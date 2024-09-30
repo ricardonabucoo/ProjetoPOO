@@ -12,7 +12,8 @@ public class Launcher {
 			@Override
 			public void run() {
 				
-				JFrameOne frame1 = new JFrameOne();
+				JFrameTwo frame2 = new JFrameTwo();
+				
 				
 			}
 		});

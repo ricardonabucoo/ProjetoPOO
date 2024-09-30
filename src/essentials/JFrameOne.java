@@ -17,17 +17,17 @@ public class JFrameOne extends JFrame {
 	
 	public void Initialize () {
 		
+		JFrame frame= new JFrame();
+		frame.setTitle("CataFrutas");
 		
-		setLayout(new BorderLayout(10,5));
-		setTitle("CataFrutas");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(500, 400);
-		setLocationRelativeTo(null);
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15,20));
+		JPanel background = new JPanel(new FlowLayout(FlowLayout.CENTER,100,200));
 		
-		JPanel panel = new JPanel();
-		JPanel background = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER,15,20));
-		background.setLayout(new FlowLayout(FlowLayout.CENTER,100,200));
+		frame.setLayout(new BorderLayout(10,5));
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setSize(500, 400);
+		frame.setLocationRelativeTo(null);
+		
 		
 		background.setBackground(Color.GRAY);
 		panel.setBackground(Color.DARK_GRAY);
@@ -35,11 +35,11 @@ public class JFrameOne extends JFrame {
 		Button button = new Button ("Play");
 		panel.add(button);
 		
-		this.add(panel, BorderLayout.EAST);
-		this.add(background, BorderLayout.CENTER);
+		frame.add(panel, BorderLayout.EAST);
+		frame.add(background, BorderLayout.CENTER);
 		
 		
-		setVisible(true);
+		frame.setVisible(true);
 		
 	}
 	
