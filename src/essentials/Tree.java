@@ -5,7 +5,7 @@ public final class Tree extends StaticElem {
 	public static final int MP_REQUIRED_FOR_TREE=1;
 	public static final int ROUNDS_REQUIRED_FOR_FRUIT= 5;
 	private int currentRoundCount;
-	private final Fruit producedFruit;
+	private Fruit producedFruit;
 	
 	
 	@Override
