@@ -31,6 +31,11 @@ public class JFrameOne extends JFrame {
     };
     private int[] answers; // Array para armazenar as respostas
     private int currentQuestionIndex = 0;
+    
+    public int[] getAnswers () {
+    	
+    	return this.answers;
+    }
 
     public JFrameOne() {
         answers = new int[questions.length]; // Inicializa o array de respostas
@@ -108,7 +113,7 @@ public class JFrameOne extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new JFrameTwo(); // Apenas inicia o jogo sem passar dados
+                new JFrameTwo(getAnswers()); // Apenas inicia o jogo sem passar dados
                 frame.dispose(); // Fecha a janela de perguntas
             }
         });
