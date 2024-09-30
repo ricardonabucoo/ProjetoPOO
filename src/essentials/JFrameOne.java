@@ -108,7 +108,6 @@ public class JFrameOne extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Inicia o jogo em uma nova instância de JFrameTwo
                 new JFrameTwo(); // Apenas inicia o jogo sem passar dados
                 frame.dispose(); // Fecha a janela de perguntas
             }
