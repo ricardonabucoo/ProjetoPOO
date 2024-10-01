@@ -31,7 +31,7 @@ public class JFrameOne extends JFrame {
         "Quantas laranjeiras?",
         "Quantos pés de abacate?",
         "Quantos coqueiros?",
-        "Qual a chance da mochila estar bichada?",
+        "Qual a chance de uma fruta estar bichada em porcetagem?",
         "Qual é a capacidade da mochila?"
     };
 
