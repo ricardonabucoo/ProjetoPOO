@@ -11,11 +11,11 @@ public class JFrameOne extends JFrame {
     private JTextField answerField;
     private JButton submitButton;
     private JButton playButton;
-    private String[] otherQuestions= {
-    	"Qual o nome do primeiro jogador?",
-    	"Qual o nome do segundo jogador?"
+    private String[] otherQuestions = {
+        "Qual o nome do primeiro jogador?",
+        "Qual o nome do segundo jogador?"
     };
-    
+
     private String[] questions = {
         "Qual o tamanho da floresta?",
         "Quantas Pedras?",
@@ -34,24 +34,22 @@ public class JFrameOne extends JFrame {
         "Qual a chance da mochila estar bichada?",
         "Qual é a capacidade da mochila?"
     };
-    private int[] answers; // Array para armazenar as respostas
-    private String[] names; // Array para armazenar o nome dos jogadores
+
+    private int[] answers; // Array para armazenar as respostas (apenas inteiros)
+    private String[] names; // Array para armazenar o nome dos jogadores (apenas strings)
     private int currentQuestionIndex = 0;
-    
-    public int[] getAnswers () {
-    	
-    	return this.answers;
+
+    public int[] getAnswers() {
+        return this.answers;
     }
-    
-    
-    public String[] getNames () {
-    	
-    	return this.names;
+
+    public String[] getNames() {
+        return this.names;
     }
 
     public JFrameOne() {
         answers = new int[questions.length]; // Inicializa o array de respostas
-        names = new String[2];
+        names = new String[2]; // Para armazenar os nomes dos jogadores
         initialize();
     }
 
@@ -96,19 +94,30 @@ public class JFrameOne extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String answer = answerField.getText();
                 if (!answer.trim().isEmpty()) {
-                    try {
-                        // Converte a resposta para inteiro e armazena no array
-                        int answerValue = Integer.parseInt(answer);
-                        answers[currentQuestionIndex - 1] = answerValue; // Armazena a resposta
-                        textArea.append(questions[currentQuestionIndex - 1] + " Resposta: " + answerValue + "\n");
-                    } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(frame, "Por favor, insira um número válido.");
-                        return;
+                    if (currentQuestionIndex < names.length) {
+                        // Armazena o nome dos jogadores
+                        names[currentQuestionIndex] = answer;
+                        textArea.append(otherQuestions[currentQuestionIndex] + " Resposta: " + answer + "\n");
+                    } else {
+                        // Armazena as respostas das perguntas do jogo
+                        try {
+                            int answerValue = Integer.parseInt(answer);
+                            int questionIndex = currentQuestionIndex - names.length; // Ajusta o índice para o array de respostas
+                            answers[questionIndex] = answerValue; // Armazena a resposta
+                            textArea.append(questions[questionIndex] + " Resposta: " + answerValue + "\n");
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(frame, "Por favor, insira um número válido.");
+                            return;
+                        }
                     }
+
                     answerField.setText(""); // Limpa o campo de resposta
 
+                    // Incrementa o índice da pergunta
+                    currentQuestionIndex++;
+
                     // Verifica se todas as perguntas foram respondidas
-                    if (currentQuestionIndex >= questions.length) {
+                    if (currentQuestionIndex >= (names.length + questions.length)) {
                         playButton.setEnabled(true); // Habilita o botão de Play
                         answerField.setEnabled(false); // Desabilita o campo de resposta
                         submitButton.setEnabled(false); // Desabilita o botão de enviar
@@ -126,7 +135,7 @@ public class JFrameOne extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new JFrameTwo(getAnswers()); // Apenas inicia o jogo sem passar dados
+                new JFrameTwo(getAnswers()); // Inicia o jogo passando as respostas
                 frame.dispose(); // Fecha a janela de perguntas
             }
         });
@@ -148,11 +157,15 @@ public class JFrameOne extends JFrame {
     }
 
     private void showNextQuestion() {
-        if (currentQuestionIndex < questions.length) {
-            textArea.append(questions[currentQuestionIndex] + "\n");
+        if (currentQuestionIndex < names.length + questions.length) {
+            if (currentQuestionIndex < names.length) {
+                textArea.append(otherQuestions[currentQuestionIndex] + "\n"); // Mostra perguntas dos jogadores
+            } else {
+                int questionIndex = currentQuestionIndex - names.length; // Ajusta o índice para o array de perguntas
+                textArea.append(questions[questionIndex] + "\n"); // Mostra perguntas do jogo
+            }
             answerField.setEnabled(true); // Habilita o campo de resposta
             submitButton.setEnabled(true); // Habilita o botão de enviar
-            currentQuestionIndex++;
         }
     }
 }
