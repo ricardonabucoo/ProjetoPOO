@@ -11,6 +11,11 @@ public class JFrameOne extends JFrame {
     private JTextField answerField;
     private JButton submitButton;
     private JButton playButton;
+    private String[] otherQuestions= {
+    	"Qual o nome do primeiro jogador?",
+    	"Qual o nome do segundo jogador?"
+    };
+    
     private String[] questions = {
         "Qual o tamanho da floresta?",
         "Quantas Pedras?",
@@ -30,15 +35,23 @@ public class JFrameOne extends JFrame {
         "Qual é a capacidade da mochila?"
     };
     private int[] answers; // Array para armazenar as respostas
+    private String[] names; // Array para armazenar o nome dos jogadores
     private int currentQuestionIndex = 0;
     
     public int[] getAnswers () {
     	
     	return this.answers;
     }
+    
+    
+    public String[] getNames () {
+    	
+    	return this.names;
+    }
 
     public JFrameOne() {
         answers = new int[questions.length]; // Inicializa o array de respostas
+        names = new String[2];
         initialize();
     }
 
