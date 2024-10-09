@@ -46,7 +46,11 @@
 		    
 		}
 		    
-		    
+		
+		public void SetOwnPlace(Cell newPlace){
+			this.ownPlace = newPlace;
+		}
+		
 		public void Drop() {
 			
 		} 
@@ -57,16 +61,16 @@
 		}
 		
 		
-		 public boolean isWormy() {
+		 public boolean IsWormy() {
 			 return isWormy;
 		 }
 		 
 		 
-		 public void setWormy (boolean isWormy) {
+		 public void SetWormy (boolean isWormy) {
 			 this.isWormy = isWormy;
 		 }
 		 
-		 public FruitType getFruitType() {
+		 public FruitType GetFruitType() {
 			 return fruitType;
 		 }
 		 

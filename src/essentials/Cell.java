@@ -1,6 +1,7 @@
 package essentials;
+import javax.swing.JButton;
 
-public class Cell {
+public class Cell extends JButton {
 
 	private static Cell[][] gridMap;
 	private int row, col;
@@ -34,6 +35,7 @@ public class Cell {
 	
 	public void Update() {
 		staticElem.Update();
+		dynamicElem.Update();
 	}
 	
 	public void OnEnter(Player player) {
