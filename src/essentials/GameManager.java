@@ -1,4 +1,4 @@
-package essentials;
+	package essentials;
 
 import java.util.HashMap;
 
@@ -8,20 +8,41 @@ public class GameManager {
 	private Player player2;
 	private Boolean isFinished;
 	
+	
+	
 	public GameManager() {
 		this.isFinished = false;
 	}
 	
 	public void Initialization() {
 		// ler arquivos , bla ,bla ,bla		
-		MapBuilder builder = new MapBuilder();
 		
-		HashMap<FruitType, Integer> treeMap = new HashMap<>();
-		treeMap.put(FruitType.ORANGE, 2);
-		treeMap.put(FruitType.COCONUT, 1);
 		
-		GameMap map = builder.BuildCellGrid(25).BuildRockCells(4).BuildTreeCells(treeMap).BuildGrassCells().BuildFruitsCells(treeMap).GetResult();
+		
+		
+		
 		//PassionFruitFactory pfFactory = new PassionFruitFactory(builder.GetTreeCellList(),maxPassionFruitsAmount);
+	}
+	
+	private void BuildMapByFile() {
+		MapReader reader = new MapReader();
+		reader.readFile("nomedoarquivo.txt");
+		
+		MapBuilder builder = new MapBuilder();	
+		
+		builder.BuildCellGrid(reader.getSize());
+		builder.BuildRockCells(reader.getRocksAmount());
+		builder.BuildTreeCells(reader.getNumberOfTrees());
+		builder.BuildGrassCells();
+		builder.BuildFruitsCells(reader.getInitialFruitsNumber());
+		
+		GameMap map = builder.GetResult();
+		
+			
+	}
+	
+	private void BuildMapByQuiz() {
+		
 	}
 	
 	public void Play() {}

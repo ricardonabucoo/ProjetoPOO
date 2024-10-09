@@ -5,26 +5,26 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class MapSaverAndReader {
+public class MapReader {
 
     // Atributos
-    public int size;
-    public int rocksAmount;
-    public int maxPassionFruitAmount;
-    public int initialPassionFruitAmount;
-    public HashMap<FruitType, Integer> numberOfTrees;
-    public HashMap<FruitType, Integer> initialFruitsNumber;
-    public int wormyFruitAmount;
-    public int bagCapacity;
+    private int size;
+    private int rocksAmount;
+    private int maxPassionFruitAmount;
+    private int initialPassionFruitAmount;
+    private HashMap<FruitType, Integer> numberOfTrees;
+    private HashMap<FruitType, Integer> initialFruitsNumber;
+    private int wormyFruitAmount;
+    private int bagCapacity;
 
     // Construtor
-    public MapSaverAndReader() {
+    public MapReader() {
         this.numberOfTrees = new HashMap<>();
         this.initialFruitsNumber = new HashMap<>();
     }
 
     // Método para ler o arquivo e salvar os dados em variáveis
-    public void ReadFile(String fileName) {
+    public void readFile(String fileName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -96,10 +96,10 @@ public class MapSaverAndReader {
 
     // Exemplo de uso da classe
     public static void main(String[] args) {
-        MapSaverAndReader mapSaver = new MapSaverAndReader();
+        MapReader mapSaver = new MapReader();
 
         // Carrega a configuração do arquivo
-        mapSaver.ReadFile("map_config.txt");
+        mapSaver.readFile("map_config.txt");
 
         // Exibe as configurações carregadas
         System.out.println("Dimensão: " + mapSaver.getSize());
