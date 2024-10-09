@@ -79,10 +79,4 @@ public class JFrameTwo {
         panel.revalidate(); // Revalida o painel para aplicar as alterações
         panel.repaint();    // Repaint para garantir que as mudanças sejam visíveis
     }
-
-    public static void main(String[] args) {
-        // Passando um exemplo de vetor como argumento
-        int[] answer = {5, 5};  // O valor de "x" será o primeiro valor do vetor
-        new JFrameTwo(answer);
-    }
 }
