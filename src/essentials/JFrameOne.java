@@ -61,7 +61,7 @@ public class JFrameOne extends JFrame {
 
         frame.setLayout(new BorderLayout(10, 5));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(500, 400);
+        frame.setSize(700, 700);
         frame.setLocationRelativeTo(null);
 
         background.setBackground(Color.GRAY);
