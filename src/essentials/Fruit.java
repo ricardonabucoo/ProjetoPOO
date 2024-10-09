@@ -1,86 +1,85 @@
-package essentials;
-
-public  class Fruit {
-	public static  int  WORMY_FRUITS_AMOUNT;
-	protected static int currentWormyFruitsAmount;
-	protected boolean isWormy;
-	protected FruitType fruitType;
-	protected StatusEffect fruitsEffect;
+	package essentials;
 	
-	
-	
-	public Fruit (boolean isWormy, FruitType fruitType ) 
-	  {
-	    this.fruitType = fruitType;
-	    this.isWormy = isWormy;
-	    
-	    StatusEffect se;
-	    
-	    switch (fruitType)
-	   { 
-	    case ORANGE:
-
-	        se = new AntidoteEffect();
-	        break;
-
-	    case BARBADOSCHERRY:
-	        se = new NullEffect();
-	        break;
-
-	    case AVOCADO:
-	        se = new PowerEffect();
-	        break;
-
-	    case BLACKBERRY:
-	        se = new NullEffect();
-	        break;
-
-	    case GUAVA:
-	        se = new NullEffect();
-	        break;
-
-	    case COCONUT:
-	        se = new MovimentEffect();
-	        break;
-
-	    case PASSIONFRUIT:
-	        se = new NullEffect();
-	        break;
-	    }
-	    
-	    if (isWormy)
-	    {
-	        fruitsEffect = new EffectList();
-	        fruitsEffect.AddEffect(new WormyEffect);
-	        fruitEffect.AddEffect(se);
-	    }
-	         else
-	           fruitEffect = se;
-	    
-	    }
-	    
-	    
-	public void Drop() {
+	public class Fruit extends DynamicElem{
 		
-	} 
-   
+		public static  int  WORMY_FRUITS_AMOUNT;
+		protected static int currentWormyFruitsAmount;
+		protected boolean isWormy;
+		protected FruitType fruitType;
+		protected StatusEffect fruitEffect;
+		
+		public Fruit (Cell ownPlace, FruitType fruitType, boolean isWormy) {
+			
+			this.ownPlace = ownPlace;
+		    this.fruitType = fruitType;	
+		    this.isWormy = isWormy;
+		    
+		    StatusEffect se;
+		    
+		    switch (fruitType) {
+		    
+		    case ORANGE:
+		        se = new AntidoteEffect();
+		        break;
 	
-	public void GiveEffect (Player player) {
-		this.fruitEffect.ApplyEffect(player);
+		    case AVOCADO:
+		        se = new PowerEffect();
+		        break;
+	
+		    case COCONUT:
+		        se = new MovimentEffect();
+		        break;
+	
+		    default:
+		        se = new NullEffect();
+		        break;
+		    }
+		    
+		    if (isWormy){
+		        EffectList el = new EffectList();
+		        el.AddEffect(new WormyEffect());
+		        el.AddEffect(se);
+		        fruitEffect = el;
+		    }
+		    else
+	           fruitEffect = se;
+		    
+		}
+		    
+		    
+		public void Drop() {
+			
+		} 
+	   
+		
+		public void GiveEffect (Player player) {
+			this.fruitEffect.ApplyEffect(player);
+		}
+		
+		
+		 public boolean isWormy() {
+			 return isWormy;
+		 }
+		 
+		 
+		 public void setWormy (boolean isWormy) {
+			 this.isWormy = isWormy;
+		 }
+		 
+		 public FruitType getFruitType() {
+			 return fruitType;
+		 }
+		 
+			 
+		 
 	}
-
-
-     public boolean isWormy() {
-    	 return isWormy;
-     }
-     
-     
-     public void setWormy (boolean isWormy) {
-    	 this.isWormy = isWormy;
-     }
-     
-     public FruitType getFruitType() {
-    	 return fruitType;
-     }
-     
-    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	    
