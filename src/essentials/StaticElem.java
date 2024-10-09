@@ -1,6 +1,6 @@
 package essentials;
 
-public abstract class StaticElem extends Elem extends JFrame {
+public abstract class StaticElem extends Elem {
 
 	
 	public void OnEnter(Player player) {}
