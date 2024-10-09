@@ -25,7 +25,7 @@ public class JFrameTwo {
 
         // Definindo o comportamento do frame
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(800, 800); // Tamanho inicial da janela
+        frame.setSize(700, 700); // Tamanho inicial da janela
         frame.setLocationRelativeTo(null); // Centraliza a janela
 
         // Adicionando o painel central ao centro (CENTER) do frame
