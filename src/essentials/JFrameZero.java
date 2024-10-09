@@ -18,14 +18,14 @@ public class JFrameZero {
 
         // Criação do JPanel para os botões com FlowLayout
         JPanel jpanel = new JPanel();
-        jpanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 300));  // Ajuste do espaçamento vertical
+        jpanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 275));  // Ajuste do espaçamento vertical
 
         // Definindo a cor de fundo do painel com a cor HEX #4d6f39
         jpanel.setBackground(Color.decode("#4d6f39"));
         
         // Criando um título com JLabel
-        JLabel title = new JLabel("Bem-vindo ao CataFrutas", JLabel.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 24));  // Definindo a fonte do título
+        JLabel title = new JLabel("Bem-vindo ao Cata Frutas", JLabel.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 50));  // Definindo a fonte do título
         title.setForeground(Color.WHITE);  // Cor do texto (branco)
         title.setBackground(Color.decode("#4d6f39"));  // Cor de fundo do título
         title.setOpaque(true);  // Torna o fundo do JLabel visível
@@ -38,6 +38,7 @@ public class JFrameZero {
 
         // Adiciona os botões ao JPanel
         JButton j = new JButton("Jogar");
+        j.setPreferredSize(new Dimension(100, 50));
         jpanel.add(j);
         
         // Ação do botão Play
@@ -50,9 +51,11 @@ public class JFrameZero {
         });
 
         JButton l = new JButton("Carregar");
+        l.setPreferredSize(new Dimension(100, 50));
         jpanel.add(l);
 
         JButton s = new JButton("Sair");
+        s.setPreferredSize(new Dimension(100, 50));
         jpanel.add(s);
         
         s.addActionListener(new ActionListener() {
