@@ -1,4 +1,4 @@
-	package essentials;
+package essentials;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -106,9 +106,7 @@ public class GameManager {
 			if (checkGameOver(isFinished)) {
 				break;
 			}
-		}
-		EndGame();
-		
+		}		
 	}
 	
 	private void TurnPlayer1(Player player) {}
