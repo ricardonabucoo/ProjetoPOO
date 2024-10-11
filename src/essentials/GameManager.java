@@ -15,16 +15,16 @@ public class GameManager {
 	}
 	
 	public void Initialization() {
-		// ler arquivos , bla ,bla ,bla		
+		BuildMapByQuiz();
+		// perguntar se a pessoa quer ler entradas ou importar arquivo
 		
 		
 		
 		
 		
-		//PassionFruitFactory pfFactory = new PassionFruitFactory(builder.GetTreeCellList(),maxPassionFruitsAmount);
 	}
 	
-	private void BuildMapByFile() {
+	private void BuildMapByFile() {			
 		MapReader reader = new MapReader();
 		reader.readFile("nomedoarquivo.txt");
 		
@@ -36,13 +36,22 @@ public class GameManager {
 		builder.BuildGrassCells();
 		builder.BuildFruitsCells(reader.getInitialFruitsNumber());
 		
-		GameMap map = builder.GetResult();
-		
-			
+		this.map = builder.GetResult();
 	}
 	
 	private void BuildMapByQuiz() {
 		
+		JFrameOne quiz = new JFrameOne();
+		
+		MapBuilder builder = new MapBuilder();	
+		
+		builder.BuildCellGrid(quiz.GetSize());
+		builder.BuildRockCells(quiz.GetRocksAmount());
+		builder.BuildTreeCells(quiz.GetNumberOfTrees());
+		builder.BuildGrassCells();
+		builder.BuildFruitsCells(quiz.GetFruitsAmount());
+		
+		this.map = builder.GetResult();
 	}
 	
 	public void Play() {}

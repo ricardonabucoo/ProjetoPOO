@@ -94,26 +94,5 @@ public class MapReader {
         return initialFruitsNumber;
     }
 
-    // Exemplo de uso da classe
-    public static void main(String[] args) {
-        MapReader mapSaver = new MapReader();
 
-        // Carrega a configuração do arquivo
-        mapSaver.readFile("map_config.txt");
-
-        // Exibe as configurações carregadas
-        System.out.println("Dimensão: " + mapSaver.getSize());
-        System.out.println("Quantidade de pedras: " + mapSaver.getRocksAmount());
-        System.out.println("Máximo de maracujás: " + mapSaver.getMaxPassionFruitAmount());
-        System.out.println("Maracujás iniciais: " + mapSaver.getInitialPassionFruitAmount());
-        System.out.println("Frutas bichadas: " + mapSaver.getWormyFruitAmount());
-        System.out.println("Capacidade da mochila: " + mapSaver.getBagCapacity());
-
-        System.out.println("\nÁrvores e Frutas Inicial:");
-        for (FruitType fruit : mapSaver.getNumberOfTrees().keySet()) {
-            System.out.println("Fruta: " + fruit.name().toLowerCase() + 
-                               " | Árvores: " + mapSaver.getNumberOfTrees().get(fruit) + 
-                               " | Frutas: " + mapSaver.getInitialFruitsNumber().get(fruit));
-        }
-    }
 }
