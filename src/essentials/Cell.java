@@ -1,4 +1,7 @@
 package essentials;
+import java.awt.Button;
+//import java.awt.*;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class Cell extends JButton {
@@ -9,6 +12,7 @@ public class Cell extends JButton {
 	private DynamicElem dynamicElem;
 	
 	public Cell(int row, int col) {
+		super("Cell " + row + " " + col);
 		this.row = row;
 		this.col = col;
 	}
@@ -71,6 +75,24 @@ public class Cell extends JButton {
 	}
 	
 	public void SetStaticElem(StaticElem elem) {
+		
+		ImageIcon image; 
+		
+		if(elem instanceof Rock) {
+			image = new ImageIcon("Rocks.png");
+		}
+		else if(elem instanceof Tree) {
+			image = new ImageIcon("arvore.png");
+		}
+		else /* (elem instanceof Grass) */{
+			image = new ImageIcon("grama.png");
+		}
+		if (image.getImageLoadStatus() == java.awt.MediaTracker.COMPLETE) {
+		    System.out.println("Imagem carregada com sucesso.");
+		} else {
+		    System.out.println("Erro ao carregar a imagem.");
+		}
+	    this.setIcon(image);    
 		this.staticElem = elem;
 	}
 	

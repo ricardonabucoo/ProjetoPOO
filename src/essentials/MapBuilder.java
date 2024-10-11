@@ -52,7 +52,7 @@ import javax.swing.JPanel;
 	        GridBagConstraints gbc = new GridBagConstraints();
 	        
 	        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	        frame.setSize(800, 800); 
+	        frame.setSize(700, 700); 
 	        frame.setLocationRelativeTo(null);
 	        frame.add(centerPanel, BorderLayout.CENTER);
 	        
