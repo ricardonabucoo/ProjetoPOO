@@ -45,7 +45,7 @@ public class JFrameZero {
         j.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new JFrameOne(); // Inicia o jogo 
+                new Quiz(); // Inicia o jogo 
                 frame.dispose(); // Fecha a janela de menu
             }
         });

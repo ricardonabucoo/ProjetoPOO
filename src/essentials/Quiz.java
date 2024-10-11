@@ -1,24 +1,36 @@
 package essentials;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
-public class JFrameOne extends JFrame {
-
-    private JTextArea textArea;
+public class Quiz extends JFrame {
+	private JTextArea textArea;
     private JTextField answerField;
     private JButton submitButton;
     private JButton playButton;
-    private int[] answers; 
-    private String[] names; 
+	private int[] answers; 
+    private String[] names;
     private int currentQuestionIndex = 0;
-    private String[] otherQuestions = {
-        "Qual o nome do primeiro jogador?",
-        "Qual o nome do segundo jogador?"
-    };
+    private GameMap map;
+    
+	private String[] otherQuestions = {
+	        "Qual o nome do primeiro jogador?",
+	        "Qual o nome do segundo jogador?"
+	    };
 
     private String[] questions = {
         "Qual o tamanho da floresta?",
@@ -39,56 +51,13 @@ public class JFrameOne extends JFrame {
         "Qual a chance de uma fruta estar bichada em porcentagem?",
         "Qual é a capacidade da mochila?"
     };
-
-    public JFrameOne() {
+	
+    public Quiz() {
     	answers = new int[questions.length];
-    	names = new String[2]; 
+    	names = new String[2];
     	initialize();
     }
     
-    public int GetSize() {
-    	return answers[0];
-    }
-    
-    public int GetRocksAmount() {
-    	return answers[1];
-    }
-
-    public HashMap<FruitType,Integer> GetFruitsAmount() {
-    	HashMap<FruitType,Integer> fruits = new HashMap<FruitType,Integer>();
-    	fruits.put(FruitType.PASSIONFRUIT, answers[2]);
-    	fruits.put(FruitType.GUAVA, answers[3]);
-    	fruits.put(FruitType.BARBADOSCHERRY, answers[4]);
-    	fruits.put(FruitType.BLACKBERRY, answers[5]);
-    	fruits.put(FruitType.ORANGE, answers[6]);
-    	fruits.put(FruitType.AVOCADO, answers[7]);
-    	fruits.put(FruitType.COCONUT, answers[8]);
-    	
-    	return fruits;
-    }
-    
-    public HashMap<FruitType,Integer> GetNumberOfTrees() {
-    	HashMap<FruitType,Integer> trees = new HashMap<FruitType,Integer>();
-    	trees.put(FruitType.PASSIONFRUIT, answers[9]);
-    	trees.put(FruitType.GUAVA, answers[10]);
-    	trees.put(FruitType.BARBADOSCHERRY, answers[11]);
-    	trees.put(FruitType.BLACKBERRY, answers[12]);
-    	trees.put(FruitType.ORANGE, answers[13]);
-    	trees.put(FruitType.AVOCADO, answers[14]);
-    	trees.put(FruitType.COCONUT, answers[15]);
-    	
-    	return trees;
-    }
-    
-    private int[] getAnswers() {
-        return this.answers;
-    }
-
-    public String[] getNames() {
-        return this.names;
-    }
-
-
     public void initialize() {
         JFrame frame = new JFrame();
         frame.setTitle("CataFrutas");
@@ -136,8 +105,16 @@ public class JFrameOne extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new JFrameTwo(getAnswers()); // Inicia o jogo passando as respostas
-                frame.dispose(); // Fecha a janela de perguntas
+            	MapBuilder builder = new MapBuilder();	
+        		
+        		builder.BuildCellGrid(GetSize());
+        		builder.BuildRockCells(GetRocksAmount());
+        		builder.BuildTreeCells(GetNumberOfTrees());
+        		builder.BuildGrassCells();
+        		builder.BuildFruitsCells(GetFruitsAmount());
+        		
+        		SetMap(builder.GetResult());
+            	frame.dispose(); 
             }
         });
 
@@ -166,7 +143,7 @@ public class JFrameOne extends JFrame {
         // Exibe o JFrame
         frame.setVisible(true);
     }
-
+    
     private void handleSubmit() {
         String answer = answerField.getText();
         if (!answer.trim().isEmpty()) {
@@ -218,4 +195,51 @@ public class JFrameOne extends JFrame {
             submitButton.setEnabled(true); // Habilita o botão de enviar
         }
     }
+    
+    private void SetMap(GameMap map) {
+    	this.map = map;
+    }
+    
+    public int GetSize() {
+    	return answers[0];
+    }
+    
+    public int GetRocksAmount() {
+    	return answers[1];
+    }
+
+    public HashMap<FruitType,Integer> GetFruitsAmount() {
+    	HashMap<FruitType,Integer> fruits = new HashMap<FruitType,Integer>();
+    	fruits.put(FruitType.PASSIONFRUIT, answers[2]);
+    	fruits.put(FruitType.GUAVA, answers[3]);
+    	fruits.put(FruitType.BARBADOSCHERRY, answers[4]);
+    	fruits.put(FruitType.BLACKBERRY, answers[5]);
+    	fruits.put(FruitType.ORANGE, answers[6]);
+    	fruits.put(FruitType.AVOCADO, answers[7]);
+    	fruits.put(FruitType.COCONUT, answers[8]);
+    	
+    	return fruits;
+    }
+    
+    public HashMap<FruitType,Integer> GetNumberOfTrees() {
+    	HashMap<FruitType,Integer> trees = new HashMap<FruitType,Integer>();
+    	trees.put(FruitType.PASSIONFRUIT, answers[9]);
+    	trees.put(FruitType.GUAVA, answers[10]);
+    	trees.put(FruitType.BARBADOSCHERRY, answers[11]);
+    	trees.put(FruitType.BLACKBERRY, answers[12]);
+    	trees.put(FruitType.ORANGE, answers[13]);
+    	trees.put(FruitType.AVOCADO, answers[14]);
+    	trees.put(FruitType.COCONUT, answers[15]);
+    	
+    	return trees;
+    }
+    
+    private int[] getAnswers() {
+        return this.answers;
+    }
+
+    public String[] getNames() {
+        return this.names;
+    }
+	
 }
