@@ -1,6 +1,7 @@
-	package essentials;
+package essentials;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class GameManager {
 	private GameMap map;
@@ -15,12 +16,7 @@ public class GameManager {
 	}
 	
 	public void Initialization() {
-		BuildMapByQuiz();
-		// perguntar se a pessoa quer ler entradas ou importar arquivo
-		
-		
-		
-		
+				BuildMapByQuiz();
 		
 	}
 	
@@ -36,7 +32,7 @@ public class GameManager {
 		builder.BuildGrassCells();
 		builder.BuildFruitsCells(reader.getInitialFruitsNumber());
 		
-		this.map = builder.GetResult();
+		this.map = 
 	}
 	
 	private void BuildMapByQuiz() {
@@ -54,11 +50,40 @@ public class GameManager {
 		this.map = builder.GetResult();
 	}
 	
-	public void Play() {}
+	public void Play() {
+		//so um esboço
+		while (!isFinished) {
+			 
+			//System.out.println(map); //exibe o estado atual do mapa
+			//System.out.print("Turno de " + player1.name);
+			TurnPlayerOne(player1);
+			
+			if (checkGameOver(isFinished)) {
+				break;
+			}
+			//System.out.print(map); //exibe o estado atual do mapa após o player jogar
+			//System.out.print("Turno de " + player2.name);
+			TurnPlayerTwo(player2);
+			
+			if (checkGameOver(isFinished)) {
+				break;
+			}
+		}		
+	}
+	
+	private void TurnPlayer1(Player player) {}
+	private void TurnPlayer2(Player player) {}	
+	private boolean checkGameOver(boolean isfinished) {
+		if () {
+			isfinished = true;
+		}
+	}
 	public void Update() {
 		map.Update();
 	}
-	public void EndGame() {}
+	public void EndGame() {
+		System.out.println("Fim de jogo!");
+	}
 	public int PlayDices() {return 0;}
 	public boolean IsFinished() {
 		return this.isFinished;
