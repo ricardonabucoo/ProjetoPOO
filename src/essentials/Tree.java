@@ -1,5 +1,7 @@
 package essentials;
 
+import javax.swing.ImageIcon;
+
 public final class Tree extends StaticElem {
 
 	public static final int MP_REQUIRED_FOR_TREE=1;
@@ -8,6 +10,9 @@ public final class Tree extends StaticElem {
 	private FruitType producedFruit;
 	
 	public Tree(Cell ownPlace, FruitType fruitType) {
+		super(ownPlace, new ImageIcon("grama.png"));
+		this.setText("");
+		this.ownPlace = ownPlace;
 		this.ownPlace = ownPlace;	
 		this.producedFruit = fruitType;
 		currentRoundCount = 0;

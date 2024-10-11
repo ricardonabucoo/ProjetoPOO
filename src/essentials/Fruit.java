@@ -1,6 +1,8 @@
 	package essentials;
-	
-	public class Fruit extends DynamicElem{
+
+import javax.swing.ImageIcon;
+
+public class Fruit extends DynamicElem{
 		
 		public static  int  WORMY_FRUITS_AMOUNT;
 		protected static int currentWormyFruitsAmount;
@@ -9,8 +11,7 @@
 		protected StatusEffect fruitEffect;
 		
 		public Fruit (Cell ownPlace, FruitType fruitType, boolean isWormy) {
-			
-			this.ownPlace = ownPlace;
+			super(ownPlace,FruitImage(fruitType) );
 		    this.fruitType = fruitType;	
 		    this.isWormy = isWormy;
 		    
@@ -46,6 +47,40 @@
 		    
 		}
 		    
+		
+		public static ImageIcon FruitImage(FruitType fruitType) {
+			
+			String str;
+			switch (fruitType) {
+		    
+		    case ORANGE:
+		        str = "laranja.png";
+		        break;
+	
+		    case AVOCADO:
+		        str = "abacate.png";
+		        break;
+	
+		    case COCONUT:
+		    	str = "coco.png";
+		        break;
+		    case GUAVA:
+		    	str = "goiaba.png";
+		    	break;
+		    case PASSIONFRUIT:
+		    	str = "maracuja.png";
+		    	break;
+		    case BARBADOSCHERRY:
+		    	str = "acerola.png";
+		    	break;
+		    case BLACKBERRY:
+		    	str = "amora.png";
+		    	break;
+		    default:
+		    	str = "pedro.png";
+			}
+			return new ImageIcon(str);
+		}
 		
 		public void SetOwnPlace(Cell newPlace){
 			this.ownPlace = newPlace;

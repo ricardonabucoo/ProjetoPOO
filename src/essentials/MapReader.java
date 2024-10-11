@@ -1,9 +1,12 @@
 package essentials;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+
+import javax.swing.JFileChooser;
 
 public class MapReader {
 
@@ -16,16 +19,55 @@ public class MapReader {
     private HashMap<FruitType, Integer> initialFruitsNumber;
     private int wormyFruitAmount;
     private int bagCapacity;
+    private GameMap map;
 
     // Construtor
     public MapReader() {
         this.numberOfTrees = new HashMap<>();
         this.initialFruitsNumber = new HashMap<>();
+        
+        JFileChooser fileChooser = new JFileChooser();
+        int returnValue = fileChooser.showOpenDialog(null);
+
+        // Verifica se um arquivo foi selecionado
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            // Carrega a configuração do arquivo
+            readFile(selectedFile);
+            
+            MapBuilder builder = new MapBuilder();	
+    		
+    		builder.BuildCellGrid(getSize());
+    		builder.BuildRockCells(getRocksAmount());
+    		builder.BuildTreeCells(getNumberOfTrees());
+    		builder.BuildGrassCells();
+    		builder.BuildFruitsCells(getInitialFruitsNumber());
+    		
+    		this.map = builder.GetResult();
+            
+        }
     }
 
     // Método para ler o arquivo e salvar os dados em variáveis
-    public void readFile(String fileName) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+    public void readFile(File file) {
+        // Mapeamento de termos em português para enums e variáveis em inglês, acho que a professora
+    	//vai passar arquivos em português, aí criei o hashmap com a tradução
+        HashMap<String, String> translationMap = new HashMap<>();
+        translationMap.put("dimensao", "size");
+        translationMap.put("pedras", "rocksAmount");
+        translationMap.put("maximo_maracuja", "maxPassionFruitAmount");
+        translationMap.put("inicial_maracuja", "initialPassionFruitAmount");
+        translationMap.put("bichadas", "wormyFruitAmount");
+        translationMap.put("mochila", "bagCapacity");
+        translationMap.put("maracuja", "PASSIONFRUIT");
+        translationMap.put("laranja", "ORANGE");
+        translationMap.put("abacate", "AVOCADO");
+        translationMap.put("coco", "COCONUT");
+        translationMap.put("acerola", "BARBADOSCHERRY");
+        translationMap.put("amora", "BLACKBERRY");
+        translationMap.put("goiaba", "GUAVA");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(" ");
@@ -36,12 +78,6 @@ public class MapReader {
                     case "pedras":
                         rocksAmount = Integer.parseInt(parts[1]);
                         break;
-                    case "maximo_maracuja":
-                        maxPassionFruitAmount = Integer.parseInt(parts[1]);
-                        break;
-                    case "inicial_maracuja":
-                        initialPassionFruitAmount = Integer.parseInt(parts[1]);
-                        break;
                     case "bichadas":
                         wormyFruitAmount = Integer.parseInt(parts[1]);
                         break;
@@ -49,8 +85,16 @@ public class MapReader {
                         bagCapacity = Integer.parseInt(parts[1]);
                         break;
                     default:
-                        // Assume que o restante são árvores e frutas (formato: fruta árvores frutas)
-                        FruitType fruitType = FruitType.valueOf(parts[0].toUpperCase());
+                        // Usar o mapa de tradução para converter o nome da fruta
+                        String fruitNameInEnglish = translationMap.getOrDefault(parts[0], parts[0].toUpperCase());
+                        FruitType fruitType = FruitType.valueOf(fruitNameInEnglish);
+
+                        // Verifica se é maracujá para atribuir valores específicos
+                        if (fruitType == FruitType.PASSIONFRUIT) {
+                            maxPassionFruitAmount = Integer.parseInt(parts[1]);
+                            initialPassionFruitAmount = Integer.parseInt(parts[2]);
+                        }
+
                         numberOfTrees.put(fruitType, Integer.parseInt(parts[1]));
                         initialFruitsNumber.put(fruitType, Integer.parseInt(parts[2]));
                         break;

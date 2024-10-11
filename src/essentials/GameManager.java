@@ -74,7 +74,15 @@ public class GameManager {
         JButton l = new JButton("Carregar");
         l.setPreferredSize(new Dimension(100, 50));
         jpanel.add(l);
-
+        
+        l.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	BuildMapByFile(); // Fecha a janela de menu
+                frame.dispose();
+            }
+        });
+        
         JButton s = new JButton("Sair");
         s.setPreferredSize(new Dimension(100, 50));
         jpanel.add(s);
@@ -97,8 +105,7 @@ public class GameManager {
 	private void BuildMapByFile() {			
 		
 		MapReader reader = new MapReader();
-		reader.readFile("nomedoarquivo.txt");
-		
+		/*
 		MapBuilder builder = new MapBuilder();	
 		
 		builder.BuildCellGrid(reader.getSize());
@@ -108,6 +115,7 @@ public class GameManager {
 		builder.BuildFruitsCells(reader.getInitialFruitsNumber());
 		
 		this.map = builder.GetResult();
+		*/
 	}
 	
 	private void BuildMapByQuiz() {
