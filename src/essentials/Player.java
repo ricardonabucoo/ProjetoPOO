@@ -1,5 +1,7 @@
 package essentials;
 
+import javax.swing.ImageIcon;
+
 public class Player extends DynamicElem{
 	public final String name;
 	private int power;
@@ -8,7 +10,7 @@ public class Player extends DynamicElem{
 	private int movimentPoints;
 	
 	public Player(String name, Bag bag, Cell ownPlace) {
-		this.ownPlace = ownPlace;
+		super(ownPlace, new ImageIcon("laranja.png"));
 		this.name = name;
 		this.bag = bag;
 		this.effectList = new EffectList();

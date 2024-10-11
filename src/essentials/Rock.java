@@ -1,11 +1,15 @@
 package essentials;
 
+import javax.swing.ImageIcon;
+
 public final class Rock extends StaticElem {
 
 	public static final int MP_REQUIRED_FOR_ROCK=2;
 	
 	
 	public Rock(Cell ownPlace) {
+		super(ownPlace, new ImageIcon("Rocks.png"));
+		this.setText("");
 		this.ownPlace = ownPlace;
 	}
 	
