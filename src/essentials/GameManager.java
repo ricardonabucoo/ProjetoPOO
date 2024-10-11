@@ -16,60 +16,11 @@ public class GameManager {
 	}
 	
 	public void Initialization() {
-		// ler arquivos , bla ,bla ,bla		
-						
-		MapBuilder builder = new MapBuilder();
+				BuildMapByQuiz();
 		
-		Scanner read = new Scanner(System.in);
-		
-		System.out.print("Digite o tamanho do mapa.");
-		int mapsize = read.nextInt();
-		
-		System.out.print("Digite a quantidade de rochas.");
-		int rocksAmount = read.nextInt();
-		
-		System.out.print("Digite a quantidade de arvores.");
-		int treeAmounts = read.nextInt(); 
-		
-		HashMap <TypeFruit, Integer> treemap = new HashMap<>();
-		System.out.ptint("Digite a quantidade de frutas que deseja adicionar.");
-		int fruitAmounts = read.nextInt();
-		
-		for (int i = 0; i < fruitAmounts; i ++) {
-			System.out.print("Digite o tipo da fruta.");
-			String fruitTypeString = read.next();
-			FruitType fruitType = FruitType.valueOf(fruitTypeString.toUpperCase());
-			
-			System.out.print("Quantas frutas do tipo escolhido deseja adicionar?");
-			int quantityFruit = read.nextInt();
-			
-			treemap.put(fruitType, quantityFruit);
-		}
-		
-		System.out.print("Digite o nome Player 1");
-		String nameOne = read.next();
-		
-		System.out.print("Digite o nome Player 2");
-		String nameTwo = read.next();
-		
-		System.out.print("Digite o tamanho da mochila dos Players.");
-		int bagSizePlayers = read.nextInt();
-		
-		builder.BuildCellGrid(mapsize)
-		       .BuildRockCells(rocksAmount)
-		       .BuildTreeCells(treemap)
-			   .BuildGrassCells()
-			   .BuildFruitsCells(treemap)
-			   .BuildPlayerOne(nameOne, bagSizePlayers)
-			   .BuildPlayerTwo(nameTwo, bagSizePlayers);
-		
-		this.map = builder.GetResult();
-		System.out.print("Mapa construido com sucesso!");
-		
-		//PassionFruitFactory pfFactory = new PassionFruitFactory(builder.GetTreeCellList(),maxPassionFruitsAmount);
 	}
 	
-	private void BuildMapByFile() {
+	private void BuildMapByFile() {			
 		MapReader reader = new MapReader();
 		reader.readFile("nomedoarquivo.txt");
 		
@@ -81,11 +32,22 @@ public class GameManager {
 		builder.BuildGrassCells();
 		builder.BuildFruitsCells(reader.getInitialFruitsNumber());
 		
-		GameMap map = builder.GetResult();			
+		this.map = 
 	}
 	
 	private void BuildMapByQuiz() {
 		
+		JFrameOne quiz = new JFrameOne();
+		
+		MapBuilder builder = new MapBuilder();	
+		
+		builder.BuildCellGrid(quiz.GetSize());
+		builder.BuildRockCells(quiz.GetRocksAmount());
+		builder.BuildTreeCells(quiz.GetNumberOfTrees());
+		builder.BuildGrassCells();
+		builder.BuildFruitsCells(quiz.GetFruitsAmount());
+		
+		this.map = builder.GetResult();
 	}
 	
 	public void Play() {

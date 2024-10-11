@@ -2,6 +2,8 @@ package essentials;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
+
 import javax.swing.*;
 
 public class JFrameOne extends JFrame {
@@ -10,6 +12,9 @@ public class JFrameOne extends JFrame {
     private JTextField answerField;
     private JButton submitButton;
     private JButton playButton;
+    private int[] answers; 
+    private String[] names; 
+    private int currentQuestionIndex = 0;
     private String[] otherQuestions = {
         "Qual o nome do primeiro jogador?",
         "Qual o nome do segundo jogador?"
@@ -19,26 +24,63 @@ public class JFrameOne extends JFrame {
         "Qual o tamanho da floresta?",
         "Quantas Pedras?",
         "Qual o total de frutas ouro?",
-        "Qual será o número de acerolas iniciais?",
         "Qual será o número de goiabas iniciais?",
+        "Qual será o número de acerolas iniciais?",
         "Qual será o número de amoras iniciais?",
         "Qual será o número de laranjas iniciais?",
         "Qual será o número de abacates iniciais?",
         "Qual será o número de cocos iniciais?",
-        "Quantas goiabeiras?",
+        "Quantas pés de goiaba?",
+        "Quantos pés de acerola?",
         "Quantos pés de amora?",
-        "Quantas laranjeiras?",
+        "Quantas pés de laranja?",
         "Quantos pés de abacate?",
-        "Quantos coqueiros?",
+        "Quantos pés de côco?",
         "Qual a chance de uma fruta estar bichada em porcentagem?",
         "Qual é a capacidade da mochila?"
     };
 
-    private int[] answers; // Array para armazenar as respostas (apenas inteiros)
-    private String[] names; // Array para armazenar o nome dos jogadores (apenas strings)
-    private int currentQuestionIndex = 0;
+    public JFrameOne() {
+    	answers = new int[questions.length];
+    	names = new String[2]; 
+    	initialize();
+    }
+    
+    public int GetSize() {
+    	return answers[0];
+    }
+    
+    public int GetRocksAmount() {
+    	return answers[1];
+    }
 
-    public int[] getAnswers() {
+    public HashMap<FruitType,Integer> GetFruitsAmount() {
+    	HashMap<FruitType,Integer> fruits = new HashMap<FruitType,Integer>();
+    	fruits.put(FruitType.PASSIONFRUIT, answers[2]);
+    	fruits.put(FruitType.GUAVA, answers[3]);
+    	fruits.put(FruitType.BARBADOSCHERRY, answers[4]);
+    	fruits.put(FruitType.BLACKBERRY, answers[5]);
+    	fruits.put(FruitType.ORANGE, answers[6]);
+    	fruits.put(FruitType.AVOCADO, answers[7]);
+    	fruits.put(FruitType.COCONUT, answers[8]);
+    	
+    	return fruits;
+    }
+    
+    public HashMap<FruitType,Integer> GetNumberOfTrees() {
+    	HashMap<FruitType,Integer> trees = new HashMap<FruitType,Integer>();
+    	trees.put(FruitType.PASSIONFRUIT, answers[9]);
+    	trees.put(FruitType.GUAVA, answers[10]);
+    	trees.put(FruitType.BARBADOSCHERRY, answers[11]);
+    	trees.put(FruitType.BLACKBERRY, answers[12]);
+    	trees.put(FruitType.ORANGE, answers[13]);
+    	trees.put(FruitType.AVOCADO, answers[14]);
+    	trees.put(FruitType.COCONUT, answers[15]);
+    	
+    	return trees;
+    }
+    
+    private int[] getAnswers() {
         return this.answers;
     }
 
@@ -46,11 +88,6 @@ public class JFrameOne extends JFrame {
         return this.names;
     }
 
-    public JFrameOne() {
-        answers = new int[questions.length]; // Inicializa o array de respostas
-        names = new String[2]; // Para armazenar os nomes dos jogadores
-        initialize();
-    }
 
     public void initialize() {
         JFrame frame = new JFrame();
