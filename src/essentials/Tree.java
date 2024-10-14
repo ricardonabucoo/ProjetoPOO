@@ -9,7 +9,7 @@ public final class Tree extends StaticElem {
 	public static final int MP_REQUIRED_FOR_TREE=1;
 	public static final int ROUNDS_REQUIRED_FOR_FRUIT= 5;
 	private int currentRoundCount;
-	private FruitType producedFruit;
+	private final Fruit producedFruit;
 	
 	public Tree(Cell ownPlace, FruitType fruitType) {
 		super(ownPlace, null);
@@ -30,29 +30,30 @@ public final class Tree extends StaticElem {
 		return 0;
 	}
 	
-	@Override
 	public void Update() {
 		
 		
 		
 	}
 	
-	@Override
-	public void OnStay(Player player) {
+	
+	public void OnStay() {
 		
 		
 		
 	}
 	
-	public void ProduceFruit() {
-		
-		
 	
+	public void ProduceFruit () {
+		
+		
+		
+		
 	}
 	
 	public void SetCurrentRoundCount(int crc) {
 		
-		this.currentRoundCount = 	crc;
+		this.currentRoundCount=crc;
 		
 	}
 	
@@ -62,7 +63,7 @@ public final class Tree extends StaticElem {
 		
 	}
 	
-	public FruitType getProducedFruit() {
+	public Fruit getProducedFruit() {
 		
 		return this.producedFruit;
 		
