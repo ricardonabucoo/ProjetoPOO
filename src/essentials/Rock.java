@@ -1,5 +1,7 @@
 package essentials;
 
+import java.awt.MediaTracker;
+
 import javax.swing.ImageIcon;
 
 public final class Rock extends StaticElem {
@@ -8,9 +10,15 @@ public final class Rock extends StaticElem {
 	
 	
 	public Rock(Cell ownPlace) {
-		super(ownPlace, new ImageIcon("Rocks.png"));
-		this.setText("");
-		this.ownPlace = ownPlace;
+		super(ownPlace, null);
+		ImageIcon icon = new ImageIcon(getClass().getResource("Rocks.png"));
+		this.setIcon(icon);
+	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
+	        System.out.println("Imagem carregada com sucesso.");
+	    } else {
+	        System.out.println("Erro ao carregar a imagem.");
+	    }
+		
 	}
 	
 	@Override

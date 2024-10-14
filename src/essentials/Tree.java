@@ -1,5 +1,7 @@
 package essentials;
 
+import java.awt.MediaTracker;
+
 import javax.swing.ImageIcon;
 
 public final class Tree extends StaticElem {
@@ -10,10 +12,14 @@ public final class Tree extends StaticElem {
 	private FruitType producedFruit;
 	
 	public Tree(Cell ownPlace, FruitType fruitType) {
-		super(ownPlace, new ImageIcon("grama.png"));
-		this.setText("");
-		this.ownPlace = ownPlace;
-		this.ownPlace = ownPlace;	
+		super(ownPlace, null);
+		ImageIcon icon = new ImageIcon(getClass().getResource("arvore.png"));
+		this.setIcon(icon);
+	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
+	        System.out.println("Imagem carregada com sucesso.");
+	    } else {
+	        System.out.println("Erro ao carregar a imagem.");
+	    }
 		this.producedFruit = fruitType;
 		currentRoundCount = 0;
 	}
