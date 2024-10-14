@@ -55,32 +55,32 @@ public class Fruit extends DynamicElem{
 			switch (fruitType) {
 		    
 		    case ORANGE:
-		        str = "laranja.png";
+		        str = "images/laranja.png";
 		        break;
 	
 		    case AVOCADO:
-		        str = "abacate.png";
+		        str = "images/abacate.png";
 		        break;
 	
 		    case COCONUT:
-		    	str = "coco.png";
+		    	str = "images/coco.png";
 		        break;
 		    case GUAVA:
-		    	str = "goiaba.png";
+		    	str = "images/goiaba.png";
 		    	break;
 		    case PASSIONFRUIT:
-		    	str = "maracuja.png";
+		    	str = "images/maracuja.png";
 		    	break;
 		    case BARBADOSCHERRY:
-		    	str = "acerola.png";
+		    	str = "images/acerola.png";
 		    	break;
 		    case BLACKBERRY:
-		    	str = "amora.png";
+		    	str = "images/amora.png";
 		    	break;
 		    default:
-		    	str = "pedro.png";
+		    	str = "images/pedro.png";
 			}
-			return new ImageIcon(getClass().getResource(str));
+			return new ImageIcon(str);
 		}
 		
 		public void SetOwnPlace(Cell newPlace){

@@ -11,7 +11,7 @@ public final class Grass extends StaticElem {
 	
 	public Grass(Cell ownPlace) {
 		super(ownPlace, null);
-		ImageIcon icon = new ImageIcon(getClass().getResource("grama.png"));
+		ImageIcon icon = new ImageIcon("images/grama.png");
 		this.setIcon(icon);
 	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
 	        System.out.println("Imagem carregada com sucesso.");

@@ -13,7 +13,7 @@ public final class Tree extends StaticElem {
 	
 	public Tree(Cell ownPlace, FruitType fruitType) {
 		super(ownPlace, null);
-		ImageIcon icon = new ImageIcon(getClass().getResource("arvore.png"));
+		ImageIcon icon = new ImageIcon("images/arvore.png");
 		this.setIcon(icon);
 	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
 	        System.out.println("Imagem carregada com sucesso.");

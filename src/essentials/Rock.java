@@ -11,7 +11,7 @@ public final class Rock extends StaticElem {
 	
 	public Rock(Cell ownPlace) {
 		super(ownPlace, null);
-		ImageIcon icon = new ImageIcon(getClass().getResource("Rocks.png"));
+		ImageIcon icon = new ImageIcon("images/Rocks.png");
 		this.setIcon(icon);
 	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
 	        System.out.println("Imagem carregada com sucesso.");
