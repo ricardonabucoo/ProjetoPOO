@@ -11,7 +11,8 @@ public class Fruit extends DynamicElem{
 		protected StatusEffect fruitEffect;
 		
 		public Fruit (Cell ownPlace, FruitType fruitType, boolean isWormy) {
-			super(ownPlace,FruitImage(fruitType) );
+			super(ownPlace,null);
+			this.setIcon(FruitImage(fruitType));
 		    this.fruitType = fruitType;	
 		    this.isWormy = isWormy;
 		    
@@ -48,7 +49,7 @@ public class Fruit extends DynamicElem{
 		}
 		    
 		
-		public static ImageIcon FruitImage(FruitType fruitType) {
+		public ImageIcon FruitImage(FruitType fruitType) {
 			
 			String str;
 			switch (fruitType) {
@@ -79,7 +80,7 @@ public class Fruit extends DynamicElem{
 		    default:
 		    	str = "pedro.png";
 			}
-			return new ImageIcon(str);
+			return new ImageIcon(getClass().getResource(str));
 		}
 		
 		public void SetOwnPlace(Cell newPlace){
