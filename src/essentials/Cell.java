@@ -93,7 +93,24 @@ public class Cell extends JButton {
 		} else {
 		    System.out.println("Erro ao carregar a imagem.");
 		}
-		this.staticElem = elem;
+		
+		Image scaledImage = image.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+        this.setIcon(new ImageIcon(scaledImage));
+		
+        this.setBorderPainted(false);
+        this.setFocusPainted(false);
+        this.setContentAreaFilled(false);
+        this.staticElem = elem;
+        
+        this.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                
+                Image resizedImage = image.getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+                setIcon(new ImageIcon(resizedImage));
+            }
+        });
+        
 	}
 	
 	
