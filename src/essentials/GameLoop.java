@@ -4,9 +4,9 @@ public class GameLoop {
 	
 	public GameLoop() {}
 	
-	public void Run() {
+	public void run() {
 		GameManager gm = new GameManager();
-		gm.Initialization();
+		gm.initialization();
 		/*
 		do {
 			gm.Play();

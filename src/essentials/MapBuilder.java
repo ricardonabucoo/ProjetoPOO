@@ -31,10 +31,10 @@ import javax.swing.JPanel;
 		
 		
 		public MapBuilder() {
-			Reset();							
+			reset();
 		}
 		
-		public void Reset() {
+		public void reset() {
 			this.grid = null;
 		    this.gridSize = 0;					
 		    this.rocksAmount = 0;
@@ -46,7 +46,7 @@ import javax.swing.JPanel;
 		    this.player2 = null;
 		}
 		
-		public MapBuilder BuildCellGrid(int size) {
+		public MapBuilder buildCellGrid(int size) {
 			JFrame frame = new JFrame();
 	        frame.setTitle("CataFrutas");
         	
@@ -86,21 +86,21 @@ import javax.swing.JPanel;
 			return this;
 		}
 		
-		public MapBuilder BuildRockCells(int rocksAmount) {
+		public MapBuilder buildRockCells(int rocksAmount) {
 			this.rocksAmount = rocksAmount;
 			for(int i = 0; i < rocksAmount; i++) {
-				Cell cell = GetRandomEmptyCell();
+				Cell cell = getRandomEmptyCell();
 				cell.SetStaticElem(new Rock(cell));
 			}
 			return this;	
 		}
 		
-		public MapBuilder BuildTreeCells(HashMap<FruitType, Integer> treeMap) {
+		public MapBuilder buildTreeCells(HashMap<FruitType, Integer> treeMap) {
 			for(Map.Entry<FruitType, Integer> entry : treeMap.entrySet()) {
 				int value = entry.getValue();
 				this.treesAmount += value;
 				for(int i = 0; i < value; i++){
-					Cell cell = GetRandomEmptyCell();
+					Cell cell = getRandomEmptyCell();
 					cell.SetStaticElem(new Tree(cell,entry.getKey()));
 					treeCellList.add(cell);
 				}
@@ -110,10 +110,10 @@ import javax.swing.JPanel;
 		}
 		
 			
-		public MapBuilder BuildGrassCells() {
+		public MapBuilder buildGrassCells() {
 			int value = gridSize*gridSize - rocksAmount - treesAmount;
 				for(int i = 0; i < value; i++) {	
-					Cell cell = GetRandomEmptyCell();
+					Cell cell = getRandomEmptyCell();
 					cell.SetStaticElem(new Grass(cell));
 					grassCellList.add(cell);
 				}	
@@ -121,7 +121,7 @@ import javax.swing.JPanel;
 		}
 		
 		// pressupoe que o numero de frutas é menor ou igual ao numero de frutas
-		public MapBuilder BuildFruitsCells(HashMap<FruitType, Integer> fruitMap) {
+		public MapBuilder buildFruitsCells(HashMap<FruitType, Integer> fruitMap) {
 			int totalFruits = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
 			if (totalFruits > grassCellList.size()) {
 			    throw new IllegalArgumentException("numero de frutas maior que o numero de celular disponiveis");
@@ -131,45 +131,45 @@ import javax.swing.JPanel;
 				for(Map.Entry<FruitType, Integer> entry : fruitMap.entrySet()) {
 					int value = entry.getValue();
 					for(int i = 0; i < value; i++){	
-						Cell cell = GetRandomWithoutFruitCell();
-						cell.SetDynamicElem(new Fruit(cell,entry.getKey(), false));
+						Cell cell = getRandomWithoutFruitCell();
+						cell.SetDynamicElem(new Fruit(cell,entry.getKey()));
 					}
 				}			
 			}
 			return this;
 		}
-		public MapBuilder BuildPlayerOne(String name, int bagCapacity){
-			Cell cell = GetRandomEmptyCell();
+		public MapBuilder buildPlayerOne(String name, int bagCapacity){
+			Cell cell = getRandomEmptyCell();
 			this.player1 = new Player(name,new Bag(bagCapacity),cell);
 			cell.SetDynamicElem(player1);
 			return this;
 		}
-		public MapBuilder BuildPlayerTwo(String name, int bagCapacity){
-			Cell cell = GetRandomEmptyCell();
+		public MapBuilder buildPlayerTwo(String name, int bagCapacity){
+			Cell cell = getRandomEmptyCell();
 			this.player2 = new Player(name,new Bag(bagCapacity),cell);
 			cell.SetDynamicElem(player1);
 			return this;
 		}
 		
-		public List<Cell> GetTreeCellList() {				
+		public List<Cell> getTreeCellList() {
 			return this.treeCellList;
 		}
 		
-		public Player GetPlayerOne() {
+		public Player getPlayerOne() {
 			return player1;
 		}
 		
-		public Player GetPlayerTwo() {
+		public Player getPlayerTwo() {
 			return player2;
 		}
 			
-		public GameMap GetResult() {
+		public GameMap getResult() {
 			GameMap gm = new GameMap(grid);
-			Reset();	
+			reset();
 			return gm;
 		}
 		
-		private Cell GetRandomWithoutFruitCell() {
+		private Cell getRandomWithoutFruitCell() {
 			if (grassCellList.isEmpty()) {
 		        throw new IllegalStateException("sem celular vazias");
 		    }
@@ -177,7 +177,7 @@ import javax.swing.JPanel;
 		    return grassCellList.remove(random.nextInt(grassCellList.size()));
 		}
 		
-		private Cell GetRandomEmptyCell() {
+		private Cell getRandomEmptyCell() {
 		    if (availableCells.isEmpty()) {
 		        throw new IllegalStateException("sem celular vazias");
 		    }

@@ -20,14 +20,12 @@ public class GameManager {
 	private Player player1;
 	private Player player2;
 	private Boolean isFinished;
-	
-	
-	
+
 	public GameManager() {
 		this.isFinished = false;
 	}
 	
-	public void Initialization() {
+	public void initialization() {
 
 		// Cria o JFrame
         JFrame frame = new JFrame();
@@ -77,7 +75,7 @@ public class GameManager {
         l.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	BuildMapByFile(); // Fecha a janela de menu
+            	buildMapByFile(); // Fecha a janela de menu
                 frame.dispose();
             }
         });
@@ -101,7 +99,7 @@ public class GameManager {
 		
 	}
 	
-	private void BuildMapByFile() {			
+	private void buildMapByFile() {
 		
 		MapReader reader = new MapReader();
 		/*
@@ -117,7 +115,7 @@ public class GameManager {
 		*/
 	}
 	
-	private void BuildMapByQuiz() {
+	private void buildMapByQuiz() {
 		
 		
 		/*
@@ -133,7 +131,7 @@ public class GameManager {
 		*/
 	}
 	/*
-	public void Play() {
+	public void play() {
 		//so um esboço
 		while (!isFinished) {
 			 
@@ -161,14 +159,14 @@ public class GameManager {
 			isfinished = true;
 		}
 	}
-	public void Update() {
+	public void update() {
 		map.Update();
 	}
-	public void EndGame() {
+	public void endGame() {
 		System.out.println("Fim de jogo!");
 	}
-	public int PlayDices() {return 0;}
-	public boolean IsFinished() {
+	public int playDices() {return 0;}
+	public boolean isFinished() {
 		return this.isFinished;
 	}
 	*/

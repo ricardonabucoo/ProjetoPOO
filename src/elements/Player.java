@@ -12,7 +12,7 @@ public class Player extends DynamicElem{
 	private int movimentPoints;
 	
 	public Player(String name, Bag bag, Cell ownPlace) {
-		super(ownPlace, new ImageIcon("laranja.png"));
+		super(ownPlace);
 		this.name = name;
 		this.bag = bag;
 		this.effectList = new EffectList();

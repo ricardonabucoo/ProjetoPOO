@@ -2,15 +2,14 @@ package elements;
 
 import essentials.Cell;
 
-import javax.swing.ImageIcon;
-
-public class DynamicElem extends Elem {
-	
-	public DynamicElem(Cell ownPlace, ImageIcon icon){
-		
-		super(ownPlace,icon);
+public class DynamicElem extends Elem
+{
+	public DynamicElem(Cell ownPlace)
+	{
+		super(ownPlace);
 	}
-	protected void ChangePosition(Cell newPosition) {
+	protected void changePosition(Cell newPosition)
+	{
 		this.ownPlace = newPosition;
 	}
 }

@@ -12,7 +12,7 @@ public class Main {
 			public void run() {
 				
 				GameLoop gl = new GameLoop();
-				gl.Run();
+				gl.run();
 			}
 		});
 	}

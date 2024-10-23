@@ -4,117 +4,75 @@ import essentials.Cell;
 import status_effect.*;
 import javax.swing.ImageIcon;
 
-public class Fruit extends DynamicElem{
-		
-		public static  int  WORMY_FRUITS_AMOUNT;
-		protected static int currentWormyFruitsAmount;
-		protected boolean isWormy;
-		protected FruitType fruitType;
-		protected StatusEffect fruitEffect;
-		
-		public Fruit (Cell ownPlace, FruitType fruitType, boolean isWormy) {
-			super(ownPlace,null);
-			this.setIcon(FruitImage(fruitType));
-		    this.fruitType = fruitType;	
-		    this.isWormy = isWormy;
-		    
-		    StatusEffect se;
-		    
-		    switch (fruitType) {
-		    
-		    case ORANGE:
-		        se = new AntidoteEffect();
-		        break;
-	
-		    case AVOCADO:
-		        se = new PowerEffect();
-		        break;
-	
-		    case COCONUT:
-		        se = new MovimentEffect();
-		        break;
-	
-		    default:
-		        se = new NullEffect();
-		        break;
-		    }
-		    
-		    if (isWormy){
-		        EffectList el = new EffectList();
-		        el.AddEffect(new WormyEffect());
-		        el.AddEffect(se);
-		        fruitEffect = el;
-		    }
-		    else
-	           fruitEffect = se;
-		    
-		}
-		    
-		
-		public ImageIcon FruitImage(FruitType fruitType) {
-			
-			String str;
-			switch (fruitType) {
-		    
-		    case ORANGE:
-		        str = "images/laranja.png";
-		        break;
-	
-		    case AVOCADO:
-		        str = "images/abacate.png";
-		        break;
-	
-		    case COCONUT:
-		    	str = "images/coco.png";
-		        break;
-		    case GUAVA:
-		    	str = "images/goiaba.png";
-		    	break;
-		    case PASSIONFRUIT:
-		    	str = "images/maracuja.png";
-		    	break;
-		    case BARBADOSCHERRY:
-		    	str = "images/acerola.png";
-		    	break;
-		    case BLACKBERRY:
-		    	str = "images/amora.png";
-		    	break;
-		    default:
-		    	str = "images/pedro.png";
-			}
-			return new ImageIcon(str);
-		}
-		
-		public void SetOwnPlace(Cell newPlace){
-			this.ownPlace = newPlace;
-		}
-		
-		public void Drop() {
-			
-		} 
-	   
-		
-		public void GiveEffect (Player player) {
-			this.fruitEffect.ApplyEffect(player);
-		}
-		
-		
-		 public boolean IsWormy() {
-			 return isWormy;
-		 }
-		 
-		 
-		 public void SetWormy (boolean isWormy) {
-			 this.isWormy = isWormy;
-		 }
-		 
-		 public FruitType GetFruitType() {
-			 return fruitType;
-		 }
-		 
-			 
-		 
+public class Fruit extends DynamicElem {
+	public static  int  WORMY_FRUITS_AMOUNT;
+	protected static int wormyChance;
+	protected FruitType fruitType;
+	protected StatusEffect fruitEffect;
+
+	public Fruit (Cell ownPlace, FruitType fruitType) {
+		super(ownPlace);
+		this.setIcon(getFruitImage(fruitType));
+		this.fruitEffect = getFruitEffect(fruitType);
+		this.fruitType = fruitType;
 	}
+
+	private StatusEffect getFruitEffect(FruitType fruitType) {
+
+		StatusEffect se;
+
+		StatusEffect fe = switch (fruitType) {
+            case ORANGE -> new AntidoteEffect();
+            case AVOCADO -> new PowerEffect();
+            case COCONUT -> new MovimentEffect();
+            default -> new NullEffect();
+        };
+		se = fe;
+
+        if (isWormy()) {
+			EffectList el = new EffectList();
+			el.addEffect(new WormyEffect());
+			el.addEffect(fe);
+			se = el;
+		}
+
+		return se;
+	}
+
+	private boolean isWormy() {
+	 return Math.random() * 100 < wormyChance;
+	}
+
+	private ImageIcon getFruitImage(FruitType fruitType) {
+		String str = switch (fruitType) {
+            case ORANGE -> "images/orange.png";
+            case AVOCADO -> "images/avocado.png";
+            case COCONUT -> "images/coconut.png";
+            case GUAVA -> "images/guava.png";
+            case PASSIONFRUIT -> "images/passionfruit.png";
+            case BARBADOSCHERRY -> "images/barbadoscherry.png";
+            case BLACKBERRY -> "images/blackberry.png";
+            default -> "null.png";
+        };
+        return new ImageIcon(str);
+	}
+
+	public void setOwnPlace(Cell newPlace){
+		changePosition(newPlace);
+	}
+
+	public void drop() {
+
+	}
+
+	public void giveEffect (Player player) {
+		this.fruitEffect.applyEffect(player);
+	}
+
+	public FruitType getFruitType() {
+	 return fruitType;
+	}
+}
 	
 	
 	

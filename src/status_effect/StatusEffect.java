@@ -4,7 +4,7 @@ import elements.Player;
 
 public interface StatusEffect {
 	
-void ApplyEffect(Player player);
+    void applyEffect(Player player);
 
 }
 		

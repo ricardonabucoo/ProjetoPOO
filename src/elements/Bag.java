@@ -9,23 +9,24 @@ public class Bag {
     private List<Fruit> fruitList;
     private int fruitsAmount;
 
-    public Bag(int capacity){
+    public Bag(int capacity) {
         this.capacity = capacity;
         this.fruitList = new ArrayList<Fruit>();
         this.fruitsAmount = 0;
     }
-    public void Add(Fruit fruit) {
+
+    public void add(Fruit fruit) {
         if(fruitsAmount >= capacity)
             System.out.println("mochila atingiu a capacidade maxima");
-        else{
+        else {
             fruitList.add(fruit);
             fruitsAmount++;
         }
     }
 
-    public Fruit Take(FruitType fruitType) {
+    public Fruit take(FruitType fruitType) {
         for(Fruit fruit : fruitList) {
-            if(fruit.GetFruitType() == fruitType) {
+            if(fruit.getFruitType() == fruitType) {
                 fruitList.remove(fruit);
                 return fruit;
             }
@@ -33,13 +34,13 @@ public class Bag {
         return null;
     }
 
-    public int GetFruitsAmount() {
+    public int getFruitsAmount() {
         return this.fruitsAmount;
     }
 
-    public void ChangeBagPosition(Cell newPosition) {
-        for(Fruit fruit : fruitList){
-            fruit.SetOwnPlace(newPosition);
+    public void changeBagPosition(Cell newPosition) {
+        for(Fruit fruit : fruitList) {
+            fruit.setOwnPlace(newPosition);
         }
     }
 }

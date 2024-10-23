@@ -10,7 +10,7 @@ public class GameMap {
         this.gridSize = grid.length;
     }
 	
-	public void Update() {
+	public void update() {
 		for(int i = 0; i < gridSize; i++)
 			for(int j = 0; j < gridSize; j++) {
 				grid[i][j].Update();	

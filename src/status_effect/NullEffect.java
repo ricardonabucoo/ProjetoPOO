@@ -4,7 +4,7 @@ import elements.Player;
 
 public class NullEffect implements StatusEffect {
 	 @Override
-	 public void ApplyEffect (Player player) { 	
-}
-		
+	 public void applyEffect (Player player) {
+
+	 }
 }

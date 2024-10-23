@@ -4,7 +4,7 @@ import elements.Player;
 
 public class MovimentEffect implements StatusEffect {
 	 @Override
-	 public void ApplyEffect (Player player) {
+	 public void applyEffect (Player player) {
 		
 	}
 }

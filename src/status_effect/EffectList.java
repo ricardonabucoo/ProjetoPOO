@@ -14,17 +14,17 @@ public class EffectList implements StatusEffect {
 	}
 	
 	@Override
-	public void ApplyEffect(Player player) {
+	public void applyEffect(Player player) {
 		for(StatusEffect se : effectList) {
-			se.ApplyEffect(player);
+			se.applyEffect(player);
 		}
 	}
 	
-	public void AddEffect(StatusEffect se) {
+	public void addEffect(StatusEffect se) {
 		effectList.add(se);
 	}
 	
-	public void RemoveEffect(StatusEffect se) {
+	public void removeEffect(StatusEffect se) {
 	    effectList.removeIf(effect -> effect.getClass().equals(se.getClass()));
 	}
 	

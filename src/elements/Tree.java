@@ -13,62 +13,39 @@ public final class Tree extends StaticElem {
 	private int currentRoundCount;
 	private FruitType producedFruit;
 	
-	public Tree(Cell ownPlace, FruitType fruitType) {
-		super(ownPlace, null);
-		ImageIcon icon = new ImageIcon("images/arvore.png");
+	public Tree(Cell ownPlace, FruitType fruitType)
+	{
+		super(ownPlace);
+		ImageIcon icon = new ImageIcon("images/tree.png");
 		this.setIcon(icon);
-	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE) {
-	        System.out.println("Imagem carregada com sucesso.");
-	    } else {
-	        System.out.println("Erro ao carregar a imagem.");
-	    }
 		this.producedFruit = fruitType;
 		currentRoundCount = 0;
+
+	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE)
+	        System.out.println("Imagem carregada com sucesso.");
+	    else
+	        System.out.println("Erro ao carregar a imagem.");
 	}
 	
 	@Override
-	public int GetMPNeeded() {
-		// TODO Auto-generated method stub
+	public int getMPNeeded() {
 		return 0;
 	}
 	
 	@Override
-	public void Update() {
-		
-		
-		
+	public void update() {
+
 	}
 	
 	@Override
-	public void OnStay(Player player) {
-		
-		
-		
+	public void onStay(Player player) {
+
 	}
 	
-	public void ProduceFruit() {
-		
-		
-	
+	public void produceFruit() {
+
 	}
-	
-	public void SetCurrentRoundCount(int crc) {
-		
-		this.currentRoundCount = 	crc;
-		
-	}
-	
-	public int getCurrentRoundCount() {
-		
-		return this.currentRoundCount;
-		
-	}
-	
-	public FruitType getProducedFruit() {
-		
-		return this.producedFruit;
-		
-	}
-	
-	
+
+	public FruitType getProducedFruit() { return this.producedFruit; }
+
 }
