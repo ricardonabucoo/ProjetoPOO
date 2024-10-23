@@ -1,5 +1,6 @@
 package essentials;
 
+import elements.FruitType;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -107,13 +108,13 @@ public class Quiz extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	MapBuilder builder = new MapBuilder();	
         		
-        		builder.BuildCellGrid(GetSize());
-        		builder.BuildRockCells(GetRocksAmount());
-        		builder.BuildTreeCells(GetNumberOfTrees());
-        		builder.BuildGrassCells();
-        		builder.BuildFruitsCells(GetFruitsAmount());
+        		builder.buildCellGrid(GetSize());
+        		builder.buildRockCells(GetRocksAmount());
+        		builder.buildTreeCells(GetNumberOfTrees());
+        		builder.buildGrassCells();
+        		builder.buildFruitsCells(GetFruitsAmount());
         		
-        		SetMap(builder.GetResult());
+        		SetMap(builder.getResult());
             	frame.dispose(); 
             }
         });

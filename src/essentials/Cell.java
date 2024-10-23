@@ -1,13 +1,9 @@
 package essentials;
-import java.awt.Button;
+import elements.*;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.*;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class Cell extends JPanel {
 
@@ -64,22 +60,22 @@ public class Cell extends JPanel {
 	
 	public void Update() {
 		if (staticElem != null) 
-			staticElem.Update();
+			staticElem.update();
 		
         if (dynamicElem != null) 
-        	dynamicElem.Update();
+        	dynamicElem.update();
 	}
 	
 	public void OnEnter(Player player) {
-		staticElem.OnEnter(player);
+		staticElem.onEnter(player);
 	}
 	
 	public void OnStay(Player player) {
-		staticElem.OnStay(player);
+		staticElem.onStay(player);
 	}
 	
 	public void OnExit(Player player) {
-		staticElem.OnExit(player);
+		staticElem.onExit(player);
 	}
 	
 	public void VerifyMPNeeded(Player player) {
@@ -87,7 +83,7 @@ public class Cell extends JPanel {
 	}
 	
 	public int GetMPNeeded() {
-		return staticElem.GetMPNeeded();
+		return staticElem.getMPNeeded();
 	}
 	
 	public DynamicElem GetDynamicElem(){
@@ -155,11 +151,6 @@ public class Cell extends JPanel {
             dynamicButton.setIcon(new ImageIcon(scaledImage));
         }
     }
-	
-	
-	
-	
-	
 
 }
 

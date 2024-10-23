@@ -1,4 +1,4 @@
-	package essentials;
+	package elements;
 	
 	public enum FruitType {
 		

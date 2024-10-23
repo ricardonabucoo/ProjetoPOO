@@ -1,5 +1,7 @@
 package essentials;
 
+import elements.FruitType;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -37,13 +39,13 @@ public class MapReader {
             
             MapBuilder builder = new MapBuilder();	
     		
-    		builder.BuildCellGrid(getSize());
-    		builder.BuildRockCells(getRocksAmount());
-    		builder.BuildTreeCells(getNumberOfTrees());
-    		builder.BuildGrassCells();
-    		builder.BuildFruitsCells(getInitialFruitsNumber());
+    		builder.buildCellGrid(getSize());
+    		builder.buildRockCells(getRocksAmount());
+    		builder.buildTreeCells(getNumberOfTrees());
+    		builder.buildGrassCells();
+    		builder.buildFruitsCells(getInitialFruitsNumber());
     		
-    		this.map = builder.GetResult();
+    		this.map = builder.getResult();
             
         }
     }
