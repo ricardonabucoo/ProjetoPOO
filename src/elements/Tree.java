@@ -1,4 +1,6 @@
-package essentials;
+package elements;
+
+import essentials.Cell;
 
 import java.awt.MediaTracker;
 
@@ -25,7 +27,7 @@ public final class Tree extends StaticElem {
 	}
 	
 	@Override
-	int GetMPNeeded() {
+	public int GetMPNeeded() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

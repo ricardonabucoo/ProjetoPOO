@@ -1,4 +1,6 @@
-package essentials;
+package elements;
+
+import essentials.Cell;
 
 import javax.swing.ImageIcon;
 
@@ -12,6 +14,6 @@ public abstract class StaticElem extends Elem {
 	public void OnStay(Player player) {}
 	public void OnExit(Player player) {}
 
-	abstract int GetMPNeeded();
+	public abstract int GetMPNeeded();
 
 }

@@ -3,7 +3,7 @@ package status_effect;
 import java.util.ArrayList;
 import java.util.List;
 
-import essentials.Player;
+import elements.Player;
 
 public class EffectList implements StatusEffect {
 	

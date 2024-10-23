@@ -1,6 +1,8 @@
 	package essentials;
 	
-	import java.awt.BorderLayout;
+	import elements.*;
+
+    import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -24,7 +26,7 @@ import javax.swing.JPanel;
 		private List<Cell> grassCellList;
 		private List<Cell> treeCellList;
 		private List<Cell> availableCells;
-		private Player player1;				
+		private Player player1;
 		private Player player2;	
 		
 		
@@ -88,7 +90,7 @@ import javax.swing.JPanel;
 			this.rocksAmount = rocksAmount;
 			for(int i = 0; i < rocksAmount; i++) {
 				Cell cell = GetRandomEmptyCell();
-				cell.SetStaticElem(new Rock(cell)); 
+				cell.SetStaticElem(new Rock(cell));
 			}
 			return this;	
 		}

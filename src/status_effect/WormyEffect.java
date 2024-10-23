@@ -1,6 +1,6 @@
 package status_effect;
 
-import essentials.Player;
+import elements.Player;
 
 public class WormyEffect implements StatusEffect {
 	 @Override

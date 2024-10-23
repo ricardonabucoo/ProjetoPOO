@@ -1,5 +1,6 @@
-package essentials;
+package elements;
 
+import essentials.Cell;
 import status_effect.*;
 import javax.swing.ImageIcon;
 

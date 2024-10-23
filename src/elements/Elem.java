@@ -1,4 +1,6 @@
-package essentials;
+package elements;
+
+import essentials.Cell;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;

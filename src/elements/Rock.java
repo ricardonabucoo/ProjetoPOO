@@ -1,4 +1,6 @@
-package essentials;
+package elements;
+
+import essentials.Cell;
 
 import java.awt.MediaTracker;
 
