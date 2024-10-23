@@ -1,5 +1,6 @@
-	package essentials;
+package essentials;
 
+import status_effect.*;
 import javax.swing.ImageIcon;
 
 public class Fruit extends DynamicElem{

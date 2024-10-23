@@ -1,5 +1,6 @@
 package essentials;
 
+import status_effect.EffectList;
 import javax.swing.ImageIcon;
 
 public class Player extends DynamicElem{
