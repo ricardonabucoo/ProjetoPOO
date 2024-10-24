@@ -1,6 +1,9 @@
-package essentials;
+package UI;
 
 import elements.FruitType;
+import essentials.GameMap;
+import essentials.MapBuilder;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -61,7 +64,6 @@ public class Quiz extends JFrame {
     
     public void initialize() {
         JFrame frame = new JFrame();
-        frame.setTitle("CataFrutas");
 
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 20));
         JPanel background = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 200));
@@ -106,7 +108,7 @@ public class Quiz extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	MapBuilder builder = new MapBuilder();	
+            	MapBuilder builder = new MapBuilder();
         		
         		builder.buildCellGrid(GetSize());
         		builder.buildRockCells(GetRocksAmount());

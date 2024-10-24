@@ -1,14 +1,13 @@
 package essentials;
 
+import UI.MainMenu;
+import UI.Quiz;
 import elements.Player;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.*;
@@ -22,51 +21,12 @@ public class GameManager {
 	public GameManager() {
 		this.isFinished = false;
 	}
-	
-	public void showMainMenu() {
 
-        JFrame frame = new JFrame();
-        frame.setBounds(50, 50, 700, 700);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setVisible(true);
+    public void showMainMenu(){
+        MainMenu mainMenu = new MainMenu(this);
+    }
 
-        JPanel jpanel = new JPanel();
-        frame.add(jpanel, BorderLayout.CENTER);
-        jpanel.setBackground(Color.decode("#008b8b"));
-        jpanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 275));  // Ajuste do espaçamento vertical
-
-        JButton playBtn = new JButton("Jogar");
-        jpanel.add(playBtn);
-        playBtn.setPreferredSize(new Dimension(100, 50));
-        playBtn.addActionListener((e -> {
-            new Quiz();
-            frame.dispose();
-        }));
-
-        JButton loadBtn = new JButton("Carregar");
-        jpanel.add(loadBtn);
-        loadBtn.setPreferredSize(new Dimension(100, 50));
-        loadBtn.addActionListener((e -> {
-
-            JFileChooser fileChooser = new JFileChooser();
-            int returnValue = fileChooser.showOpenDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION){
-                buildMapByFile(fileChooser.getSelectedFile());
-                frame.dispose();
-            }
-
-        }));
-
-        JButton exitBtn = new JButton("Sair");
-        jpanel.add(exitBtn);
-        exitBtn.setPreferredSize(new Dimension(100, 50));
-        exitBtn.addActionListener((e -> {
-            frame.dispose();
-        }));
-	}
-	
-	private void buildMapByFile(File file) {
+    public void buildMapByFile(File file) {
 		
 		MapReader reader = new MapReader(file);
 		MapBuilder builder = new MapBuilder();
@@ -79,8 +39,6 @@ public class GameManager {
 	}
 	
 	private void buildMapByQuiz() {
-		
-		
 		/*
 		MapBuilder builder = new MapBuilder();	
 		
