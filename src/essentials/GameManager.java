@@ -9,11 +9,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class GameManager {
 	private GameMap map;
@@ -25,94 +23,59 @@ public class GameManager {
 		this.isFinished = false;
 	}
 	
-	public void initialization() {
+	public void showMainMenu() {
 
-		// Cria o JFrame
         JFrame frame = new JFrame();
-        frame.setTitle("CataFrutas");
         frame.setBounds(50, 50, 700, 700);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setVisible(true);
 
-        // Criação do JPanel para os botões com FlowLayout
         JPanel jpanel = new JPanel();
+        frame.add(jpanel, BorderLayout.CENTER);
+        jpanel.setBackground(Color.decode("#008b8b"));
         jpanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 275));  // Ajuste do espaçamento vertical
 
-        // Definindo a cor de fundo do painel com a cor HEX #4d6f39
-        jpanel.setBackground(Color.decode("#4d6f39"));
-        
-        // Criando um título com JLabel
-        JLabel title = new JLabel("Bem-vindo ao Cata Frutas", JLabel.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 50));  // Definindo a fonte do título
-        title.setForeground(Color.WHITE);  // Cor do texto (branco)
-        title.setBackground(Color.decode("#4d6f39"));  // Cor de fundo do título
-        title.setOpaque(true);  // Torna o fundo do JLabel visível
+        JButton playBtn = new JButton("Jogar");
+        jpanel.add(playBtn);
+        playBtn.setPreferredSize(new Dimension(100, 50));
+        playBtn.addActionListener((e -> {
+            new Quiz();
+            frame.dispose();
+        }));
 
-        // Criação do BorderLayout no JFrame
-        frame.setLayout(new BorderLayout());
+        JButton loadBtn = new JButton("Carregar");
+        jpanel.add(loadBtn);
+        loadBtn.setPreferredSize(new Dimension(100, 50));
+        loadBtn.addActionListener((e -> {
 
-        // Adiciona o título no topo do JFrame (NORTE)
-        frame.add(title, BorderLayout.NORTH);
-
-        // Adiciona os botões ao JPanel
-        JButton j = new JButton("Jogar");
-        j.setPreferredSize(new Dimension(100, 50));
-        jpanel.add(j);
-        
-        // Ação do botão Play
-        j.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	new Quiz();
-                frame.dispose(); 
-            }
-        });
-
-        JButton l = new JButton("Carregar");
-        l.setPreferredSize(new Dimension(100, 50));
-        jpanel.add(l);
-        
-        l.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	buildMapByFile(); // Fecha a janela de menu
+            JFileChooser fileChooser = new JFileChooser();
+            int returnValue = fileChooser.showOpenDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION){
+                buildMapByFile(fileChooser.getSelectedFile());
                 frame.dispose();
             }
-        });
-        
-        JButton s = new JButton("Sair");
-        s.setPreferredSize(new Dimension(100, 50));
-        jpanel.add(s);
-        
-        s.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose(); // Fecha a janela de menu
-            }
-        });
 
-        // Adiciona o JPanel com os botões no centro do JFrame (CENTRO)
-        frame.add(jpanel, BorderLayout.CENTER);
+        }));
 
-        // Torna o JFrame visível
-        frame.setVisible(true);
-		
+        JButton exitBtn = new JButton("Sair");
+        jpanel.add(exitBtn);
+        exitBtn.setPreferredSize(new Dimension(100, 50));
+        exitBtn.addActionListener((e -> {
+            frame.dispose();
+        }));
 	}
 	
-	private void buildMapByFile() {
+	private void buildMapByFile(File file) {
 		
-		MapReader reader = new MapReader();
-		/*
-		MapBuilder builder = new MapBuilder();	
-		
-		builder.BuildCellGrid(reader.getSize());
-		builder.BuildRockCells(reader.getRocksAmount());
-		builder.BuildTreeCells(reader.getNumberOfTrees());
-		builder.BuildGrassCells();
-		builder.BuildFruitsCells(reader.getInitialFruitsNumber());
-		
-		this.map = builder.GetResult();
-		*/
+		MapReader reader = new MapReader(file);
+		MapBuilder builder = new MapBuilder();
+		builder.buildCellGrid(reader.getSize());
+		builder.buildRockCells(reader.getRocksAmount());
+		builder.buildTreeCells(reader.getNumberOfTrees());
+		builder.buildGrassCells();
+		builder.buildFruitsCells(reader.getInitialFruitsNumber());
+		this.map = builder.getResult();
 	}
 	
 	private void buildMapByQuiz() {

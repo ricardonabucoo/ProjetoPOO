@@ -6,7 +6,7 @@ public class GameLoop {
 	
 	public void run() {
 		GameManager gm = new GameManager();
-		gm.initialization();
+		gm.showMainMenu();
 		/*
 		do {
 			gm.Play();
