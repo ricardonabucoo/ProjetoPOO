@@ -4,18 +4,38 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InputField extends JPanel {
+    private JTextField field;
 
     public InputField() {
         setLayout(new FlowLayout());
     }
 
     public InputField(JLabel label) {
-
+        field = new JTextField(4);
         setLayout(new FlowLayout());
         //Dimension textFieldDimension = new Dimension(100, 30);
         //textField.setPreferredSize(textFieldDimension);
         add(label);
-        add(new JTextField(4));
+        add(field);
+    }
+    public InputField(JLabel label, int size) {
+        field = new JTextField(size);
+        setLayout(new FlowLayout());
+        add(label);
+        add(field);
     }
 
+    public String getInput() {
+        return field.getText();
+    }
+
+    public int getInputAsInt() {
+        try {
+            return Integer.parseInt(field.getText());
+        }
+        catch (NumberFormatException e) {
+            System.err.println("Valor inválido, não é um número inteiro");
+            return 0; // valor padrao
+        }
+    }
 }

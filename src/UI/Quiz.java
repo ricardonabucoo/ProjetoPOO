@@ -1,7 +1,7 @@
 package UI;
 
 import elements.FruitType;
-import essentials.GameMap;
+import essentials.Map;
 import essentials.MapBuilder;
 
 import java.awt.BorderLayout;
@@ -29,7 +29,7 @@ public class Quiz extends JFrame {
 	private int[] answers; 
     private String[] names;
     private int currentQuestionIndex = 0;
-    private GameMap map;
+    private Map map;
     
 	private String[] otherQuestions = {
 	        "Qual o nome do primeiro jogador?",
@@ -199,7 +199,7 @@ public class Quiz extends JFrame {
         }
     }
     
-    private void SetMap(GameMap map) {
+    private void SetMap(Map map) {
     	this.map = map;
     }
     

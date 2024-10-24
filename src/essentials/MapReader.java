@@ -8,8 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.swing.JFileChooser;
-
 public class MapReader {
 
     // Atributos
@@ -21,7 +19,7 @@ public class MapReader {
     private HashMap<FruitType, Integer> initialFruitsNumber;
     private int wormyFruitAmount;
     private int bagCapacity;
-    private GameMap map;
+    private Map map;
 
     public MapReader(File file) {
         this.numberOfTrees = new HashMap<>();

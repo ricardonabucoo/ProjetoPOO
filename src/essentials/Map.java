@@ -1,11 +1,13 @@
 package essentials;
 
-public class GameMap {
+import javax.swing.*;
+
+public class Map extends JPanel {
 	
 	private static Cell[][] grid;
 	private int gridSize;
 	
-	public GameMap(Cell[][] grid) {
+	public Map(Cell[][] grid) {
         this.grid = grid;
         this.gridSize = grid.length;
     }

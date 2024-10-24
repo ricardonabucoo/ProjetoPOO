@@ -1,26 +1,22 @@
 package essentials;
 
 import UI.MainMenu;
-import UI.Quiz;
 import elements.Player;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.io.File;
 
 import javax.swing.*;
 
 public class GameManager extends JFrame{
-	private GameMap map;
+	private Map map;
 	private Player player1;
 	private Player player2;
 	private Boolean isFinished;
 
 	public GameManager() {
 		this.isFinished = false;
-		setBounds(50, 50, 700, 700);
+		setBounds(50, 50, 1000, 1000);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
