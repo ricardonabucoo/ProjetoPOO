@@ -12,7 +12,7 @@ import java.io.File;
 
 import javax.swing.*;
 
-public class GameManager {
+public class GameManager extends JFrame{
 	private GameMap map;
 	private Player player1;
 	private Player player2;
@@ -20,10 +20,14 @@ public class GameManager {
 
 	public GameManager() {
 		this.isFinished = false;
+		setBounds(50, 50, 700, 700);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setVisible(true);
 	}
 
     public void showMainMenu(){
-        MainMenu mainMenu = new MainMenu(this);
+        this.add(new MainMenu(this),BorderLayout.CENTER);
     }
 
     public void buildMapByFile(File file) {
