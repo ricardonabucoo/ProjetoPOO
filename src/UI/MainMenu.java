@@ -2,6 +2,7 @@ package UI;
 
 import UI.Buttons.CloseFrameButton;
 import UI.Buttons.LoadFileButton;
+import UI.Buttons.NewMatchButton;
 import essentials.GameManager;
 
 import javax.swing.*;
@@ -12,14 +13,10 @@ public class MainMenu extends JPanel{
 
     public MainMenu(GameManager gm) {
         this.gm = gm;
-
-
         setBackground(Color.decode("#008b8b"));
         setLayout(new FlowLayout(FlowLayout.CENTER, 50, 275));
 
-        Dimension btnDimension = new Dimension(100, 50);
-
-
+        add(new NewMatchButton(gm,this));
 
 //        JButton playBtn = new JButton("Jogar");
 //        panel.add(playBtn);
@@ -29,7 +26,7 @@ public class MainMenu extends JPanel{
 //            gm.dispose();
 //        }));
 
-        add(new LoadFileButton(gm, "Carregar Partida"));
+        add(new LoadFileButton(gm, "<html>Carregar<br> Partida</html>"));
 
         add(new CloseFrameButton(gm,"Sair"));
 

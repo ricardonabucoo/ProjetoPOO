@@ -9,13 +9,13 @@ public class InputField extends JPanel {
         setLayout(new FlowLayout());
     }
 
-    public InputField(JLabel label, JTextField textField) {
+    public InputField(JLabel label) {
 
         setLayout(new FlowLayout());
         //Dimension textFieldDimension = new Dimension(100, 30);
         //textField.setPreferredSize(textFieldDimension);
         add(label);
-        add(textField);
+        add(new JTextField(4));
     }
 
 }

@@ -10,7 +10,7 @@ public class NewMatchButton extends JButton {
     private final JFrame frame;
 
     public NewMatchButton(JFrame frame, JPanel panel) {
-        super("Nova Partida");
+        super("<html> Nova <br>Partida</html>");
         this.frame = frame;
         setPreferredSize(new Dimension(100, 50));
         this.addActionListener((e -> {
