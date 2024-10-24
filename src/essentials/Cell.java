@@ -13,9 +13,9 @@ public class Cell extends JPanel {
 	private DynamicElem dynamicElem;
 	private ImageIcon staticImageIcon;  // Para armazenar a imagem original do botão estático
     private ImageIcon dynamicImageIcon;
-	
+
 	public Cell(int row, int col) {
-		//super("Cell " + row + " " + col);
+
 		this.setLayout(null);
 		this.row = row;
 		this.col = col;
@@ -42,23 +42,23 @@ public class Cell extends JPanel {
 	    Cell.gridMap = grid;
 	}
 	
-	public Cell GetCellUp()	{
+	public Cell getCellUp()	{
 		return gridMap[row][col-1];
 	}
 	
-	public Cell GetCellDown() {
+	public Cell getCellDown() {
 		return gridMap[row][col+1];
 	}
 	
-	public Cell GetCellLeft() {
+	public Cell getCellLeft() {
 		return gridMap[row-1][col];
 	}
 	
-	public Cell GetCellRight() {
+	public Cell getCellRight() {
 		return gridMap[row+1][col];
 	}
 	
-	public void Update() {
+	public void update() {
 		if (staticElem != null) 
 			staticElem.update();
 		
@@ -66,31 +66,31 @@ public class Cell extends JPanel {
         	dynamicElem.update();
 	}
 	
-	public void OnEnter(Player player) {
+	public void onEnter(Player player) {
 		staticElem.onEnter(player);
 	}
 	
-	public void OnStay(Player player) {
+	public void onStay(Player player) {
 		staticElem.onStay(player);
 	}
 	
-	public void OnExit(Player player) {
+	public void onExit(Player player) {
 		staticElem.onExit(player);
 	}
 	
-	public void VerifyMPNeeded(Player player) {
+	public void verifyMPNeeded(Player player) {
 		
 	}
 	
-	public int GetMPNeeded() {
+	public int getMPNeeded() {
 		return staticElem.getMPNeeded();
 	}
 	
-	public DynamicElem GetDynamicElem(){
+	public DynamicElem getDynamicElem(){
 		return this.dynamicElem;
 	}
 	
-	public void SetDynamicElem(DynamicElem elem) {
+	public void setDynamicElem(DynamicElem elem) {
         this.dynamicElem = elem;
         elem.setBounds(0,0, 50, 50); 
         elem.setBorderPainted(false);
@@ -104,11 +104,11 @@ public class Cell extends JPanel {
 	}
 	
 	
-	public StaticElem GetStaticElem(){
+	public StaticElem getStaticElem(){
 		return this.staticElem;
 	}
 	
-	public void SetStaticElem(StaticElem elem) {
+	public void setStaticElem(StaticElem elem) {
 		this.staticElem = elem;
 		this.removeAll();
 		elem.setBounds(0, 0, this.getWidth(), this.getHeight());  

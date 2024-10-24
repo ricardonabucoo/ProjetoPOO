@@ -90,7 +90,7 @@ import javax.swing.JPanel;
 			this.rocksAmount = rocksAmount;
 			for(int i = 0; i < rocksAmount; i++) {
 				Cell cell = getRandomEmptyCell();
-				cell.SetStaticElem(new Rock(cell));
+				cell.setStaticElem(new Rock(cell));
 			}
 			return this;	
 		}
@@ -101,7 +101,7 @@ import javax.swing.JPanel;
 				this.treesAmount += value;
 				for(int i = 0; i < value; i++){
 					Cell cell = getRandomEmptyCell();
-					cell.SetStaticElem(new Tree(cell,entry.getKey()));
+					cell.setStaticElem(new Tree(cell,entry.getKey()));
 					treeCellList.add(cell);
 				}
 			}	
@@ -114,7 +114,7 @@ import javax.swing.JPanel;
 			int value = gridSize*gridSize - rocksAmount - treesAmount;
 				for(int i = 0; i < value; i++) {	
 					Cell cell = getRandomEmptyCell();
-					cell.SetStaticElem(new Grass(cell));
+					cell.setStaticElem(new Grass(cell));
 					grassCellList.add(cell);
 				}	
 			return this;		
@@ -132,7 +132,7 @@ import javax.swing.JPanel;
 					int value = entry.getValue();
 					for(int i = 0; i < value; i++){	
 						Cell cell = getRandomWithoutFruitCell();
-						cell.SetDynamicElem(new Fruit(cell,entry.getKey()));
+						cell.setDynamicElem(new Fruit(cell,entry.getKey()));
 					}
 				}			
 			}
@@ -141,13 +141,13 @@ import javax.swing.JPanel;
 		public MapBuilder buildPlayerOne(String name, int bagCapacity){
 			Cell cell = getRandomEmptyCell();
 			this.player1 = new Player(name,new Bag(bagCapacity),cell);
-			cell.SetDynamicElem(player1);
+			cell.setDynamicElem(player1);
 			return this;
 		}
 		public MapBuilder buildPlayerTwo(String name, int bagCapacity){
 			Cell cell = getRandomEmptyCell();
 			this.player2 = new Player(name,new Bag(bagCapacity),cell);
-			cell.SetDynamicElem(player1);
+			cell.setDynamicElem(player1);
 			return this;
 		}
 		
