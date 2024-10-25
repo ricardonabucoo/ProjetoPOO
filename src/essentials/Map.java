@@ -2,8 +2,9 @@ package essentials;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class Map extends JPanel {
+public class Map extends JPanel{
 	
 	public static Cell[][] grid;
 	private int gridSize;
