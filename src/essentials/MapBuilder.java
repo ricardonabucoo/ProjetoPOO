@@ -48,7 +48,7 @@ public class MapBuilder {
 
 		JPanel centerPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		
+
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;

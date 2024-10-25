@@ -152,21 +152,21 @@ public class Cell extends JPanel {
         }
     }
 
+	public static void main(String[] args) {
+
+		JFrame frame = new JFrame();
+
+		Cell cell = new Cell(1, 1);
+		frame.add(cell);
+		frame.setVisible(true);
+
+	}
+
+
+
+
+
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
