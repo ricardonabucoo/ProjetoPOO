@@ -21,6 +21,17 @@ public class Map extends JPanel{
 		fillDefaultCells();
 	}
 
+	public Map(int size) {
+		grid = null;
+		gridSize = size;
+		setLayout(new GridBagLayout());
+		gbc = new GridBagConstraints();
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		fillDefaultCells();
+	}
+
 	private void fillDefaultCells() {
 		grid = new Cell[gridSize][gridSize];
 		for (int i = 0; i < gridSize; i++) {

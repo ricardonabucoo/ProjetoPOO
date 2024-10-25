@@ -16,7 +16,7 @@ import static essentials.Map.grid;
 
 public class CreateWorldOptionsPanel extends JPanel {
     private MapBuilder mapBuilder;
-    private HashMap<InputField,String> inputFields;
+    private HashMap<String,InputField> inputFields;
     private Map map;
     private JPanel leftPanel;
     private JPanel rightPanel;
@@ -74,12 +74,11 @@ public class CreateWorldOptionsPanel extends JPanel {
         generalDataPanel.setLayout(new GridLayout(0,1));
         generalDataPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Dados Gerais", TitledBorder.CENTER, TitledBorder.TOP));
 
-
-        generalDataPanel.add(new InputField(new JLabel("Tamanho:")));
-        generalDataPanel.add(new InputField(new JLabel("Pedras:")));
-        generalDataPanel.add(new InputField(new JLabel("Maracujás:")));
-        generalDataPanel.add(new InputField(new JLabel("<html>Capacidade <br>da mochila</html>:")));
-        generalDataPanel.add(new InputField(new JLabel("<html>Chance de <br>fruta bichada:</html>")));
+        addNewInputFieldToHashMap(generalDataPanel,"Size","Tamanho:");
+        addNewInputFieldToHashMap(generalDataPanel,"Rocks_amount","Pedras:");
+        addNewInputFieldToHashMap(generalDataPanel,"PassionFruit_amount","Maracujás:");
+        addNewInputFieldToHashMap(generalDataPanel,"BagCapacity","<html>Capacidade <br>da mochila</html>:");
+        addNewInputFieldToHashMap(generalDataPanel,"WormyChance","<html>Chance de <br>fruta bichada:</html>:");
 
         return generalDataPanel;
     }
@@ -89,11 +88,13 @@ public class CreateWorldOptionsPanel extends JPanel {
         treesTypePanel.setLayout(new GridLayout(0,1));
         treesTypePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Árvore", TitledBorder.CENTER, TitledBorder.TOP));
 
-        treesTypePanel.add(new InputField(new JLabel("Goiaba:")));
-        treesTypePanel.add(new InputField(new JLabel("Acerola:")));
-        treesTypePanel.add(new InputField(new JLabel("Amora:")));
-        treesTypePanel.add(new InputField(new JLabel("Laranja:")));
-        treesTypePanel.add(new InputField(new JLabel("Côco:")));
+
+        addNewInputFieldToHashMap(treesTypePanel,"Guava_tree","Goiaba:");
+        addNewInputFieldToHashMap(treesTypePanel,"BarbadosCherry_tree","Acerola:");
+        addNewInputFieldToHashMap(treesTypePanel,"BlackBerry_tree","Amora:");
+        addNewInputFieldToHashMap(treesTypePanel,"Orange_tree","Laranja:");
+        addNewInputFieldToHashMap(treesTypePanel,"Avocado_tree","Abacate:");
+        addNewInputFieldToHashMap(treesTypePanel,"Coconut_tree","Côco:");
 
         return treesTypePanel;
     }
@@ -103,12 +104,13 @@ public class CreateWorldOptionsPanel extends JPanel {
         initalFruitsPanel.setLayout(new GridLayout(0,1));
         initalFruitsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Frutas Iniciais", TitledBorder.CENTER, TitledBorder.TOP));
 
-        initalFruitsPanel.add(new InputField(new JLabel("Goiabas:")));
-        initalFruitsPanel.add(new InputField(new JLabel("Acerolas:")));
-        initalFruitsPanel.add(new InputField(new JLabel("Amoras:")));
-        initalFruitsPanel.add(new InputField(new JLabel("Laranjas:")));
-        initalFruitsPanel.add(new InputField(new JLabel("Côcos:")));
-        initalFruitsPanel.add(new InputField(new JLabel("Maracujás:")));
+        addNewInputFieldToHashMap(initalFruitsPanel,"Guava_fruit","Goiabas:");
+        addNewInputFieldToHashMap(initalFruitsPanel,"BarbadosCherry_fruit","Acerolas:");
+        addNewInputFieldToHashMap(initalFruitsPanel,"BlackBerry_fruit","Amoras:");
+        addNewInputFieldToHashMap(initalFruitsPanel,"Orange_fruit","Laranjas:");
+        addNewInputFieldToHashMap(initalFruitsPanel,"Coconut_fruit","Côcos:");
+        addNewInputFieldToHashMap(initalFruitsPanel,"Avocado_fruit","Abacate:");
+        addNewInputFieldToHashMap(initalFruitsPanel,"PassionFruit_fruit","Maracujás:");
 
         return initalFruitsPanel;
     }
@@ -118,8 +120,8 @@ public class CreateWorldOptionsPanel extends JPanel {
         playerNamesPanel.setLayout(new GridLayout(2,1));
         playerNamesPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Nomes dos Jogadores", TitledBorder.CENTER, TitledBorder.TOP));
 
-        playerNamesPanel.add(new InputField(new JLabel("<html>Apelido do<br> jogador 1:  </html>"), 20));
-        playerNamesPanel.add(new InputField(new JLabel("<html>Apelido do<br> jogador 2:  </html>"), 20));
+        addNewInputFieldToHashMap(playerNamesPanel,"Player1","<html>Apelido do<br> jogador 1:  </html>",20);
+        addNewInputFieldToHashMap(playerNamesPanel,"Player2","<html>Apelido do<br> jogador 2:  </html>",20);
 
         return playerNamesPanel;
     }
@@ -130,15 +132,26 @@ public class CreateWorldOptionsPanel extends JPanel {
 
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> {
-
+            mapBuilder = new MapBuilder(map);
+            mapBuilder.buildCellGrid(inputFields.get("Size").getInputAsInt());
+            mapBuilder.buildRockCells(inputFields.get("Rocks_amount").getInputAsInt());
+            mapBuilder.buildTreeCells(createTreesTypesHashMap());
+            /*
+            mapBuilder.buildGrassCells();
+            mapBuilder.buildFruitsCells(createInitialFruitHashMap());
+            */
+            rightPanel.revalidate();
+            rightPanel.repaint();
         });
 
         JButton shuffleButton = new JButton("Shuffle");
         shuffleButton.addActionListener(e -> {
-            map.grid[1][1].setStaticElem(new Grass(grid[1][1]));
-            map.grid[1][1].setDynamicElem(new Fruit(grid[1][1], FruitType.AVOCADO));
-            //map.revalidate();
-            //map.repaint();
+            mapBuilder.reset();
+            mapBuilder.buildCellGrid(inputFields.get("Size").getInputAsInt());
+            mapBuilder.buildRockCells(inputFields.get("Rocks_amount").getInputAsInt());
+            mapBuilder.buildTreeCells(createTreesTypesHashMap());
+            mapBuilder.buildGrassCells();
+            mapBuilder.buildFruitsCells(createInitialFruitHashMap());
         });
         buttonsPanel.add(submitButton);
         buttonsPanel.add(shuffleButton);
@@ -146,10 +159,41 @@ public class CreateWorldOptionsPanel extends JPanel {
         return buttonsPanel;
     }
 
-    private void addNewInputFieldToHashMap(JPanel panel, String key){
-        InputField inputField = new InputField(new JLabel(key));
+    private void addNewInputFieldToHashMap(JPanel panel, String key, String text){
+        InputField inputField = new InputField(new JLabel(text));
         panel.add(inputField);
-        inputFields.put(inputField, key);
+        inputFields.put(key,inputField);
+    }
+
+    private void addNewInputFieldToHashMap(JPanel panel, String key, String text, int size){
+        InputField inputField = new InputField(new JLabel(text),size);
+        panel.add(inputField);
+        inputFields.put(key,inputField);
+    }
+
+    private HashMap<FruitType,Integer> createTreesTypesHashMap(){
+        HashMap<FruitType,Integer> trees = new HashMap<>();
+        trees.put(FruitType.GUAVA, inputFields.get("Guava_tree").getInputAsInt());
+        trees.put(FruitType.BARBADOSCHERRY, inputFields.get("BarbadosCherry_tree").getInputAsInt());
+        trees.put(FruitType.BLACKBERRY, inputFields.get("BlackBerry_tree").getInputAsInt());
+        trees.put(FruitType.ORANGE, inputFields.get("Orange_tree").getInputAsInt());
+        trees.put(FruitType.AVOCADO, inputFields.get("Avocado_tree").getInputAsInt());
+        trees.put(FruitType.COCONUT, inputFields.get("Coconut_tree").getInputAsInt());
+
+        return trees;
+    }
+
+    private HashMap<FruitType,Integer> createInitialFruitHashMap(){
+        HashMap<FruitType,Integer> fruits = new HashMap<>();
+        fruits.put(FruitType.PASSIONFRUIT, inputFields.get("PassionFruit_fruit").getInputAsInt());
+        fruits.put(FruitType.GUAVA, inputFields.get("Guava_fruit").getInputAsInt());
+        fruits.put(FruitType.BARBADOSCHERRY, inputFields.get("BarbadosCherry_fruit").getInputAsInt());
+        fruits.put(FruitType.BLACKBERRY, inputFields.get("BlackBerry_fruit").getInputAsInt());
+        fruits.put(FruitType.ORANGE, inputFields.get("Orange_fruit").getInputAsInt());
+        fruits.put(FruitType.AVOCADO, inputFields.get("Avocado_fruit").getInputAsInt());
+        fruits.put(FruitType.COCONUT, inputFields.get("Coconut_fruit").getInputAsInt());
+
+        return fruits;
     }
 
     public static void main(String[] args) {
