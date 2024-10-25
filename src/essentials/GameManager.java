@@ -3,16 +3,18 @@ package essentials;
 import UI.MainMenu;
 import elements.Player;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.io.File;
 
 import javax.swing.*;
+
 
 public class GameManager extends JFrame{
 	private Map map;
 	private Player player1;
 	private Player player2;
 	private Boolean isFinished;
+	private JPanel currentPanel;
 
 	public GameManager() {
 		this.isFinished = false;
@@ -91,6 +93,20 @@ public class GameManager extends JFrame{
 		return this.isFinished;
 	}
 	*/
+	// Método para ajustar o tamanho dos botões para que sejam quadrados
+	private void adjustButtonSize(JPanel panel, int gridSize) {
+		int width = panel.getWidth() / gridSize; // Largura de cada botão
+		int height = panel.getHeight() / gridSize; // Altura de cada botão
+		int buttonSize = Math.min(width, height); // Tamanho mínimo para manter os botões quadrados
+
+		for (Component comp : panel.getComponents()) {
+			if (comp instanceof JButton) {
+				comp.setPreferredSize(new Dimension(buttonSize, buttonSize));
+			}
+		}
+		panel.revalidate(); // Revalida o painel para aplicar as alterações
+		panel.repaint();    // Repaint para garantir que as mudanças sejam visíveis
+	}
 	
 }
 	

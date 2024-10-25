@@ -46,34 +46,16 @@ public class MapBuilder {
 
 	public MapBuilder buildCellGrid(int size) {
 
-		JPanel centerPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		gbc.fill = GridBagConstraints.BOTH;
-
-
 		this.gridSize = size;
-		grid = new Cell[size][size];
-		for (int i = 0; i < size; i++) {
+		Map map = new Map();
+
+		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++) {
 				Cell cell = new Cell(i, j);
-				cell.setPreferredSize(new Dimension(100, 100));
-				gbc.gridx = i;
-				gbc.gridy = j;
-				centerPanel.add(cell, gbc);
-				grid[i][j] = cell;
+				map.addCell(cell,i,j);
 				availableCells.add(cell);
 			}
-		}
 
-		frame.addComponentListener(new java.awt.event.ComponentAdapter() {
-			public void componentResized(java.awt.event.ComponentEvent evt) {
-				adjustButtonSize(centerPanel, size);
-			}
-		});
-		frame.setVisible(true);
 		return this;
 	}
 
@@ -175,20 +157,7 @@ public class MapBuilder {
 		Random random = new Random();
 		return availableCells.remove(random.nextInt(availableCells.size()));
 	}
-	// Método para ajustar o tamanho dos botões para que sejam quadrados
-	private void adjustButtonSize(JPanel panel, int gridSize) {
-		int width = panel.getWidth() / gridSize; // Largura de cada botão
-		int height = panel.getHeight() / gridSize; // Altura de cada botão
-		int buttonSize = Math.min(width, height); // Tamanho mínimo para manter os botões quadrados
 
-		for (Component comp : panel.getComponents()) {
-			if (comp instanceof JButton) {
-				comp.setPreferredSize(new Dimension(buttonSize, buttonSize));
-			}
-		}
-		panel.revalidate(); // Revalida o painel para aplicar as alterações
-		panel.repaint();    // Repaint para garantir que as mudanças sejam visíveis
-	}
 
 
 }

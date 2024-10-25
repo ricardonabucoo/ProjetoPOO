@@ -19,7 +19,7 @@ public class Cell extends JPanel {
 		this.setLayout(null);
 		this.row = row;
 		this.col = col;
-		this.setPreferredSize(new Dimension(100, 100)); 
+		setPreferredSize(new Dimension(100, 100));
         this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         
         this.addComponentListener(new ComponentAdapter() {
