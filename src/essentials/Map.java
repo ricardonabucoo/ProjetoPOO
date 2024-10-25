@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Map extends JPanel {
 	
-	private static Cell[][] grid;
+	public static Cell[][] grid;
 	private int gridSize;
 	private GridBagConstraints gbc;
 
@@ -17,12 +17,40 @@ public class Map extends JPanel {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
+		fillDefaultCells();
+	}
+
+	private void fillDefaultCells() {
+		grid = new Cell[gridSize][gridSize];
+		for (int i = 0; i < gridSize; i++) {
+			for (int j = 0; j < gridSize; j++) {
+				Cell cell = new Cell(i, j);
+				grid[i][j] = cell;
+				addCell(cell, i, j);
+			}
+		}
 	}
 
 	public void addCell(Cell cell, int row,int col){
 		gbc.gridx = row;
 		gbc.gridy = col;
 		add(cell, gbc);
+	}
+
+	@Override
+	public void revalidate() {
+		super.revalidate();
+		for (int i = 0; i < gridSize; i++)
+			for (int j = 0; j < gridSize; j++)
+				grid[i][j].revalidate();
+	}
+
+	@Override
+	public void repaint() {
+		super.repaint();
+		for (int i = 0; i < gridSize; i++)
+			for (int j = 0; j < gridSize; j++)
+				grid[i][j].repaint();
 	}
 
 	public Map(Cell[][] grid) {
@@ -40,4 +68,6 @@ public class Map extends JPanel {
 				grid[i][j].update();
 			}
 	}
+
+
 }

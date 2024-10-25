@@ -116,8 +116,8 @@ public class Cell extends JPanel {
 		elem.setFocusPainted(false);
 		elem.setContentAreaFilled(false);
         this.add(elem);
-        this.revalidate();
-        this.repaint();
+        revalidate();
+        repaint();
         
         if (dynamicElem != null) {
             dynamicElem.setBounds(0, 0, 50, 50);     

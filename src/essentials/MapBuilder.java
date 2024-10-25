@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 public class MapBuilder {
 
+	private Map map;
 	private Cell[][] grid;
 	private int gridSize;
 	private int rocksAmount;
@@ -31,8 +32,13 @@ public class MapBuilder {
 	public MapBuilder() {
 		reset();
 	}
+	public MapBuilder(Map map){
+		reset();
+		this.map = map;
+	}
 
 	public void reset() {
+		map = new Map();
 		grid = null;
 		gridSize = 0;
 		rocksAmount = 0;
@@ -45,9 +51,6 @@ public class MapBuilder {
 	}
 
 	public MapBuilder buildCellGrid(int size) {
-
-		this.gridSize = size;
-		Map map = new Map();
 
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++) {
@@ -82,7 +85,6 @@ public class MapBuilder {
 		return this;
 	}
 
-
 	public MapBuilder buildGrassCells() {
 		int value = gridSize*gridSize - rocksAmount - treesAmount;
 			for(int i = 0; i < value; i++) {
@@ -93,7 +95,6 @@ public class MapBuilder {
 		return this;
 	}
 
-	// pressupoe que o numero de frutas é menor ou igual ao numero de frutas
 	public MapBuilder buildFruitsCells(HashMap<FruitType, Integer> fruitMap) {
 		int totalFruits = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
 		if (totalFruits > grassCellList.size()) {
@@ -111,12 +112,14 @@ public class MapBuilder {
 		}
 		return this;
 	}
+
 	public MapBuilder buildPlayerOne(String name, int bagCapacity){
 		Cell cell = getRandomEmptyCell();
 		this.player1 = new Player(name,new Bag(bagCapacity),cell);
 		cell.setDynamicElem(player1);
 		return this;
 	}
+
 	public MapBuilder buildPlayerTwo(String name, int bagCapacity){
 		Cell cell = getRandomEmptyCell();
 		this.player2 = new Player(name,new Bag(bagCapacity),cell);
@@ -137,14 +140,14 @@ public class MapBuilder {
 	}
 
 	public Map getResult() {
-		Map gm = new Map(grid);
+		Map mapAux = map;
 		reset();
-		return gm;
+		return mapAux;
 	}
 
 	private Cell getRandomWithoutFruitCell() {
 		if (grassCellList.isEmpty()) {
-			throw new IllegalStateException("sem celular vazias");
+			throw new IllegalStateException("sem celulas vazias");
 		}
 		Random random = new Random();
 		return grassCellList.remove(random.nextInt(grassCellList.size()));
@@ -152,7 +155,7 @@ public class MapBuilder {
 
 	private Cell getRandomEmptyCell() {
 		if (availableCells.isEmpty()) {
-			throw new IllegalStateException("sem celular vazias");
+			throw new IllegalStateException("sem celulas vazias");
 		}
 		Random random = new Random();
 		return availableCells.remove(random.nextInt(availableCells.size()));

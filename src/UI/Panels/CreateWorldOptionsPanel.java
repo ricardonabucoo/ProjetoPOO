@@ -1,19 +1,56 @@
 package UI.Panels;
 
+import elements.Fruit;
+import elements.FruitType;
+import elements.Grass;
+import elements.Rock;
+import essentials.Map;
+import essentials.MapBuilder;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.HashMap;
+
+import static essentials.Map.grid;
 
 public class CreateWorldOptionsPanel extends JPanel {
+    private MapBuilder mapBuilder;
+    private Map map;
+    private JPanel leftPanel;
+    private JPanel rightPanel;
 
     public CreateWorldOptionsPanel() {
-        setBackground(Color.decode("#008b8b"));
         setLayout(new BorderLayout());
+        setBackground(Color.decode("#008b8b"));
 
-        JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        leftPanel.setBackground(Color.decode("#f0f0f0"));
-        leftPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Configurações Avançadas", TitledBorder.CENTER, TitledBorder.TOP));
+
+        leftPanel = createSetConfigsPanel();
+        rightPanel = new JPanel(new GridBagLayout());
+        rightPanel.setBackground(Color.darkGray);
+        map = new Map();
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        rightPanel.add(map, gbc);
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        splitPane.setResizeWeight(0.3);
+        splitPane.setOneTouchExpandable(true); // Adiciona setinhas para o usuário ajustar o tamanho manualmente
+        splitPane.setDividerLocation(300); // Posição inicial do divisor (pode ajustar conforme necessário)
+
+        // Adiciona o JSplitPane ao layout do painel
+        add(splitPane, BorderLayout.CENTER);
+    }
+
+    private JPanel createSetConfigsPanel(){
+        JPanel configPanel = new JPanel();
+        configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.Y_AXIS));
+        configPanel.setBackground(Color.decode("#f0f0f0"));
+        configPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Configurações Avançadas", TitledBorder.CENTER, TitledBorder.TOP));
 
         //dados gerais
         JPanel generalDataPanel = new JPanel();
@@ -56,23 +93,42 @@ public class CreateWorldOptionsPanel extends JPanel {
         playerNamesPanel.add(new InputField(new JLabel("<html>Apelido do<br> jogador 1:  </html>"), 20));
         playerNamesPanel.add(new InputField(new JLabel("<html>Apelido do<br> jogador 2:  </html>"), 20));
 
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new GridLayout(0,2));
 
-        leftPanel.add(generalDataPanel);
-        //add(Box.createRigidArea(new Dimension(20, 0)));
-        leftPanel.add(treesTypePanel);
-        //add(Box.createRigidArea(new Dimension(20, 0)));
-        leftPanel.add(initalFruitsPanel);
-        //add(Box.createRigidArea(new Dimension(20, 0)));
-        leftPanel.add(playerNamesPanel);
+        JButton submitButton = new JButton("Submit");
+        submitButton.addActionListener(e -> {
 
-        add(leftPanel,BorderLayout.WEST);
+        });
 
-        JPanel rightPanel = new JPanel();
+        JButton shuffleButton = new JButton("Shuffle");
+        shuffleButton.addActionListener(e -> {
+            map.grid[1][1].setStaticElem(new Grass(grid[1][1]));
+            map.grid[1][1].setDynamicElem(new Fruit(grid[1][1], FruitType.AVOCADO));
+            //map.revalidate();
+            //map.repaint();
+        });
+        buttonsPanel.add(submitButton);
+        buttonsPanel.add(shuffleButton);
 
-        add(rightPanel,BorderLayout.EAST);
+        configPanel.add(generalDataPanel);
+        configPanel.add(treesTypePanel);
+        configPanel.add(initalFruitsPanel);
+        configPanel.add(playerNamesPanel);
+        configPanel.add(buttonsPanel);
 
-
-
-
+        return configPanel;
     }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+        frame.setBounds(50, 50, 1000, 1000);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        CreateWorldOptionsPanel panel = new CreateWorldOptionsPanel();
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+
+
 }
