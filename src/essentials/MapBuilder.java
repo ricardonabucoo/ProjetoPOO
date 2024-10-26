@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 public class MapBuilder {
 
 	private Map map;
-	private Cell[][] grid;
 	private int gridSize;
 	private int rocksAmount;
 	private int treesAmount;
@@ -38,8 +37,6 @@ public class MapBuilder {
 	}
 
 	public void reset() {
-		map = new Map();
-		grid = null;
 		gridSize = 0;
 		rocksAmount = 0;
 		treesAmount = 0;
@@ -51,8 +48,8 @@ public class MapBuilder {
 	}
 
 	public MapBuilder buildCellGrid(int size) {
-
-		map = new Map();
+		this.gridSize = size;
+		map = new Map(size);
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++) {
 				Cell cell = new Cell(i, j);

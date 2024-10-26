@@ -46,6 +46,7 @@ public class Map extends JPanel{
 	public void addCell(Cell cell, int row,int col){
 		gbc.gridx = row;
 		gbc.gridy = col;
+		grid[row][col] = cell;
 		add(cell, gbc);
 	}
 
@@ -55,6 +56,7 @@ public class Map extends JPanel{
 		for (int i = 0; i < gridSize; i++)
 			for (int j = 0; j < gridSize; j++)
 				grid[i][j].revalidate();
+		super.revalidate();
 	}
 
 	@Override
@@ -63,6 +65,7 @@ public class Map extends JPanel{
 		for (int i = 0; i < gridSize; i++)
 			for (int j = 0; j < gridSize; j++)
 				grid[i][j].repaint();
+		super.repaint();
 	}
 
 	public Map(Cell[][] grid) {

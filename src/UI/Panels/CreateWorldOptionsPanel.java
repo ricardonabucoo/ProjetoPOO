@@ -133,13 +133,22 @@ public class CreateWorldOptionsPanel extends JPanel {
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> {
             mapBuilder = new MapBuilder(map);
+
             mapBuilder.buildCellGrid(inputFields.get("Size").getInputAsInt());
             mapBuilder.buildRockCells(inputFields.get("Rocks_amount").getInputAsInt());
             mapBuilder.buildTreeCells(createTreesTypesHashMap());
-            /*
             mapBuilder.buildGrassCells();
             mapBuilder.buildFruitsCells(createInitialFruitHashMap());
-            */
+
+            rightPanel.remove(map);
+            map = mapBuilder.getResult();
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.weightx = 0;
+            gbc.weighty = 0;
+            rightPanel.add(map, gbc);
             rightPanel.revalidate();
             rightPanel.repaint();
         });
