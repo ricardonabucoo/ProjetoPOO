@@ -25,10 +25,18 @@ public class CreateWorldOptionsPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(Color.decode("#008b8b"));
 
-
         leftPanel = createSetConfigsPanel();
-        rightPanel = new JPanel(new GridBagLayout());
-        rightPanel.setBackground(Color.darkGray);
+        rightPanel = createMapViewerPanel();
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        splitPane.setResizeWeight(0.3);
+        splitPane.setDividerLocation(300);
+        add(splitPane, BorderLayout.CENTER);
+    }
+
+    private JPanel createMapViewerPanel(){
+        JPanel mapViewer = new JPanel(new GridBagLayout());
+        mapViewer.setBackground(Color.darkGray);
         map = new Map();
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -36,15 +44,8 @@ public class CreateWorldOptionsPanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.weightx = 0;
         gbc.weighty = 0;
-        rightPanel.add(map, gbc);
-
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
-        splitPane.setResizeWeight(0.3);
-        splitPane.setOneTouchExpandable(true); // Adiciona setinhas para o usuário ajustar o tamanho manualmente
-        splitPane.setDividerLocation(300); // Posição inicial do divisor (pode ajustar conforme necessário)
-
-        // Adiciona o JSplitPane ao layout do painel
-        add(splitPane, BorderLayout.CENTER);
+        mapViewer.add(map, gbc);
+        return mapViewer;
     }
 
     private JPanel createSetConfigsPanel(){
@@ -120,8 +121,8 @@ public class CreateWorldOptionsPanel extends JPanel {
         playerNamesPanel.setLayout(new GridLayout(2,1));
         playerNamesPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Nomes dos Jogadores", TitledBorder.CENTER, TitledBorder.TOP));
 
-        addNewInputFieldToHashMap(playerNamesPanel,"Player1","<html>Apelido do<br> jogador 1:  </html>",20);
-        addNewInputFieldToHashMap(playerNamesPanel,"Player2","<html>Apelido do<br> jogador 2:  </html>",20);
+        addNewInputFieldToHashMap(playerNamesPanel,"Player1","Apelido do jogador 1:",20);
+        addNewInputFieldToHashMap(playerNamesPanel,"Player2","Apelido do jogador 2:",20);
 
         return playerNamesPanel;
     }
@@ -130,18 +131,18 @@ public class CreateWorldOptionsPanel extends JPanel {
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayout(0,2));
 
+        mapBuilder = new MapBuilder();
+
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> {
-            mapBuilder = new MapBuilder(map);
 
-            mapBuilder.buildCellGrid(inputFields.get("Size").getInputAsInt());
-            mapBuilder.buildRockCells(inputFields.get("Rocks_amount").getInputAsInt());
-            mapBuilder.buildTreeCells(createTreesTypesHashMap());
-            mapBuilder.buildGrassCells();
-            mapBuilder.buildFruitsCells(createInitialFruitHashMap());
+            int size = inputFields.get("Size").getInputAsInt();
+            int rocksAmount = inputFields.get("RocksAmount").getInputAsInt();
+            HashMap<FruitType, Integer> treeMap = createTreesTypesHashMap();
+            HashMap<FruitType, Integer> fruitMap = createInitialFruitHashMap();
 
             rightPanel.remove(map);
-            map = mapBuilder.getResult();
+            map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap);
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;

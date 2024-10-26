@@ -28,15 +28,12 @@ public class MapBuilder {
 	private Player player1;
 	private Player player2;
 
-	public MapBuilder() {
+	public MapBuilder(){
 		reset();
-	}
-	public MapBuilder(Map map){
-		reset();
-		this.map = map;
 	}
 
 	public void reset() {
+		map = null;
 		gridSize = 0;
 		rocksAmount = 0;
 		treesAmount = 0;
@@ -47,8 +44,17 @@ public class MapBuilder {
 		player2 = null;
 	}
 
+	public Map buildMap(
+		int size,
+		int rocksAmount,
+		HashMap<FruitType, Integer> treeMap,
+		HashMap<FruitType, Integer> fruitMap
+	) {
+		return this.buildCellGrid(size).buildRockCells(rocksAmount).buildTreeCells(treeMap).buildGrassCells().buildFruitsCells(fruitMap).getResult();
+	}
+
 	public MapBuilder buildCellGrid(int size) {
-		this.gridSize = size;
+		gridSize = size;
 		map = new Map(size);
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++) {
@@ -80,7 +86,6 @@ public class MapBuilder {
 				treeCellList.add(cell);
 			}
 		}
-
 		return this;
 	}
 
@@ -112,17 +117,20 @@ public class MapBuilder {
 		return this;
 	}
 
-	public MapBuilder buildPlayerOne(String name, int bagCapacity){
+	public Player buildPlayer(String playerName, int bagCapacity) {
 		Cell cell = getRandomEmptyCell();
-		this.player1 = new Player(name,new Bag(bagCapacity),cell);
-		cell.setDynamicElem(player1);
+		Player player = new Player(playerName,new Bag(bagCapacity),cell);
+		cell.setDynamicElem(player);
+		return player;
+	}
+
+	public MapBuilder buildPlayerOne(String name, int bagCapacity){
+		player1 = buildPlayer(name,bagCapacity);
 		return this;
 	}
 
 	public MapBuilder buildPlayerTwo(String name, int bagCapacity){
-		Cell cell = getRandomEmptyCell();
-		this.player2 = new Player(name,new Bag(bagCapacity),cell);
-		cell.setDynamicElem(player1);
+		player2 = buildPlayer(name,bagCapacity);
 		return this;
 	}
 

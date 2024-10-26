@@ -30,7 +30,43 @@ public class MainPanel extends JFrame {
     }
 
     public static void main(String[] args) {
-        new MainPanel();
+
+        JFrame frame = new JFrame();
+        frame.setBounds(50, 50, 1000, 1000);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setVisible(true);
+
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(Color.CYAN);
+        frame.add(panel1);
+
+        JPanel panel2 = new JPanel();
+        panel2.setBackground(Color.ORANGE);
+
+        // Painel no lado oeste (WEST)
+        JPanel westPanel = new JPanel();
+        westPanel.setBackground(Color.CYAN);
+        westPanel.add(new JLabel("WEST"));
+
+        // Painel no lado leste (EAST)
+        JPanel eastPanel = new JPanel();
+        eastPanel.setBackground(Color.MAGENTA);
+        eastPanel.add(new JLabel("EAST"));
+
+        panel2.setLayout(new BorderLayout());
+        panel2.add(westPanel, BorderLayout.WEST);
+        panel2.add(eastPanel, BorderLayout.EAST);
+
+        JButton button = new JButton("Click Me");
+        panel1.add(button);
+        button.addActionListener(e -> {
+            frame.remove(panel1);
+            frame.add(panel2);
+            frame.revalidate();
+            frame.repaint();
+        });
+
     }
 }
 
