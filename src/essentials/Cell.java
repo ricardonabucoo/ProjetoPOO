@@ -8,18 +8,23 @@ import javax.swing.*;
 public class Cell extends JPanel {
 
 	private static Cell[][] gridMap;
+	public boolean isEmpty;
 	private int row, col;
 	private StaticElem staticElem;
 	private DynamicElem dynamicElem;
 	private ImageIcon staticImageIcon;  // Para armazenar a imagem original do botão estático
     private ImageIcon dynamicImageIcon;
-	
+
+	public static void setGridMap(Cell[][] grid){
+		gridMap = grid;
+	}
+
 	public Cell(int row, int col) {
-		//super("Cell " + row + " " + col);
+
 		this.setLayout(null);
 		this.row = row;
 		this.col = col;
-		this.setPreferredSize(new Dimension(100, 100)); 
+		setPreferredSize(new Dimension(100, 100));
         this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         
         this.addComponentListener(new ComponentAdapter() {
@@ -42,23 +47,35 @@ public class Cell extends JPanel {
 	    Cell.gridMap = grid;
 	}
 	
-	public Cell GetCellUp()	{
-		return gridMap[row][col-1];
+	public Cell getCellUp()	{
+		if(col != 0 )
+			return gridMap[row][col-1];
+		else
+			return null;
 	}
 	
-	public Cell GetCellDown() {
-		return gridMap[row][col+1];
+	public Cell getCellDown() {
+		if(col != gridMap.length-1)
+			return gridMap[row][col+1];
+		else
+			return null;
 	}
 	
-	public Cell GetCellLeft() {
-		return gridMap[row-1][col];
+	public Cell getCellLeft() {
+		if(row != 0)
+			return gridMap[row-1][col];
+		else
+			return null;
 	}
 	
-	public Cell GetCellRight() {
-		return gridMap[row+1][col];
+	public Cell getCellRight() {
+		if(row != gridMap.length-1)
+			return gridMap[row+1][col];
+		else
+			return null;
 	}
 	
-	public void Update() {
+	public void update() {
 		if (staticElem != null) 
 			staticElem.update();
 		
@@ -66,31 +83,31 @@ public class Cell extends JPanel {
         	dynamicElem.update();
 	}
 	
-	public void OnEnter(Player player) {
+	public void onEnter(Player player) {
 		staticElem.onEnter(player);
 	}
 	
-	public void OnStay(Player player) {
+	public void onStay(Player player) {
 		staticElem.onStay(player);
 	}
 	
-	public void OnExit(Player player) {
+	public void onExit(Player player) {
 		staticElem.onExit(player);
 	}
 	
-	public void VerifyMPNeeded(Player player) {
+	public void verifyMPNeeded(Player player) {
 		
 	}
 	
-	public int GetMPNeeded() {
+	public int getMPNeeded() {
 		return staticElem.getMPNeeded();
 	}
 	
-	public DynamicElem GetDynamicElem(){
+	public DynamicElem getDynamicElem(){
 		return this.dynamicElem;
 	}
 	
-	public void SetDynamicElem(DynamicElem elem) {
+	public void setDynamicElem(DynamicElem elem) {
         this.dynamicElem = elem;
         elem.setBounds(0,0, 50, 50); 
         elem.setBorderPainted(false);
@@ -102,13 +119,24 @@ public class Cell extends JPanel {
         this.revalidate();
         this.repaint();
 	}
+
+	public void removeDynamic(DynamicElem elem) {
+		if(elem != this.dynamicElem){
+			System.out.println("opaopaopa erro");
+			return;
+		}
+		remove(dynamicElem);
+		dynamicElem = null;
+		revalidate();
+		repaint();
+	}
 	
 	
-	public StaticElem GetStaticElem(){
+	public StaticElem getStaticElem(){
 		return this.staticElem;
 	}
 	
-	public void SetStaticElem(StaticElem elem) {
+	public void setStaticElem(StaticElem elem) {
 		this.staticElem = elem;
 		this.removeAll();
 		elem.setBounds(0, 0, this.getWidth(), this.getHeight());  
@@ -116,8 +144,8 @@ public class Cell extends JPanel {
 		elem.setFocusPainted(false);
 		elem.setContentAreaFilled(false);
         this.add(elem);
-        this.revalidate();
-        this.repaint();
+        revalidate();
+        repaint();
         
         if (dynamicElem != null) {
             dynamicElem.setBounds(0, 0, 50, 50);     
@@ -152,21 +180,26 @@ public class Cell extends JPanel {
         }
     }
 
+
+	public boolean withoutDynamicElem() {
+		return dynamicElem == null; // Retorna true se a célula estiver vazia
+	}
+
+    public static void main(String[] args) {
+
+		JFrame frame = new JFrame();
+
+		Cell cell = new Cell(1, 1);
+		frame.add(cell);
+		frame.setVisible(true);
+
+	}
+
+
+
+
+
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

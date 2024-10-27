@@ -1,12 +1,14 @@
 package essentials;
 
+import UI.Frames.MainFrame;
+
 public class GameLoop {
 	
 	public GameLoop() {}
 	
 	public void run() {
-		GameManager gm = new GameManager();
-		gm.initialization();
+		MainFrame gm = new MainFrame();
+		gm.showMainMenu();
 		/*
 		do {
 			gm.Play();

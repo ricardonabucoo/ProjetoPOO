@@ -1,6 +1,9 @@
-package essentials;
+package temporario;
 
 import elements.FruitType;
+import essentials.Map;
+import Builders.MapBuilder;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -26,7 +29,7 @@ public class Quiz extends JFrame {
 	private int[] answers; 
     private String[] names;
     private int currentQuestionIndex = 0;
-    private GameMap map;
+    private Map map;
     
 	private String[] otherQuestions = {
 	        "Qual o nome do primeiro jogador?",
@@ -61,7 +64,6 @@ public class Quiz extends JFrame {
     
     public void initialize() {
         JFrame frame = new JFrame();
-        frame.setTitle("CataFrutas");
 
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 20));
         JPanel background = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 200));
@@ -106,14 +108,14 @@ public class Quiz extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	MapBuilder builder = new MapBuilder();	
-        		
+            	MapBuilder builder = new MapBuilder();
+        		/*
         		builder.buildCellGrid(GetSize());
         		builder.buildRockCells(GetRocksAmount());
         		builder.buildTreeCells(GetNumberOfTrees());
         		builder.buildGrassCells();
         		builder.buildFruitsCells(GetFruitsAmount());
-        		
+        		*/
         		SetMap(builder.getResult());
             	frame.dispose(); 
             }
@@ -197,7 +199,7 @@ public class Quiz extends JFrame {
         }
     }
     
-    private void SetMap(GameMap map) {
+    private void SetMap(Map map) {
     	this.map = map;
     }
     

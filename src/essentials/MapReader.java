@@ -8,8 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.swing.JFileChooser;
-
 public class MapReader {
 
     // Atributos
@@ -21,37 +19,15 @@ public class MapReader {
     private HashMap<FruitType, Integer> initialFruitsNumber;
     private int wormyFruitAmount;
     private int bagCapacity;
-    private GameMap map;
+    private Map map;
 
-    // Construtor
-    public MapReader() {
+    public MapReader(File file) {
         this.numberOfTrees = new HashMap<>();
         this.initialFruitsNumber = new HashMap<>();
-        
-        JFileChooser fileChooser = new JFileChooser();
-        int returnValue = fileChooser.showOpenDialog(null);
-
-        // Verifica se um arquivo foi selecionado
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            // Carrega a configuração do arquivo
-            readFile(selectedFile);
-            
-            MapBuilder builder = new MapBuilder();	
-    		
-    		builder.buildCellGrid(getSize());
-    		builder.buildRockCells(getRocksAmount());
-    		builder.buildTreeCells(getNumberOfTrees());
-    		builder.buildGrassCells();
-    		builder.buildFruitsCells(getInitialFruitsNumber());
-    		
-    		this.map = builder.getResult();
-            
-        }
+        readFile(file);
     }
 
-    // Método para ler o arquivo e salvar os dados em variáveis
-    public void readFile(File file) {
+    private void readFile(File file) {
         // Mapeamento de termos em português para enums e variáveis em inglês, acho que a professora
     	//vai passar arquivos em português, aí criei o hashmap com a tradução
         HashMap<String, String> translationMap = new HashMap<>();
