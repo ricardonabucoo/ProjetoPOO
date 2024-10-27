@@ -1,4 +1,4 @@
-package UI;
+package temporario;
 
 import elements.FruitType;
 import essentials.Map;

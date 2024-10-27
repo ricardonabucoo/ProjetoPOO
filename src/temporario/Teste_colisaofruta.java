@@ -1,8 +1,9 @@
-package essentials;
+package temporario;
 
 import Builders.MapBuilder;
 import elements.Fruit;
 import elements.FruitType;
+import essentials.Map;
 
 import javax.swing.*;
 import java.awt.*;

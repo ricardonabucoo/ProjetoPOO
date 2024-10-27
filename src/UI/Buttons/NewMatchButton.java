@@ -12,6 +12,7 @@ public class NewMatchButton extends JButton {
     public NewMatchButton() {
         super("<html> Nova <br>Partida</html>");
         setPreferredSize(new Dimension(100, 50));
+
         this.addActionListener((e -> {
             MainFrame mainFrame = MainFrame.getInstance();
             mainFrame.setCurrentPanel(new ChooseBuildMapMethodPanel());

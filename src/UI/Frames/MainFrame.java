@@ -1,15 +1,6 @@
 package UI.Frames;
 
-import Builders.MapBuilder;
-import UI.MainMenu;
-import elements.Player;
-import essentials.Cell;
-import essentials.Map;
-import essentials.MapReader;
-
-import java.awt.*;
-import java.io.File;
-import java.util.List;
+import UI.Panels.MainMenuPanel;
 
 import javax.swing.*;
 
@@ -53,7 +44,7 @@ public class MainFrame extends JFrame{
 	}
 
     public void showMainMenu(){
-		setCurrentPanel(new MainMenu());
+		setCurrentPanel(new MainMenuPanel());
     }
 
 	public static void main(String[] args) {
