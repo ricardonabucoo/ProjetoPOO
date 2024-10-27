@@ -1,6 +1,6 @@
 package temporario;
 
-import Builders.MapBuilder;
+import builders.MapBuilder;
 import elements.Fruit;
 import elements.FruitType;
 import essentials.Map;

@@ -2,7 +2,7 @@ package UI.Panels;
 
 import elements.FruitType;
 import essentials.Map;
-import Builders.MapBuilder;
+import builders.MapBuilder;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

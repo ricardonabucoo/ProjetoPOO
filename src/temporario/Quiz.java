@@ -2,7 +2,7 @@ package temporario;
 
 import elements.FruitType;
 import essentials.Map;
-import Builders.MapBuilder;
+import builders.MapBuilder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
