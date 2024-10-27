@@ -12,6 +12,7 @@ public final class Tree extends StaticElem {
 	public static final int ROUNDS_REQUIRED_FOR_FRUIT= 5;
 	private int currentRoundCount;
 	private FruitType producedFruit;
+	private boolean hasfruit = false;
 	
 	public Tree(Cell ownPlace, FruitType fruitType)
 	{
@@ -34,16 +35,36 @@ public final class Tree extends StaticElem {
 	
 	@Override
 	public void update() {
-
+		currentRoundCount++;
 	}
 	
 	@Override
 	public void onStay(Player player) {
-
+			if (player.getOwnPlace() == this.ownPlace) {
+				if (currentRoundCount >= ROUNDS_REQUIRED_FOR_FRUIT) {
+					produceFruit(player);
+				}
+			}
 	}
 	
-	public void produceFruit() {
+	public void produceFruit(Player player) {
+		if (!hasfruit) {
+			currentRoundCount = 0;
+			Fruit fruit = new Fruit(ownPlace, producedFruit);
+			player.addFruitBag(fruit);
+			hasfruit = true;
+		}
+	}
 
+	public void collectFruit() {
+		if (hasfruit) {
+			hasfruit = false;
+		}
+	}
+
+
+	public boolean hasfruit() {
+		return hasfruit;
 	}
 
 	public FruitType getProducedFruit() { return this.producedFruit; }

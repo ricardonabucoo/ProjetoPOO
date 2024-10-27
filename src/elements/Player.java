@@ -19,5 +19,13 @@ public class Player extends DynamicElem{
 		this.movimentPoints = 0;
 		this.power = 0;
 	}
+
+	public void addFruitBag(Fruit fruit) {
+		bag.add(fruit);
+	}
+
+	public Cell getOwnPlace() {
+		return this.ownPlace;
+	}
 	
 }
