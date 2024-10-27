@@ -50,6 +50,8 @@ public class PassionFruitFactory {
 					return;
 				}
 			}
+
+			System.out.println("nao tem espaço pra por a fruta de maracujá");
 		}
 	}
 }

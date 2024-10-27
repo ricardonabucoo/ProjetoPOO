@@ -1,6 +1,7 @@
 package essentials;
 
 import Builders.MapBuilder;
+import elements.Fruit;
 import elements.FruitType;
 
 import javax.swing.*;
@@ -34,21 +35,27 @@ public class Teste_colisaofruta {
 
         HashMap<FruitType, Integer> fruitMap = new HashMap<FruitType, Integer>();
         fruitMap.put(FruitType.AVOCADO,1);
-        fruitMap.put(FruitType.COCONUT,1);
-        fruitMap.put(FruitType.ORANGE,2);
+        //fruitMap.put(FruitType.COCONUT,1);
+        //fruitMap.put(FruitType.ORANGE,2);
 
-        Map map = builder.buildMap(5,5,treeMap,fruitMap).getResult();
+        builder.buildMap(5,5,treeMap,fruitMap);
+        Fruit fruita = (Fruit) builder.getFruitCellList().get(0).getDynamicElem();
+        Map map = builder.getResult();
 
         mapViewer.add(map, gbc);
+        mapViewer.revalidate();;
+        mapViewer.repaint();
+
 
         JButton button = new JButton("simular colisao");
         button.addActionListener(e -> {
-           //adicionar a funcao aqui
+           fruita.drop();
         });
         mapViewer.add(button);
 
         frame.add(mapViewer);
 
-
+        mapViewer.revalidate();;
+        mapViewer.repaint();
     }
 }

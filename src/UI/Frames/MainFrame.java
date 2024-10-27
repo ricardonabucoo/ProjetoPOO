@@ -6,7 +6,6 @@ import elements.Player;
 import essentials.Cell;
 import essentials.Map;
 import essentials.MapReader;
-import essentials.PassionFruitFactory;
 
 import java.awt.*;
 import java.io.File;
@@ -21,6 +20,7 @@ public class MainFrame extends JFrame{
 	private static MainFrame instance;
 
 	public MainFrame() {
+		instance = this;
 		previousPanel = null;
 		currentPanel = null;
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -43,7 +43,9 @@ public class MainFrame extends JFrame{
 
 	public void setCurrentPanel(JPanel currentPanel) {
 		MainFrame.previousPanel = MainFrame.currentPanel;
-		remove(MainFrame.previousPanel);
+		if (MainFrame.previousPanel != null) {
+			remove(MainFrame.previousPanel);
+		}
 		MainFrame.currentPanel = currentPanel;
 		add(MainFrame.currentPanel);
 		revalidate();

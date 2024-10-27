@@ -32,6 +32,10 @@ public class Map extends JPanel{
 		fillDefaultCells();
 	}
 
+	public Cell[][] getGrid() {
+		return grid;
+	}
+
 	private void fillDefaultCells() {
 		grid = new Cell[gridSize][gridSize];
 		for (int i = 0; i < gridSize; i++) {

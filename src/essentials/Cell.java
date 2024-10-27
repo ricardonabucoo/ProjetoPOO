@@ -15,6 +15,10 @@ public class Cell extends JPanel {
 	private ImageIcon staticImageIcon;  // Para armazenar a imagem original do botão estático
     private ImageIcon dynamicImageIcon;
 
+	public static void setGridMap(Cell[][] grid){
+		gridMap = grid;
+	}
+
 	public Cell(int row, int col) {
 
 		this.setLayout(null);
@@ -44,19 +48,31 @@ public class Cell extends JPanel {
 	}
 	
 	public Cell getCellUp()	{
-		return gridMap[row][col-1];
+		if(col != 0 )
+			return gridMap[row][col-1];
+		else
+			return null;
 	}
 	
 	public Cell getCellDown() {
-		return gridMap[row][col+1];
+		if(col != gridMap.length-1)
+			return gridMap[row][col+1];
+		else
+			return null;
 	}
 	
 	public Cell getCellLeft() {
-		return gridMap[row-1][col];
+		if(row != 0)
+			return gridMap[row-1][col];
+		else
+			return null;
 	}
 	
 	public Cell getCellRight() {
-		return gridMap[row+1][col];
+		if(row != gridMap.length-1)
+			return gridMap[row+1][col];
+		else
+			return null;
 	}
 	
 	public void update() {
@@ -102,6 +118,17 @@ public class Cell extends JPanel {
         this.setComponentZOrder(staticElem, 1);
         this.revalidate();
         this.repaint();
+	}
+
+	public void removeDynamic(DynamicElem elem) {
+		if(elem != this.dynamicElem){
+			System.out.println("opaopaopa erro");
+			return;
+		}
+		remove(dynamicElem);
+		dynamicElem = null;
+		revalidate();
+		repaint();
 	}
 	
 	

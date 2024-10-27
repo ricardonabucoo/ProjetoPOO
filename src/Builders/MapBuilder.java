@@ -13,8 +13,10 @@ public class MapBuilder implements Builder {
 
 	private Map map;
 	private int gridSize;
+	private List<Cell> rocksCellList;
 	private List<Cell> grassCellList;
 	private List<Cell> treeCellList;
+	private List<Cell> fruitCellList;
 	private List<Cell> availableCells;
 	private Player player1;
 	private Player player2;
@@ -39,8 +41,10 @@ public class MapBuilder implements Builder {
 	public void reset() {
 		map = null;
 		gridSize = 0;
+		rocksCellList = new ArrayList<>();
 		grassCellList = new ArrayList<>();
 		treeCellList = new ArrayList<>();
+		fruitCellList = new ArrayList<>();
 		availableCells = new ArrayList<>();
 		player1 = null;
 		player2 = null;
@@ -62,6 +66,10 @@ public class MapBuilder implements Builder {
 		return this.treeCellList;
 	}
 
+	public List<Cell> getFruitCellList() {
+		return this.fruitCellList;
+	}
+
 	private MapBuilder buildCellGrid(int size) {
 		gridSize = size;
 		map = new Map(size);
@@ -71,6 +79,7 @@ public class MapBuilder implements Builder {
 				map.addCell(cell,i,j);
 				availableCells.add(cell);
 			}
+		Cell.setGridMap(map.getGrid());
 		map.revalidate();
 		map.repaint();
 		return this;
@@ -80,6 +89,7 @@ public class MapBuilder implements Builder {
 		for(int i = 0; i < rocksAmount; i++) {
 			Cell cell = getRandomEmptyCell();
 			cell.setStaticElem(new Rock(cell));
+			rocksCellList.add(cell);
 		}
 		return this;
 	}
@@ -108,7 +118,7 @@ public class MapBuilder implements Builder {
 	}
 
 	private MapBuilder buildGrassCells() {
-		int grassCount = gridSize * gridSize - treeCellList.size() - availableCells.size();
+		int grassCount = gridSize * gridSize - treeCellList.size() - rocksCellList.size();
 			for(int i = 0; i < grassCount; i++) {
 				Cell cell = getRandomEmptyCell();
 				cell.setStaticElem(new Grass(cell));
@@ -123,6 +133,7 @@ public class MapBuilder implements Builder {
 			for (int i = 0; i < amount; i++) {
 				Cell cell = getRandomWithoutFruitCell();
 				cell.setDynamicElem(new Fruit(cell, type));
+				fruitCellList.add(cell);
 			}
 		});
 		/*

@@ -63,17 +63,31 @@ public class Fruit extends DynamicElem {
 		changePosition(newPlace);
 	}
 
+	public void verify(List<Cell> cellList, Cell cell){
+		if(cell != null){
+			cellList.add(cell);
+			return;
+		}
+		return;
+	}
+
 	public void drop() {
 		List <Cell> neighboringCells = new ArrayList<>();
+		verify(neighboringCells,ownPlace.getCellDown());
+		verify(neighboringCells,ownPlace.getCellUp());
+		verify(neighboringCells,ownPlace.getCellLeft());
+		verify(neighboringCells,ownPlace.getCellRight());
+		/*
 		neighboringCells.add(ownPlace.getCellDown());
 		neighboringCells.add(ownPlace.getCellUp());
 		neighboringCells.add(ownPlace.getCellLeft());
 		neighboringCells.add(ownPlace.getCellRight());
-
+		*/
 /////////////////A ideia é criar uma lista já com o que sabemos que não será null
 		List<Cell> neighboringSquareCells = new ArrayList<>();
+		/*
 		if (ownPlace.getCellDown() != null) {
-			neighboringSquareCells.add(ownPlace.getCellDown().getCellDown());
+			verify(neighboringSquareCells,ownPlace.getCellDown().getCellDown());
 			neighboringSquareCells.add(ownPlace.getCellDown().getCellLeft());
 			neighboringSquareCells.add(ownPlace.getCellDown().getCellRight());
 
@@ -96,12 +110,39 @@ public class Fruit extends DynamicElem {
 			neighboringSquareCells.add(ownPlace.getCellRight().getCellDown());
 			neighboringSquareCells.add(ownPlace.getCellRight().getCellUp());
 		}
+		*/
+
+		if (ownPlace.getCellDown() != null) {
+			verify(neighboringSquareCells, ownPlace.getCellDown().getCellDown());
+			verify(neighboringSquareCells, ownPlace.getCellDown().getCellLeft());
+			verify(neighboringSquareCells, ownPlace.getCellDown().getCellRight());
+		}
+		if (ownPlace.getCellUp() != null) {
+			verify(neighboringSquareCells, ownPlace.getCellUp().getCellUp());
+			verify(neighboringSquareCells, ownPlace.getCellUp().getCellLeft());
+			verify(neighboringSquareCells, ownPlace.getCellUp().getCellRight());
+		}
+		if (ownPlace.getCellLeft() != null) {
+			verify(neighboringSquareCells, ownPlace.getCellLeft().getCellLeft());
+		}
+		if (ownPlace.getCellRight() != null) {
+			verify(neighboringSquareCells, ownPlace.getCellRight().getCellRight());
+		}
+
+		if (ownPlace.getCellDown() == null || ownPlace.getCellUp() == null) {
+			verify(neighboringSquareCells, ownPlace.getCellLeft().getCellDown());
+			verify(neighboringSquareCells, ownPlace.getCellLeft().getCellUp());
+			verify(neighboringSquareCells, ownPlace.getCellRight().getCellDown());
+			verify(neighboringSquareCells, ownPlace.getCellRight().getCellUp());
+		}
 
 		Collections.shuffle(neighboringCells);
 		boolean findPlace = false;
 
 		for (Cell cell : neighboringCells) {
 			if (cell != null && cell.withoutDynamicElem()){
+				ownPlace.removeDynamic(this);
+				cell.setDynamicElem(this);
 				setOwnPlace(cell);
 				findPlace = true;
 				break;
