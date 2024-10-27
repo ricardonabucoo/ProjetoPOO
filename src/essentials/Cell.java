@@ -8,6 +8,7 @@ import javax.swing.*;
 public class Cell extends JPanel {
 
 	private static Cell[][] gridMap;
+	public boolean isEmpty;
 	private int row, col;
 	private StaticElem staticElem;
 	private DynamicElem dynamicElem;
@@ -152,7 +153,12 @@ public class Cell extends JPanel {
         }
     }
 
-	public static void main(String[] args) {
+
+	public boolean withoutDynamicElem() {
+		return dynamicElem == null; // Retorna true se a célula estiver vazia
+	}
+
+    public static void main(String[] args) {
 
 		JFrame frame = new JFrame();
 

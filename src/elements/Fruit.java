@@ -1,5 +1,7 @@
 package elements;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 import essentials.Cell;
 import status_effect.*;
 import javax.swing.ImageIcon;
@@ -62,7 +64,61 @@ public class Fruit extends DynamicElem {
 	}
 
 	public void drop() {
+		List <Cell> neighboringCells = new ArrayList<>();
+		neighboringCells.add(ownPlace.getCellDown());
+		neighboringCells.add(ownPlace.getCellUp());
+		neighboringCells.add(ownPlace.getCellLeft());
+		neighboringCells.add(ownPlace.getCellRight());
 
+/////////////////A ideia é criar uma lista já com o que sabemos que não será null
+		List<Cell> neighboringSquareCells = new ArrayList<>();
+		if (ownPlace.getCellDown() != null) {
+			neighboringSquareCells.add(ownPlace.getCellDown().getCellDown());
+			neighboringSquareCells.add(ownPlace.getCellDown().getCellLeft());
+			neighboringSquareCells.add(ownPlace.getCellDown().getCellRight());
+
+		}
+		if (ownPlace.getCellUp() != null) {
+			neighboringSquareCells.add(ownPlace.getCellUp().getCellUp());
+			neighboringSquareCells.add(ownPlace.getCellUp().getCellLeft());
+			neighboringSquareCells.add(ownPlace.getCellUp().getCellRight());
+		}
+		if (ownPlace.getCellLeft() != null) {
+			neighboringSquareCells.add(ownPlace.getCellLeft().getCellLeft());
+		}
+		if (ownPlace.getCellRight() != null) {
+			neighboringSquareCells.add(ownPlace.getCellRight().getCellRight());
+		}
+		//////a ideia é só adicionar essas repetições caso não haja o parametro de up ou down (bordas)
+		if (ownPlace.getCellDown() == null || ownPlace.getCellUp() == null ) {
+			neighboringSquareCells.add(ownPlace.getCellLeft().getCellDown());
+			neighboringSquareCells.add(ownPlace.getCellLeft().getCellUp());
+			neighboringSquareCells.add(ownPlace.getCellRight().getCellDown());
+			neighboringSquareCells.add(ownPlace.getCellRight().getCellUp());
+		}
+
+		Collections.shuffle(neighboringCells);
+		boolean findPlace = false;
+
+		for (Cell cell : neighboringCells) {
+			if (cell != null && cell.withoutDynamicElem()){
+				setOwnPlace(cell);
+				findPlace = true;
+				break;
+
+			}
+
+		}
+		if (!findPlace) {
+			Collections.shuffle(neighboringSquareCells);
+			for (Cell cellSquares : neighboringSquareCells) {
+				if (cellSquares != null && cellSquares.withoutDynamicElem()){
+					setOwnPlace(cellSquares);
+					findPlace = true;
+					break;
+				}
+			}
+		}
 	}
 
 	public void giveEffect (Player player) {
