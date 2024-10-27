@@ -1,27 +1,22 @@
 package UI.Panels;
 
-import elements.Fruit;
 import elements.FruitType;
-import elements.Grass;
-import elements.Rock;
 import essentials.Map;
-import essentials.MapBuilder;
+import Builders.MapBuilder;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.HashMap;
 
-import static essentials.Map.grid;
-
-public class CreateWorldOptionsPanel extends JPanel {
-    private MapBuilder mapBuilder;
+public class CreateMapPanel extends JPanel {
     private HashMap<String,InputField> inputFields;
+    private MapBuilder mapBuilder;
     private Map map;
     private JPanel leftPanel;
     private JPanel rightPanel;
 
-    public CreateWorldOptionsPanel() {
+    public CreateMapPanel() {
         setLayout(new BorderLayout());
         setBackground(Color.decode("#008b8b"));
 
@@ -37,7 +32,7 @@ public class CreateWorldOptionsPanel extends JPanel {
     private JPanel createMapViewerPanel(){
         JPanel mapViewer = new JPanel(new GridBagLayout());
         mapViewer.setBackground(Color.darkGray);
-        map = new Map();
+        map = createDefaultMap();
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -46,6 +41,14 @@ public class CreateWorldOptionsPanel extends JPanel {
         gbc.weighty = 0;
         mapViewer.add(map, gbc);
         return mapViewer;
+    }
+
+    private Map createDefaultMap(){
+        HashMap<FruitType,Integer> treeMap = new HashMap<FruitType,Integer>();
+        treeMap.put(FruitType.COCONUT,1);
+        HashMap<FruitType,Integer> fruitMap = new HashMap<FruitType,Integer>();
+        fruitMap.put(FruitType.BLACKBERRY,1);
+        return mapBuilder.buildMap(3,1,treeMap,fruitMap).getResult();
     }
 
     private JPanel createSetConfigsPanel(){
@@ -88,7 +91,6 @@ public class CreateWorldOptionsPanel extends JPanel {
         JPanel treesTypePanel = new JPanel();
         treesTypePanel.setLayout(new GridLayout(0,1));
         treesTypePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Árvore", TitledBorder.CENTER, TitledBorder.TOP));
-
 
         addNewInputFieldToHashMap(treesTypePanel,"Guava_tree","Goiaba:");
         addNewInputFieldToHashMap(treesTypePanel,"BarbadosCherry_tree","Acerola:");
@@ -142,7 +144,7 @@ public class CreateWorldOptionsPanel extends JPanel {
             HashMap<FruitType, Integer> fruitMap = createInitialFruitHashMap();
 
             rightPanel.remove(map);
-            map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap);
+            map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap).getResult();
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -156,12 +158,7 @@ public class CreateWorldOptionsPanel extends JPanel {
 
         JButton shuffleButton = new JButton("Shuffle");
         shuffleButton.addActionListener(e -> {
-            mapBuilder.reset();
-            mapBuilder.buildCellGrid(inputFields.get("Size").getInputAsInt());
-            mapBuilder.buildRockCells(inputFields.get("Rocks_amount").getInputAsInt());
-            mapBuilder.buildTreeCells(createTreesTypesHashMap());
-            mapBuilder.buildGrassCells();
-            mapBuilder.buildFruitsCells(createInitialFruitHashMap());
+
         });
         buttonsPanel.add(submitButton);
         buttonsPanel.add(shuffleButton);
@@ -183,6 +180,7 @@ public class CreateWorldOptionsPanel extends JPanel {
 
     private HashMap<FruitType,Integer> createTreesTypesHashMap(){
         HashMap<FruitType,Integer> trees = new HashMap<>();
+
         trees.put(FruitType.GUAVA, inputFields.get("Guava_tree").getInputAsInt());
         trees.put(FruitType.BARBADOSCHERRY, inputFields.get("BarbadosCherry_tree").getInputAsInt());
         trees.put(FruitType.BLACKBERRY, inputFields.get("BlackBerry_tree").getInputAsInt());
@@ -195,6 +193,7 @@ public class CreateWorldOptionsPanel extends JPanel {
 
     private HashMap<FruitType,Integer> createInitialFruitHashMap(){
         HashMap<FruitType,Integer> fruits = new HashMap<>();
+
         fruits.put(FruitType.PASSIONFRUIT, inputFields.get("PassionFruit_fruit").getInputAsInt());
         fruits.put(FruitType.GUAVA, inputFields.get("Guava_fruit").getInputAsInt());
         fruits.put(FruitType.BARBADOSCHERRY, inputFields.get("BarbadosCherry_fruit").getInputAsInt());
@@ -211,7 +210,7 @@ public class CreateWorldOptionsPanel extends JPanel {
         frame.setBounds(50, 50, 1000, 1000);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        CreateWorldOptionsPanel panel = new CreateWorldOptionsPanel();
+        CreateMapPanel panel = new CreateMapPanel();
         frame.add(panel);
         frame.setVisible(true);
     }

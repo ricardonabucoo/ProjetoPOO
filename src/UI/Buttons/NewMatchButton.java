@@ -1,7 +1,6 @@
 package UI.Buttons;
 
-import UI.Panels.CreateWorldOptionsPanel;
-import UI.Quiz;
+import UI.Panels.CreateMapPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +14,7 @@ public class NewMatchButton extends JButton {
         setPreferredSize(new Dimension(100, 50));
         this.addActionListener((e -> {
             frame.remove(panel);
-            frame.add(new CreateWorldOptionsPanel());
+            frame.add(new CreateMapPanel());
             frame.revalidate();
             frame.repaint();
         }));

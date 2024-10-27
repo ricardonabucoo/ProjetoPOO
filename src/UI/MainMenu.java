@@ -3,15 +3,15 @@ package UI;
 import UI.Buttons.CloseFrameButton;
 import UI.Buttons.LoadFileButton;
 import UI.Buttons.NewMatchButton;
-import essentials.GameManager;
+import UI.Frames.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainMenu extends JPanel{
-    private GameManager gm;
+    private MainFrame gm;
 
-    public MainMenu(GameManager gm) {
+    public MainMenu(MainFrame gm) {
         this.gm = gm;
         setBackground(Color.decode("#008b8b"));
         setLayout(new FlowLayout(FlowLayout.CENTER, 50, 275));

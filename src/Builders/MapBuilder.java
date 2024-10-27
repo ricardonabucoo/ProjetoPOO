@@ -1,27 +1,18 @@
-package essentials;
+package Builders;
 
 import elements.*;
+import essentials.Cell;
+import essentials.Map;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-public class MapBuilder {
+public class MapBuilder implements Builder {
 
 	private Map map;
 	private int gridSize;
-	private int rocksAmount;
-	private int treesAmount;
 	private List<Cell> grassCellList;
 	private List<Cell> treeCellList;
 	private List<Cell> availableCells;
@@ -32,28 +23,46 @@ public class MapBuilder {
 		reset();
 	}
 
+	@Override
+	public void build() {}
+
+	public MapBuilder buildMap(int size, int rocksAmount, HashMap<FruitType, Integer> treeMap, HashMap<FruitType, Integer> fruitMap) {
+		buildCellGrid(size)
+				.buildRockCells(rocksAmount)
+				.buildTreeCells(treeMap)
+				.buildGrassCells()
+				.buildFruitsCells(fruitMap);
+		return this;
+	}
+
+	@Override
 	public void reset() {
 		map = null;
 		gridSize = 0;
-		rocksAmount = 0;
-		treesAmount = 0;
 		grassCellList = new ArrayList<>();
 		treeCellList = new ArrayList<>();
 		availableCells = new ArrayList<>();
 		player1 = null;
 		player2 = null;
 	}
-
-	public Map buildMap(
-		int size,
-		int rocksAmount,
-		HashMap<FruitType, Integer> treeMap,
-		HashMap<FruitType, Integer> fruitMap
-	) {
-		return this.buildCellGrid(size).buildRockCells(rocksAmount).buildTreeCells(treeMap).buildGrassCells().buildFruitsCells(fruitMap).getResult();
+	public Map getResult() {
+		Map mapAux = map;
+		reset();
+		return mapAux;
 	}
 
-	public MapBuilder buildCellGrid(int size) {
+	public Player buildPlayer(String playerName, int bagCapacity) {
+		Cell cell = getRandomEmptyCell();
+		Player player = new Player(playerName,new Bag(bagCapacity),cell);
+		cell.setDynamicElem(player);
+		return player;
+	}
+
+	public List<Cell> getTreeCellList() {
+		return this.treeCellList;
+	}
+
+	private MapBuilder buildCellGrid(int size) {
 		gridSize = size;
 		map = new Map(size);
 		for (int i = 0; i < size; i++)
@@ -67,8 +76,7 @@ public class MapBuilder {
 		return this;
 	}
 
-	public MapBuilder buildRockCells(int rocksAmount) {
-		this.rocksAmount = rocksAmount;
+	private MapBuilder buildRockCells(int rocksAmount) {
 		for(int i = 0; i < rocksAmount; i++) {
 			Cell cell = getRandomEmptyCell();
 			cell.setStaticElem(new Rock(cell));
@@ -76,22 +84,32 @@ public class MapBuilder {
 		return this;
 	}
 
-	public MapBuilder buildTreeCells(HashMap<FruitType, Integer> treeMap) {
+	private MapBuilder buildTreeCells(HashMap<FruitType, Integer> treeMap) {
+		treeMap.forEach((type, amount) -> {
+			for (int i = 0; i < amount; i++) {
+				Cell cell = getRandomEmptyCell();
+				cell.setStaticElem(new Tree(cell, type));
+				treeCellList.add(cell);
+			}
+		});
+		/*
+		int treesAmount = 0;
 		for(java.util.Map.Entry<FruitType, Integer> entry : treeMap.entrySet()) {
 			int value = entry.getValue();
-			this.treesAmount += value;
+			treesAmount += value;
 			for(int i = 0; i < value; i++){
 				Cell cell = getRandomEmptyCell();
 				cell.setStaticElem(new Tree(cell,entry.getKey()));
 				treeCellList.add(cell);
 			}
 		}
+		*/
 		return this;
 	}
 
-	public MapBuilder buildGrassCells() {
-		int value = gridSize*gridSize - rocksAmount - treesAmount;
-			for(int i = 0; i < value; i++) {
+	private MapBuilder buildGrassCells() {
+		int grassCount = gridSize * gridSize - treeCellList.size() - availableCells.size();
+			for(int i = 0; i < grassCount; i++) {
 				Cell cell = getRandomEmptyCell();
 				cell.setStaticElem(new Grass(cell));
 				grassCellList.add(cell);
@@ -99,7 +117,15 @@ public class MapBuilder {
 		return this;
 	}
 
-	public MapBuilder buildFruitsCells(HashMap<FruitType, Integer> fruitMap) {
+	private MapBuilder buildFruitsCells(HashMap<FruitType, Integer> fruitMap) {
+
+		fruitMap.forEach((type, amount) -> {
+			for (int i = 0; i < amount; i++) {
+				Cell cell = getRandomWithoutFruitCell();
+				cell.setDynamicElem(new Fruit(cell, type));
+			}
+		});
+		/*
 		int totalFruits = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
 		if (totalFruits > grassCellList.size()) {
 			throw new IllegalArgumentException("numero de frutas maior que o numero de celular disponiveis");
@@ -114,42 +140,8 @@ public class MapBuilder {
 				}
 			}
 		}
+		*/
 		return this;
-	}
-
-	public Player buildPlayer(String playerName, int bagCapacity) {
-		Cell cell = getRandomEmptyCell();
-		Player player = new Player(playerName,new Bag(bagCapacity),cell);
-		cell.setDynamicElem(player);
-		return player;
-	}
-
-	public MapBuilder buildPlayerOne(String name, int bagCapacity){
-		player1 = buildPlayer(name,bagCapacity);
-		return this;
-	}
-
-	public MapBuilder buildPlayerTwo(String name, int bagCapacity){
-		player2 = buildPlayer(name,bagCapacity);
-		return this;
-	}
-
-	public List<Cell> getTreeCellList() {
-		return this.treeCellList;
-	}
-
-	public Player getPlayerOne() {
-		return player1;
-	}
-
-	public Player getPlayerTwo() {
-		return player2;
-	}
-
-	public Map getResult() {
-		Map mapAux = map;
-		reset();
-		return mapAux;
 	}
 
 	private Cell getRandomWithoutFruitCell() {
@@ -167,7 +159,5 @@ public class MapBuilder {
 		Random random = new Random();
 		return availableCells.remove(random.nextInt(availableCells.size()));
 	}
-
-
 
 }

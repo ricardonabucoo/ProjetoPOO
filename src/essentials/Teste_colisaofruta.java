@@ -1,11 +1,11 @@
 package essentials;
 
+import Builders.MapBuilder;
 import elements.FruitType;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 public class Teste_colisaofruta {
 
@@ -37,7 +37,7 @@ public class Teste_colisaofruta {
         fruitMap.put(FruitType.COCONUT,1);
         fruitMap.put(FruitType.ORANGE,2);
 
-        Map map = builder.buildMap(5,5,treeMap,fruitMap);
+        Map map = builder.buildMap(5,5,treeMap,fruitMap).getResult();
 
         mapViewer.add(map, gbc);
 
