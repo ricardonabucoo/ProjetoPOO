@@ -7,15 +7,15 @@ import java.awt.*;
 
 public class LoadFileButton extends JButton {
 
-    public LoadFileButton(MainFrame gm, String title) {
+    public LoadFileButton(String title) {
         super(title);
         setPreferredSize(new Dimension(100, 50));
         this.addActionListener((e -> {
             JFileChooser fileChooser = new JFileChooser();
             int returnValue = fileChooser.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION){
-                gm.buildMapByFile(fileChooser.getSelectedFile());
-                gm.dispose();
+                // construa o mapa com essas caracteristicas
+                //gm.buildMapByFile(fileChooser.getSelectedFile());
             }
         }));
     }

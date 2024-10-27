@@ -1,22 +1,20 @@
 package UI.Buttons;
 
+import UI.Frames.MainFrame;
+import UI.Panels.ChooseBuildMapMethodPanel;
 import UI.Panels.CreateMapPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class NewMatchButton extends JButton {
-    private final JFrame frame;
 
-    public NewMatchButton(JFrame frame, JPanel panel) {
+    public NewMatchButton() {
         super("<html> Nova <br>Partida</html>");
-        this.frame = frame;
         setPreferredSize(new Dimension(100, 50));
         this.addActionListener((e -> {
-            frame.remove(panel);
-            frame.add(new CreateMapPanel());
-            frame.revalidate();
-            frame.repaint();
+            MainFrame mainFrame = MainFrame.getInstance();
+            mainFrame.setCurrentPanel(new ChooseBuildMapMethodPanel());
         }));
     }
 }
