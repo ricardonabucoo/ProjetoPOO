@@ -1,5 +1,6 @@
 package UI.Panels;
 
+import UI.Frames.MainFrame;
 import elements.FruitType;
 import essentials.Map;
 import builders.MapBuilder;
@@ -48,7 +49,7 @@ public class CreateMapPanel extends JPanel {
         treeMap.put(FruitType.COCONUT,1);
         HashMap<FruitType,Integer> fruitMap = new HashMap<FruitType,Integer>();
         fruitMap.put(FruitType.BLACKBERRY,1);
-        return mapBuilder.buildMap(3,1,treeMap,fruitMap).getResult();
+        return mapBuilder.buildMap(3,1,treeMap,fruitMap,5,"claudinho","giovanny",5).getResult();
     }
 
     private JPanel createSetConfigsPanel(){
@@ -65,8 +66,6 @@ public class CreateMapPanel extends JPanel {
         configPanel.add(createTreesTypePanel());
         //frutas iniciais
         configPanel.add(createInitalFruitsPanel());
-        //nomes dos jogadores
-        configPanel.add(createPlayerNamesPanel());
         //botoes de submit e suffle
         configPanel.add(createButtonsPanel());
 
@@ -118,20 +117,11 @@ public class CreateMapPanel extends JPanel {
         return initalFruitsPanel;
     }
 
-    private JPanel createPlayerNamesPanel(){
-        JPanel playerNamesPanel = new JPanel();
-        playerNamesPanel.setLayout(new GridLayout(2,1));
-        playerNamesPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Nomes dos Jogadores", TitledBorder.CENTER, TitledBorder.TOP));
 
-        addNewInputFieldToHashMap(playerNamesPanel,"Player1","Apelido do jogador 1:",20);
-        addNewInputFieldToHashMap(playerNamesPanel,"Player2","Apelido do jogador 2:",20);
-
-        return playerNamesPanel;
-    }
 
     private JPanel createButtonsPanel(){
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(0,2));
+        buttonsPanel.setLayout(new GridLayout(0,3));
 
         mapBuilder = new MapBuilder();
 
@@ -139,12 +129,14 @@ public class CreateMapPanel extends JPanel {
         submitButton.addActionListener(e -> {
 
             int size = inputFields.get("Size").getInputAsInt();
-            int rocksAmount = inputFields.get("RocksAmount").getInputAsInt();
+            int rocksAmount = inputFields.get("Rocks_amount").getInputAsInt();
             HashMap<FruitType, Integer> treeMap = createTreesTypesHashMap();
             HashMap<FruitType, Integer> fruitMap = createInitialFruitHashMap();
+            int passionFruitAmount = inputFields.get("PassionFruit_amount").getInputAsInt();
+            int bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
 
             rightPanel.remove(map);
-            map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap).getResult();
+            map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap, passionFruitAmount, "giovanny", "calebe", bagCapacity).getResult();
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -160,8 +152,16 @@ public class CreateMapPanel extends JPanel {
         shuffleButton.addActionListener(e -> {
 
         });
+
+        JButton nextButton = new JButton("Next");
+        nextButton.addActionListener(e -> {
+           MainFrame mainFrame = MainFrame.getInstance();
+           mainFrame.setCurrentPanel(new CreateMatchPanel(mapBuilder,map));
+        });
+
         buttonsPanel.add(submitButton);
         buttonsPanel.add(shuffleButton);
+        buttonsPanel.add(nextButton);
 
         return buttonsPanel;
     }
@@ -206,13 +206,8 @@ public class CreateMapPanel extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setBounds(50, 50, 1000, 1000);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        CreateMapPanel panel = new CreateMapPanel();
-        frame.add(panel);
-        frame.setVisible(true);
+        MainFrame mainFrame = MainFrame.getInstance();
+        mainFrame.setCurrentPanel(new CreateMapPanel());
     }
 
 

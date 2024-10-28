@@ -5,6 +5,8 @@ import java.util.Collections;
 import essentials.Cell;
 import status_effect.*;
 import javax.swing.ImageIcon;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Fruit extends DynamicElem {
 	public static  int  WORMY_FRUITS_AMOUNT;
@@ -72,95 +74,79 @@ public class Fruit extends DynamicElem {
 	}
 
 	public void drop() {
-		List <Cell> neighboringCells = new ArrayList<>();
-		verify(neighboringCells,ownPlace.getCellDown());
-		verify(neighboringCells,ownPlace.getCellUp());
-		verify(neighboringCells,ownPlace.getCellLeft());
-		verify(neighboringCells,ownPlace.getCellRight());
-		/*
-		neighboringCells.add(ownPlace.getCellDown());
-		neighboringCells.add(ownPlace.getCellUp());
-		neighboringCells.add(ownPlace.getCellLeft());
-		neighboringCells.add(ownPlace.getCellRight());
-		*/
-/////////////////A ideia é criar uma lista já com o que sabemos que não será null
-		List<Cell> neighboringSquareCells = new ArrayList<>();
-		/*
-		if (ownPlace.getCellDown() != null) {
-			verify(neighboringSquareCells,ownPlace.getCellDown().getCellDown());
-			neighboringSquareCells.add(ownPlace.getCellDown().getCellLeft());
-			neighboringSquareCells.add(ownPlace.getCellDown().getCellRight());
+		Set<Cell> neighboringCells = new HashSet<>();
+		Set<Cell> neighboringSquareCells = new HashSet<>();
 
-		}
-		if (ownPlace.getCellUp() != null) {
-			neighboringSquareCells.add(ownPlace.getCellUp().getCellUp());
-			neighboringSquareCells.add(ownPlace.getCellUp().getCellLeft());
-			neighboringSquareCells.add(ownPlace.getCellUp().getCellRight());
-		}
-		if (ownPlace.getCellLeft() != null) {
-			neighboringSquareCells.add(ownPlace.getCellLeft().getCellLeft());
-		}
-		if (ownPlace.getCellRight() != null) {
-			neighboringSquareCells.add(ownPlace.getCellRight().getCellRight());
-		}
-		//////a ideia é só adicionar essas repetições caso não haja o parametro de up ou down (bordas)
-		if (ownPlace.getCellDown() == null || ownPlace.getCellUp() == null ) {
-			neighboringSquareCells.add(ownPlace.getCellLeft().getCellDown());
-			neighboringSquareCells.add(ownPlace.getCellLeft().getCellUp());
-			neighboringSquareCells.add(ownPlace.getCellRight().getCellDown());
-			neighboringSquareCells.add(ownPlace.getCellRight().getCellUp());
-		}
-		*/
+		addDirectNeighbors(neighboringCells);
+		addDiagonalAndBorderNeighbors(neighboringSquareCells);
 
-		if (ownPlace.getCellDown() != null) {
-			verify(neighboringSquareCells, ownPlace.getCellDown().getCellDown());
-			verify(neighboringSquareCells, ownPlace.getCellDown().getCellLeft());
-			verify(neighboringSquareCells, ownPlace.getCellDown().getCellRight());
-		}
-		if (ownPlace.getCellUp() != null) {
-			verify(neighboringSquareCells, ownPlace.getCellUp().getCellUp());
-			verify(neighboringSquareCells, ownPlace.getCellUp().getCellLeft());
-			verify(neighboringSquareCells, ownPlace.getCellUp().getCellRight());
-		}
-		if (ownPlace.getCellLeft() != null) {
-			verify(neighboringSquareCells, ownPlace.getCellLeft().getCellLeft());
-		}
-		if (ownPlace.getCellRight() != null) {
-			verify(neighboringSquareCells, ownPlace.getCellRight().getCellRight());
-		}
-
-		if (ownPlace.getCellDown() == null || ownPlace.getCellUp() == null) {
-			verify(neighboringSquareCells, ownPlace.getCellLeft().getCellDown());
-			verify(neighboringSquareCells, ownPlace.getCellLeft().getCellUp());
-			verify(neighboringSquareCells, ownPlace.getCellRight().getCellDown());
-			verify(neighboringSquareCells, ownPlace.getCellRight().getCellUp());
-		}
-
-		Collections.shuffle(neighboringCells);
-		boolean findPlace = false;
-
-		for (Cell cell : neighboringCells) {
-			if (cell != null && cell.withoutDynamicElem()){
-				ownPlace.removeDynamic(this);
-				cell.setDynamicElem(this);
-				setOwnPlace(cell);
-				findPlace = true;
-				break;
-
-			}
-
-		}
-		if (!findPlace) {
-			Collections.shuffle(neighboringSquareCells);
-			for (Cell cellSquares : neighboringSquareCells) {
-				if (cellSquares != null && cellSquares.withoutDynamicElem()){
-					setOwnPlace(cellSquares);
-					findPlace = true;
-					break;
-				}
-			}
+		// Tenta mover para uma célula direta, se não conseguir, tenta uma célula diagonal ou de borda
+		if (!moveToAvailableCell(neighboringCells)) {
+			moveToAvailableCell(neighboringSquareCells);
 		}
 	}
+
+	// vizinhos diretos
+	private void addDirectNeighbors(Set<Cell> cellSet) {
+		addNeighbor(cellSet, ownPlace.getCellDown());
+		addNeighbor(cellSet, ownPlace.getCellUp());
+		addNeighbor(cellSet, ownPlace.getCellLeft());
+		addNeighbor(cellSet, ownPlace.getCellRight());
+	}
+
+	// Adiciona as diagonais e bordas
+	private void addDiagonalAndBorderNeighbors(Set<Cell> cellSet) {
+		Cell down = ownPlace.getCellDown();
+		Cell up = ownPlace.getCellUp();
+		Cell left = ownPlace.getCellLeft();
+		Cell right = ownPlace.getCellRight();
+
+		if (down != null) {
+			addNeighbor(cellSet, down.getCellDown());
+			addNeighbor(cellSet, down.getCellLeft());
+			addNeighbor(cellSet, down.getCellRight());
+		}
+		if (up != null) {
+			addNeighbor(cellSet, up.getCellUp());
+			addNeighbor(cellSet, up.getCellLeft());
+			addNeighbor(cellSet, up.getCellRight());
+		}
+		if (left != null) {
+			addNeighbor(cellSet, left.getCellLeft());
+			addNeighbor(cellSet, left.getCellUp());
+			addNeighbor(cellSet, left.getCellDown());
+		}
+		if (right != null) {
+			addNeighbor(cellSet, right.getCellRight());
+			addNeighbor(cellSet, right.getCellUp());
+			addNeighbor(cellSet, right.getCellDown());
+		}
+
+
+	}
+
+	// Método que adiciona ao conjunto se não for nulo
+	private void addNeighbor(Set<Cell> cellSet, Cell cell) {
+		if (cell != null) {
+			cellSet.add(cell);
+		}
+	}
+
+	// Método  mover para a primeira célula disponível no conjunto
+	private boolean moveToAvailableCell(Set<Cell> cells) {
+		List<Cell> cellList = new ArrayList<>(cells);
+		Collections.shuffle(cellList);
+		for (Cell cell : cellList) {
+			if (cell.withoutDynamicElem()) {
+				ownPlace.removeDynamicElem(this);
+				cell.setDynamicElem(this);
+				setOwnPlace(cell);
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	public void giveEffect (Player player) {
 		this.fruitEffect.applyEffect(player);

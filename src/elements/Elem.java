@@ -1,7 +1,8 @@
 package elements;
 
 import essentials.Cell;
-import javax.swing.JButton;
+
+import javax.swing.*;
 
 public abstract class Elem extends JButton
 {

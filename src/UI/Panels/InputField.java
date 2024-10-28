@@ -18,6 +18,7 @@ public class InputField extends JPanel {
         add(label);
         add(field);
     }
+
     public InputField(JLabel label, int size) {
         field = new JTextField("nome",size);
         setLayout(new FlowLayout());

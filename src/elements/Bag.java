@@ -3,10 +3,11 @@ package elements;
 import essentials.Cell;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class Bag {
     private static int capacity;
-    private List<Fruit> fruitList;
+    private ArrayList<Fruit> fruitList;
     private int fruitsAmount;
 
     public Bag(int capacity) {
@@ -43,5 +44,22 @@ public class Bag {
             fruit.setOwnPlace(newPosition);
         }
     }
+
+    public void dropFruit(int dropFruitAmount) {
+
+        int value = 0;
+        if(dropFruitAmount <= fruitsAmount)
+            value = dropFruitAmount;
+        else
+            value = fruitsAmount;
+
+        for(int i = 0; i < value; i++) {
+            Collections.shuffle(fruitList);
+            Fruit fruit = fruitList.getFirst();
+            fruit.drop();
+            fruitsAmount--;
+        }
+    }
+
 }
 

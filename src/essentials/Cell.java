@@ -4,8 +4,9 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.*;
+import java.io.Serializable;
 
-public class Cell extends JPanel {
+public class Cell extends JPanel implements Serializable{
 
 	private static Cell[][] gridMap;
 	public boolean isEmpty;
@@ -42,7 +43,15 @@ public class Cell extends JPanel {
             }
         });
 	}
-	
+
+	public int getRow() {
+		return row;
+	}
+	public int getCol() {
+		return col;
+	}
+
+
 	public static void initializeGridMap(Cell[][] grid) {
 	    Cell.gridMap = grid;
 	}
@@ -106,6 +115,9 @@ public class Cell extends JPanel {
 	public DynamicElem getDynamicElem(){
 		return this.dynamicElem;
 	}
+	public StaticElem getStaticElem(){
+		return this.staticElem;
+	}
 	
 	public void setDynamicElem(DynamicElem elem) {
         this.dynamicElem = elem;
@@ -120,7 +132,7 @@ public class Cell extends JPanel {
         this.repaint();
 	}
 
-	public void removeDynamic(DynamicElem elem) {
+	public void removeDynamicElem(DynamicElem elem) {
 		if(elem != this.dynamicElem){
 			System.out.println("opaopaopa erro");
 			return;
@@ -132,9 +144,7 @@ public class Cell extends JPanel {
 	}
 	
 	
-	public StaticElem getStaticElem(){
-		return this.staticElem;
-	}
+
 	
 	public void setStaticElem(StaticElem elem) {
 		this.staticElem = elem;
@@ -194,10 +204,6 @@ public class Cell extends JPanel {
 		frame.setVisible(true);
 
 	}
-
-
-
-
 
 
 

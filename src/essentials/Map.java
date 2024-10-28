@@ -1,16 +1,28 @@
 package essentials;
 
+import elements.DynamicElem;
+import elements.Player;
+import temporario.CellInfoDisplay;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.Serializable;
 
-public class Map extends JPanel{
-	
+public class Map extends JPanel implements Serializable{
+
 	public static Cell[][] grid;
+	private Player player1;
+	private Player player2;
 	private int gridSize;
 	private GridBagConstraints gbc;
+	private  JLabel infoLabel;
 
 	public Map() {
+		infoLabel = new JLabel();
+		player1 = null;
+		player2 = null;
 		grid = null;
 		gridSize = 3;
 		setLayout(new GridBagLayout());
@@ -22,6 +34,9 @@ public class Map extends JPanel{
 	}
 
 	public Map(int size) {
+		infoLabel = new JLabel();
+		player1 = null;
+		player2 = null;
 		grid = null;
 		gridSize = size;
 		setLayout(new GridBagLayout());
@@ -30,7 +45,9 @@ public class Map extends JPanel{
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		fillDefaultCells();
+
 	}
+
 
 	public Cell[][] getGrid() {
 		return grid;
@@ -44,37 +61,40 @@ public class Map extends JPanel{
 			}
 		}
 	}
+	private void showCellInfo(int i, int j) {
+		Cell cell = grid[i][j];
+		StringBuilder info = new StringBuilder(String.format("Posição: (%d, %d), Elemento: %s,",
+				cell.getRow(), cell.getCol(), cell.getStaticElem() ));
 
+		// Verifica e exibe o elemento dinâmico, se houver
+		DynamicElem dynamicElem = cell.getDynamicElem();
+		if (dynamicElem != null) {
+			info.append(", Dinâmico: ").append(cell.getDynamicElem());
+		}
+
+		infoLabel.setText(info.toString());
+	}
 	public void addCell(Cell cell, int row,int col){
 		gbc.gridx = row;
 		gbc.gridy = col;
 		grid[row][col] = cell;
 		add(cell, gbc);
-	}
-	/*
-	@Override
-	public void revalidate() {
-		super.revalidate();
-		for (int i = 0; i < gridSize; i++)
-			for (int j = 0; j < gridSize; j++)
-				grid[i][j].revalidate();
-		super.revalidate();
+		cell.addMouseMotionListener(new MouseMotionAdapter() {
+										@Override
+										public void mouseMoved(MouseEvent e) {
+											showCellInfo(row, col);
+										}
+									} );
 	}
 
-	@Override
-	public void repaint() {
-		super.repaint();
-		for (int i = 0; i < gridSize; i++)
-			for (int j = 0; j < gridSize; j++)
-				grid[i][j].repaint();
-		super.repaint();
-	}
-	*/
 	public void update() {
 		for(int i = 0; i < gridSize; i++)
 			for(int j = 0; j < gridSize; j++) {
 				grid[i][j].update();
 			}
 	}
-	
+
+	public JLabel getInfoLabel() {
+		return infoLabel;
+	}
 }
