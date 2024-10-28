@@ -50,9 +50,10 @@ public final class Tree extends StaticElem {
 	public void produceFruit(Player player) {
 		if (!hasfruit) {
 			currentRoundCount = 0;
+			hasfruit = true;
 			Fruit fruit = new Fruit(ownPlace, producedFruit);
 			player.addFruitBag(fruit);
-			hasfruit = true;
+			collectFruit();
 		}
 	}
 
