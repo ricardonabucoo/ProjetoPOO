@@ -129,7 +129,7 @@ public class CreateMapPanel extends JPanel {
         submitButton.addActionListener(e -> {
 
             int size = inputFields.get("Size").getInputAsInt();
-            int rocksAmount = inputFields.get("RocksAmount").getInputAsInt();
+            int rocksAmount = inputFields.get("Rocks_amount").getInputAsInt();
             HashMap<FruitType, Integer> treeMap = createTreesTypesHashMap();
             HashMap<FruitType, Integer> fruitMap = createInitialFruitHashMap();
 
