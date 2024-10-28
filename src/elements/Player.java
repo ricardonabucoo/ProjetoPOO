@@ -20,4 +20,16 @@ public class Player extends DynamicElem{
 		this.power = 0;
 	}
 	
+	public String getPlayerName() {
+		
+		return this.name;
+		
+	}
+	
+	public int getPlayerPower() {
+		
+		return this.power;
+		
+	}
+	
 }
