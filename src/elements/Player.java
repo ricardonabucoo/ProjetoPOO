@@ -3,6 +3,7 @@ package elements;
 import essentials.Cell;
 import status_effect.EffectList;
 import javax.swing.ImageIcon;
+import java.awt.*;
 
 public class Player extends DynamicElem{
 	public final String name;
@@ -20,6 +21,14 @@ public class Player extends DynamicElem{
 		this.movimentPoints = 0;
 		this.power = 0;
 		this.canMoveNextRound = true;
+
+		ImageIcon imageIcon = new ImageIcon("images/Female01.png");
+
+		Image scaledImage = imageIcon.getImage().getScaledInstance(60, 100, Image.SCALE_SMOOTH); // Defina o tamanho desejado
+		setIcon(new ImageIcon(scaledImage));
+		setPreferredSize(new java.awt.Dimension(100, 100));
+		revalidate();
+		repaint();
 	}
 
 	public void addFruitBag(Fruit fruit) {

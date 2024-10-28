@@ -1,5 +1,6 @@
 package temporario;
 
+import UI.Frames.MainFrame;
 import builders.MapBuilder;
 import elements.Fruit;
 import elements.FruitType;
@@ -12,15 +13,10 @@ import java.util.HashMap;
 public class Teste_colisaofruta {
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setBounds(50, 50, 1000, 1000);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setVisible(true);
+        MainFrame mainFrame = MainFrame.getInstance();
 
         JPanel mapViewer = new JPanel(new BorderLayout());
         mapViewer.setBackground(Color.darkGray);
-        frame.add(mapViewer);
 
         MapBuilder builder = new MapBuilder();
 
@@ -34,23 +30,33 @@ public class Teste_colisaofruta {
         //fruitMap.put(FruitType.COCONUT,1);
         //fruitMap.put(FruitType.ORANGE,2);
 
-        builder.buildMap(8,5,treeMap,fruitMap,5,"sla","sla",5);
+        builder.buildMap(5,5,treeMap,fruitMap,5,"sla","sla",5);
         Fruit fruita = (Fruit) builder.getFruitCellList().get(0).getDynamicElem();
         Map map = builder.getResult();
-       //mapViewer.add (map.getInfoLabel(), BorderLayout.SOUTH);
-        mapViewer.add(map);
+        mapViewer.add(map, BorderLayout.CENTER);
+
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.lightGray);
+        panel.setPreferredSize(new Dimension(300,500));
+        mapViewer.add(panel, BorderLayout.WEST);
+        JPanel panel2 = new JPanel();
+        panel2.setBackground(Color.lightGray);
+        panel2.setPreferredSize(new Dimension(300,500));
+        mapViewer.add(panel2, BorderLayout.EAST);
+
         mapViewer.revalidate();;
         mapViewer.repaint();
 
-////infoLabel = new JLabel ("Passe o mouse sobre uma célular para ver informações");
-//		add(infoLabel, BorderLayout.SOUTH);
+        mainFrame.setCurrentPanel(mapViewer);
+        JLabel infoLabel = map.getInfoLabel();
+        panel2.add(infoLabel);
 
 
         JButton button = new JButton("simular colisao");
         button.addActionListener(e -> {
            fruita.drop();
         });
-        mapViewer.add(button);
+       // mapViewer.add(button);
 
 
         mapViewer.revalidate();;

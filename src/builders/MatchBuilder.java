@@ -41,9 +41,4 @@ public class MatchBuilder implements Builder {
         return aux;
     }
 
-    private MatchBuilder buildPassionFruitFactory(int PassionFruitsAmount){
-        passionFruitFactory = PassionFruitFactory.getInstance(mapBuilder.getTreeCellList(), PassionFruitsAmount);
-        return this;
-    }
-
 }
