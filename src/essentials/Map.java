@@ -1,14 +1,20 @@
 package essentials;
 
+import elements.DynamicElem;
+import temporario.CellInfoDisplay;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.Serializable;
 
-public class Map extends JPanel{
-	
+public class Map extends JPanel implements Serializable{
+
 	public static Cell[][] grid;
 	private int gridSize;
 	private GridBagConstraints gbc;
+	private  JLabel infoLabel;
 
 	public Map() {
 		grid = null;
@@ -30,7 +36,9 @@ public class Map extends JPanel{
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		fillDefaultCells();
+
 	}
+
 
 	public Cell[][] getGrid() {
 		return grid;
@@ -44,13 +52,32 @@ public class Map extends JPanel{
 			}
 		}
 	}
+	private void showCellInfo(int i, int j) {
+		Cell cell = grid[i][j];
+		StringBuilder info = new StringBuilder(String.format("Posição: (%d, %d), Elemento: %s,",
+				cell.getRow(), cell.getCol(), cell.getStaticElem() ));
 
+		// Verifica e exibe o elemento dinâmico, se houver
+		DynamicElem dynamicElem = cell.getDynamicElem();
+		if (dynamicElem != null) {
+			info.append(", Dinâmico: ").append(cell.getDynamicElem());
+		}
+
+		infoLabel.setText(info.toString());
+	}
 	public void addCell(Cell cell, int row,int col){
 		gbc.gridx = row;
 		gbc.gridy = col;
 		grid[row][col] = cell;
 		add(cell, gbc);
+		cell.addMouseMotionListener(new MouseMotionAdapter() {
+										@Override
+										public void mouseMoved(MouseEvent e) {
+											showCellInfo(row, col);
+										}
+									} );
 	}
+
 	/*
 	@Override
 	public void revalidate() {
@@ -69,6 +96,16 @@ public class Map extends JPanel{
 				grid[i][j].repaint();
 		super.repaint();
 	}
+
+	public Map(Cell[][] grid) {
+		this.grid = grid;
+		this.gridSize = grid.length;
+		setLayout(new GridLayout(gridSize, gridSize));
+		for(int i = 0; i < gridSize; i++)
+			for(int j = 0; j < gridSize; j++)
+				add(grid[i][j],i,j);
+	}
+
 	*/
 	public void update() {
 		for(int i = 0; i < gridSize; i++)
@@ -76,5 +113,8 @@ public class Map extends JPanel{
 				grid[i][j].update();
 			}
 	}
-	
+
+	public JLabel getInfoLabel() {
+		return infoLabel;
+	}
 }

@@ -18,14 +18,9 @@ public class Teste_colisaofruta {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
 
-        JPanel mapViewer = new JPanel(new GridBagLayout());
+        JPanel mapViewer = new JPanel(new BorderLayout());
         mapViewer.setBackground(Color.darkGray);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.weightx = 0;
-        gbc.weighty = 0;
+        frame.add(mapViewer);
 
         MapBuilder builder = new MapBuilder();
 
@@ -39,13 +34,16 @@ public class Teste_colisaofruta {
         //fruitMap.put(FruitType.COCONUT,1);
         //fruitMap.put(FruitType.ORANGE,2);
 
-        builder.buildMap(5,5,treeMap,fruitMap);
+        builder.buildMap(8,5,treeMap,fruitMap);
         Fruit fruita = (Fruit) builder.getFruitCellList().get(0).getDynamicElem();
         Map map = builder.getResult();
-
-        mapViewer.add(map, gbc);
+       //mapViewer.add (map.getInfoLabel(), BorderLayout.SOUTH);
+        mapViewer.add(map);
         mapViewer.revalidate();;
         mapViewer.repaint();
+
+////infoLabel = new JLabel ("Passe o mouse sobre uma célular para ver informações");
+//		add(infoLabel, BorderLayout.SOUTH);
 
 
         JButton button = new JButton("simular colisao");
@@ -54,7 +52,6 @@ public class Teste_colisaofruta {
         });
         mapViewer.add(button);
 
-        frame.add(mapViewer);
 
         mapViewer.revalidate();;
         mapViewer.repaint();

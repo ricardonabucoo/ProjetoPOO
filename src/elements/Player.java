@@ -19,5 +19,48 @@ public class Player extends DynamicElem{
 		this.movimentPoints = 0;
 		this.power = 0;
 	}
-	
+
+	public void addFruitBag(Fruit fruit) {
+		bag.add(fruit);
+	}
+
+	public Cell getOwnPlace() {
+		return this.ownPlace;
+	}
+
+	public void playerMove (Cell newcell) {
+		DynamicElem dynamicElem = newcell.getDynamicElem();
+		if (movimentPoints >= newcell.getMPNeeded()) {
+			if (dynamicElem == null) {
+				ownPlace.removeDynamicElem(this);
+				newcell.setDynamicElem(this);
+				this.ownPlace = newcell;
+				movimentPoints--;
+			} else if (dynamicElem instanceof Fruit) {
+				Fruit fruit = (Fruit) dynamicElem;
+				ownPlace.removeDynamicElem(this);
+				newcell.setDynamicElem(this);
+				addFruitBag(fruit);
+				this.ownPlace = newcell;
+				movimentPoints--;
+			} else {
+				Player opponent = (Player) dynamicElem;
+				opponent.receivedDamage(this.power);
+			}
+		}
+	}
+
+	public void receivedDamage (int power) {
+		double logFa = Math.log(power + 1) / Math.log(2);
+		double logFd = Math.log(this.power + 1) / Math.log(2);
+		int difference = (int) Math.floor(logFa - logFd);
+
+		if (difference > 0) {
+			bag.droppedFuit(difference);
+		}
+	}
+
+	public int getMovimentPoints () {
+		return movimentPoints;
+	}
 }
