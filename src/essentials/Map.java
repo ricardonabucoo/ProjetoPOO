@@ -1,6 +1,7 @@
 package essentials;
 
 import elements.DynamicElem;
+import elements.PassionFruitFactory;
 import elements.Player;
 import temporario.CellInfoDisplay;
 
@@ -16,10 +17,12 @@ public class Map extends JPanel implements Serializable{
 	private Player player1;
 	private Player player2;
 	private int gridSize;
+	private PassionFruitFactory passionFruitFactory;
 	private GridBagConstraints gbc;
 	private JPanel cellInfoPanel;
 
 	public Map() {
+		passionFruitFactory = null;
 		cellInfoPanel = new JPanel();
 		player1 = null;
 		player2 = null;
@@ -34,6 +37,7 @@ public class Map extends JPanel implements Serializable{
 	}
 
 	public Map(int size) {
+		passionFruitFactory = null;
 		cellInfoPanel = new JPanel();
 		player1 = null;
 		player2 = null;
@@ -48,7 +52,6 @@ public class Map extends JPanel implements Serializable{
 
 	}
 
-
 	public Cell[][] getGrid() {
 		return grid;
 	}
@@ -61,9 +64,6 @@ public class Map extends JPanel implements Serializable{
 			}
 		}
 	}
-
-
-
 
 	private void cellInfoPanel(int i, int j) {
 		JPanel panel = new JPanel();
@@ -104,6 +104,27 @@ public class Map extends JPanel implements Serializable{
 											cellInfoPanel(row, col);
 										}
 									} );
+	}
+
+	public void setPassionFruitFactory(PassionFruitFactory passionFruitFactory) {
+		this.passionFruitFactory = passionFruitFactory;
+	}
+
+	public void setPlayer1(Player player1) {
+		this.player1 = player1;
+	}
+
+	public void setPlayerOneName(String name){
+		player1.setName(name);
+	}
+
+
+	public void setPlayer2(Player player2) {
+		this.player2 = player2;
+	}
+
+	public void setPlayerTwoName(String name){
+		player2.setName(name);
 	}
 
 	public void update() {

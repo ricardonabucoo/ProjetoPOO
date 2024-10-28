@@ -1,6 +1,6 @@
 package builders;
 
 public interface Builder {
-    void build();
+    Builder build();
     void reset();
 }

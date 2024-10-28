@@ -20,9 +20,15 @@ public class MatchBuilder implements Builder {
     }
 
     @Override
-    public void build() {
-
+    public MatchBuilder build() {
         match = new Match(map, player1, player2, passionFruitFactory);
+        return this;
+    }
+
+    public MatchBuilder setPlayersName(String player1Name, String player2Name) {
+        map.setPlayerOneName(player1Name);
+        map.setPlayerTwoName(player2Name);
+        return this;
     }
 
     @Override
