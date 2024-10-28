@@ -10,7 +10,7 @@ import elements.*;
 
 public class TopGameBoard extends JPanel {
 
-	private Match gameMatch;
+	private final Match gameMatch;
 
 
 	public TopGameBoard(Match gameMatch) {

@@ -39,7 +39,7 @@ public class Teste_colisaofruta {
         panel.setBackground(Color.lightGray);
         panel.setPreferredSize(new Dimension(300,500));
         mapViewer.add(panel, BorderLayout.WEST);
-        JPanel panel2 = new JPanel();
+        JPanel panel2 = map.getCellInfoPanel();
         panel2.setBackground(Color.lightGray);
         panel2.setPreferredSize(new Dimension(300,500));
         mapViewer.add(panel2, BorderLayout.EAST);
@@ -48,8 +48,6 @@ public class Teste_colisaofruta {
         mapViewer.repaint();
 
         mainFrame.setCurrentPanel(mapViewer);
-        JLabel infoLabel = map.getInfoLabel();
-        panel2.add(infoLabel);
 
 
         JButton button = new JButton("simular colisao");

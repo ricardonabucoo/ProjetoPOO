@@ -1,13 +1,21 @@
 package essentials;
 
+import UI.Panels.MapInfoPanel;
+import UI.Panels.PlayerInfoPanel;
+import UI.Panels.TopGameBoard;
 import elements.Bag;
 import elements.PassionFruitFactory;
 import elements.Player;
 
+import javax.swing.*;
 import java.awt.*;
 
-public class Match {
+public class Match extends JPanel {
 
+    private TopGameBoard topBoard;
+    private MapInfoPanel mapInfo;
+    private PlayerInfoPanel player1Info;
+    private PlayerInfoPanel player2Info;
     private Map map;
     private Player player1;
     private Player player2;
@@ -21,7 +29,28 @@ public class Match {
         this.passionFruitFactory = passionFruitFactory;
         this.roundCount = 0;
 
+        setLayout(new BorderLayout());
+        setBackground(Color.decode("#008b8b"));
+        mapInfo = new MapInfoPanel(map);
+        player1Info = new PlayerInfoPanel(this,player1);
+        player2Info = new PlayerInfoPanel(this,player2);
+        add(mapInfo, BorderLayout.WEST);
+        add(player1Info, BorderLayout.EAST);
+        add(map, BorderLayout.CENTER);
+        add(new TopGameBoard(this), BorderLayout.NORTH);
+
     }
+
+    public void endTurn(Player player) {
+        if(player == player1)
+            setTurn(player2);
+
+    }
+
+    private void setTurn(Player player) {
+
+    }
+
 
     public Player getPlayerOne() {
     	return this.player1;
