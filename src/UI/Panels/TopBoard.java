@@ -49,8 +49,8 @@ public class TopBoard extends JPanel  {
 	}
 
 	private JButton getPowerPlayerTwo(Match match) {
-		int player2P = match.getPlayerTwo().getPower();
-		JButton powerButton = new JButton(Integer.toString(player2P));
+		int player2Power = match.getPlayerTwo().getPower();
+		JButton powerButton = new JButton(Integer.toString(player2Power));
 		return powerButton;
 	}
 
@@ -81,32 +81,32 @@ public class TopBoard extends JPanel  {
 	}
 
 	private JButton getPowerPlayerOne(Match match) {
-		int player1P = match.getPlayerOne().getPower();
-		JButton powerButton = new JButton(Integer.toString(player1P));
+		int player1Power = match.getPlayerOne().getPower();
+		JButton powerButton = new JButton(Integer.toString(player1Power));
 		return powerButton;
 	}
 
 	private JButton getNamePlayerTwo(Match match) {
-		String player2N = match.getPlayerTwo().getName();
-		JButton nameButton = new JButton(player2N);
+		String player2Name = match.getPlayerTwo().getName();
+		JButton nameButton = new JButton(player2Name);
 		return nameButton;
 	}
 
 	private JButton getNamePlayerOne(Match match) {
-		String player1N = match.getPlayerOne().getName();
-		JButton nameButton = new JButton(player1N);
+		String player1Name = match.getPlayerOne().getName();
+		JButton nameButton = new JButton(player1Name);
 		return nameButton;
 	}
 
 	private JButton getPassionPlayerTwo(Match match) {
-		int player2PF = match.getPlayerTwo().getBag().getPassionFruitAmount();
-		JButton goldenFruitButton = new JButton(Integer.toString(player2PF));
+		int player2PassionFruit = match.getPlayerTwo().getBag().getPassionFruitAmount();
+		JButton goldenFruitButton = new JButton(Integer.toString(player2PassionFruit));
 		return goldenFruitButton;
 	}
 
 	private JButton getPassionPlayerOne(Match match) {
-		int player1PF = match.getPlayerOne().getBag().getPassionFruitAmount();
-		JButton goldenFruitButton = new JButton(Integer.toString(player1PF));
+		int player1PassionFruit = match.getPlayerOne().getBag().getPassionFruitAmount();
+		JButton goldenFruitButton = new JButton(Integer.toString(player1PassionFruit));
 		return goldenFruitButton;
 	}
 
