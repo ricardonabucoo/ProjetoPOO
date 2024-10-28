@@ -101,4 +101,8 @@ public class Player extends DynamicElem{
 	public void setMovimentPoints (int movimentPoints) {
 		this.movimentPoints = movimentPoints;
 	}
+	
+	public Bag getBag() {
+		return this.bag;
+	}
 }

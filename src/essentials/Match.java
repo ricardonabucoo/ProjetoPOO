@@ -18,7 +18,13 @@ public class Match {
         this.passionFruitFactory = passionFruitFactory;
     }
 
-
+    public Player getPlayerOne() {
+    	return this.player1;
+    }
+    
+    public Player getPlayerTwo() {
+    	return this.player2;
+    }
 
 
 }

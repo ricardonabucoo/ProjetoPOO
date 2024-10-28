@@ -17,7 +17,7 @@ public class GamePanel extends JPanel {
 	        setBackground(Color.decode("#008b8b"));
 	        leftPanel = createLeftPanel();
 	        rightPanel = createRightPanel();
-	        centerPanel = new MainMenuPanel();
+	        centerPanel = new CreateMapPanel();
 	        topPanel = createTopPanel();
 	        add(leftPanel, BorderLayout.WEST);
 	        add(rightPanel, BorderLayout.EAST);

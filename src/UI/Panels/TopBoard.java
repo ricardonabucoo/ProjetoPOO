@@ -7,7 +7,7 @@ import javax.swing.*;
 import UI.Buttons.*;
 import essentials.*;
 
-public class TopBoard extends JPanel {
+public class TopBoard extends JPanel  {
 	
 	private JButton PassionPlayerOne;
 	private JButton PassionPlayerTwo;
@@ -23,16 +23,16 @@ public class TopBoard extends JPanel {
 	
 	
 
-	public TopBoard() {
+	public TopBoard(Match gameMatch) {
 		
 		setLayout(new GridLayout(0,3));
 		setBackground(Color.decode("#008b8b"));
-		PassionPlayerOne = getPassionPlayerOne();
-		PassionPlayerTwo = getPassionPlayerTwo();
-		NamePlayerOne = getNamePlayerOne();
-		NamePlayerTwo = getNamePlayerTwo();
-		PowerPlayerOne = getPowerPlayerOne();
-		PowerPlayerTwo = getPowerPlayerTwo();
+		PassionPlayerOne = getPassionPlayerOne(gameMatch);
+		PassionPlayerTwo = getPassionPlayerTwo(gameMatch);
+		NamePlayerOne = getNamePlayerOne(gameMatch);
+		NamePlayerTwo = getNamePlayerTwo(gameMatch);
+		PowerPlayerOne = getPowerPlayerOne(gameMatch);
+		PowerPlayerTwo = getPowerPlayerTwo(gameMatch);
 		RoundCounter = getRoundCounter();
 		ExitButton = new CloseMainFrameButton();
 		Left= createLeftPanel();
@@ -49,54 +49,65 @@ public class TopBoard extends JPanel {
 	}
 
 	private JButton getPowerPlayerTwo(Match match) {
-		int player2P = match.GetPlayerTwo().getPlayerPower();
-		return null;
+		int player2P = match.getPlayerTwo().getPower();
+		JButton powerButton = new JButton(Integer.toString(player2P));
+		return powerButton;
 	}
 
 	private JPanel createRightPanel() {
     	 JPanel panel = new JPanel();
     	 setLayout(new FlowLayout());
-         panel.setBackground(Color.orange);
+    	 panel.add(PassionPlayerTwo);
+    	 panel.add(NamePlayerTwo);
+    	 panel.add(PowerPlayerTwo);
          return panel;
 	}
 
 	private JPanel createCenterPanel() {
 		 JPanel panel = new JPanel();
 		 setLayout(new FlowLayout());
-	        panel.setBackground(Color.yellow);
+    	 panel.add(RoundCounter);
+    	 panel.add(ExitButton);
 	        return panel;
 	}
 
 	private JPanel createLeftPanel() {
 		 JPanel panel = new JPanel();
 		 setLayout(new FlowLayout());
-	        panel.setBackground(Color.green);
+    	 panel.add(PassionPlayerOne);
+    	 panel.add(NamePlayerOne);
+    	 panel.add(PowerPlayerOne);
 	        return panel;
 	}
 
 	private JButton getPowerPlayerOne(Match match) {
-		int player1P = match.GetPlayerOne().getPlayerPower();
-		return null;
+		int player1P = match.getPlayerOne().getPower();
+		JButton powerButton = new JButton(Integer.toString(player1P));
+		return powerButton;
 	}
 
 	private JButton getNamePlayerTwo(Match match) {
-		String player2N = match.GetPlayerTwo().getPlayerName();
-		return null;
+		String player2N = match.getPlayerTwo().getName();
+		JButton nameButton = new JButton(player2N);
+		return nameButton;
 	}
 
 	private JButton getNamePlayerOne(Match match) {
-		String player1N = match.GetPlayerOne().getPlayerName();
-		return null;
+		String player1N = match.getPlayerOne().getName();
+		JButton nameButton = new JButton(player1N);
+		return nameButton;
 	}
 
 	private JButton getPassionPlayerTwo(Match match) {
-		int player2PF = match.GetPlayerTwo().getBag().getFruitsAmount();
-		return null;
+		int player2PF = match.getPlayerTwo().getBag().getPassionFruitAmount();
+		JButton goldenFruitButton = new JButton(Integer.toString(player2PF));
+		return goldenFruitButton;
 	}
 
 	private JButton getPassionPlayerOne(Match match) {
-		int player1PF = match.GetPlayerOne().getBag().getFruitsAmount();
-		return null;
+		int player1PF = match.getPlayerOne().getBag().getPassionFruitAmount();
+		JButton goldenFruitButton = new JButton(Integer.toString(player1PF));
+		return goldenFruitButton;
 	}
 
 
@@ -106,8 +117,9 @@ public class TopBoard extends JPanel {
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
-        TopBoard panel = new TopBoard();
+        
+        CreateMatchPanel create = new CreateMatchPanel(null, null);
+        TopBoard panel = new TopBoard(create.getMatch());
         frame.add(panel);
 
     }
