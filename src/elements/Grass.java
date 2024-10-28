@@ -7,10 +7,12 @@ import javax.swing.ImageIcon;
 public final class Grass extends StaticElem {
 
 	public static final int MP_REQUIRED_FOR_GRASS = 1;
+	private String currentImagePath;
 
 	public Grass(Cell ownPlace) {
 		super(ownPlace);
-		ImageIcon icon = new ImageIcon("images/grass.png");
+		currentImagePath = "images/grass.png";
+		ImageIcon icon = new ImageIcon(currentImagePath);
 		this.setIcon(icon);
 
 		if (icon.getImageLoadStatus() == MediaTracker.COMPLETE)
@@ -23,4 +25,8 @@ public final class Grass extends StaticElem {
 	public int getMPNeeded() {
 		return this.MP_REQUIRED_FOR_GRASS;
 	}
+	public String getCurrentImagePath () {
+		return this.currentImagePath;
+	}
+
 }
