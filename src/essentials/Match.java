@@ -13,15 +13,15 @@ import java.awt.*;
 public class Match extends JPanel {
 
     private TopGameBoard topBoard;
-    private Map map;
+    private final Map map;
     private MapInfoPanel mapInfo;
 
-    private PlayerInfoPanel player1Info;
-    private PlayerInfoPanel player2Info;
+    private final PlayerInfoPanel player1Info;
+    private final PlayerInfoPanel player2Info;
     private PlayerInfoPanel currentPlayerInfo;
 
-    private Player player1;
-    private Player player2;
+    private final Player player1;
+    private final Player player2;
     private Player currentPlayer;
     private PassionFruitFactory passionFruitFactory;
     private int roundCount;
@@ -35,10 +35,10 @@ public class Match extends JPanel {
 
         setLayout(new BorderLayout());
         setBackground(Color.decode("#008b8b"));
-        mapInfo = new MapInfoPanel(map);
+        mapInfo = map.getMapInfoPanel();
         player1Info = new PlayerInfoPanel(this,player1);
         add(player1Info, BorderLayout.EAST);
-        //player2Info = new PlayerInfoPanel(this,player2);
+        player2Info = new PlayerInfoPanel(this,player2);
         add(mapInfo, BorderLayout.WEST);
         add(map, BorderLayout.CENTER);
         //add(new TopGameBoard(this), BorderLayout.NORTH);
