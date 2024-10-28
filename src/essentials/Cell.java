@@ -4,8 +4,9 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.*;
+import java.io.Serializable;
 
-public class Cell extends JPanel {
+public class Cell extends JPanel implements Serializable{
 
 	private static Cell[][] gridMap;
 	public boolean isEmpty;

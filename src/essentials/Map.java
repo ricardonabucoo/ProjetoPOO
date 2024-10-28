@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
 
-public class Map extends JPanel{
-	
+public class Map extends JPanel implements Serializable{
+
 	public static Cell[][] grid;
 	private int gridSize;
 	private GridBagConstraints gbc;
@@ -69,6 +69,16 @@ public class Map extends JPanel{
 				grid[i][j].repaint();
 		super.repaint();
 	}
+
+	public Map(Cell[][] grid) {
+		this.grid = grid;
+		this.gridSize = grid.length;
+		setLayout(new GridLayout(gridSize, gridSize));
+		for(int i = 0; i < gridSize; i++)
+			for(int j = 0; j < gridSize; j++)
+				add(grid[i][j],i,j);
+	}
+
 	*/
 	public void update() {
 		for(int i = 0; i < gridSize; i++)
