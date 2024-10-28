@@ -1,5 +1,6 @@
 package essentials;
 
+import UI.Panels.MapInfoPanel;
 import elements.*;
 import temporario.CellInfoDisplay;
 
@@ -17,30 +18,12 @@ public class Map extends JPanel implements Serializable {
 	private int gridSize;
 	private PassionFruitFactory passionFruitFactory;
 	private GridBagConstraints gbc;
-	private JPanel cellInfoPanel;
+	private MapInfoPanel mapInfoPanel;
 
-	public Map() {
-		passionFruitFactory = null;
-		cellInfoPanel = new JPanel();
-		player1 = null;
-		player2 = null;
-		grid = null;
-		gridSize = 3;
-		setLayout(new GridBagLayout());
-		gbc = new GridBagConstraints();
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		gbc.fill = GridBagConstraints.BOTH;
-
-		fillDefaultCells();
-
-		add(cellInfoPanel, BorderLayout.EAST); // Coloca o painel de informações no lado direito
-
-	}
 
 	public Map(int size) {
 		passionFruitFactory = null;
-		cellInfoPanel = new JPanel();
+		mapInfoPanel = new MapInfoPanel(this);
 		player1 = null;
 		player2 = null;
 		grid = null;
@@ -72,18 +55,17 @@ public class Map extends JPanel implements Serializable {
 
 
 	private void cellInfoPanel(int i, int j) {
-		cellInfoPanel.removeAll();
 
-		cellInfoPanel.setLayout(new BoxLayout(cellInfoPanel, BoxLayout.Y_AXIS));
+		mapInfoPanel.removeAll();
 
 		Cell cell = grid[i][j];
 
 		Dimension buttonSize = new Dimension(200, 40); // Largura 200px, altura 40px
 
 		// Cria e adiciona os botões de informações
-		cellInfoPanel.add(createButtonPanel("Célula", buttonSize));
-		cellInfoPanel.add(createButtonPanel("Linha: " + cell.getRow(), buttonSize));
-		cellInfoPanel.add(createButtonPanel("Coluna: " + cell.getCol(), buttonSize));
+		mapInfoPanel.add(createButtonPanel("Célula", buttonSize));
+		mapInfoPanel.add(createButtonPanel("Linha: " + cell.getRow(), buttonSize));
+		mapInfoPanel.add(createButtonPanel("Coluna: " + cell.getCol(), buttonSize));
 
 		// Exibe o elemento estático como um painel de imagem
 		JPanel staticElemPanel = new JPanel();
@@ -97,18 +79,18 @@ public class Map extends JPanel implements Serializable {
 		button.setIcon(staticElemIcon);
 
 		staticElemPanel.add(button);
-		cellInfoPanel.add(staticElemPanel);
+		mapInfoPanel.add(staticElemPanel);
 
 
 		// Verifica se há um elemento dinâmico e cria um botão para ele
 		DynamicElem dynamicElem = cell.getDynamicElem();
 		if (dynamicElem != null) {
-			cellInfoPanel.add(createButtonPanel("Elemento Dinâmico: " + dynamicElem, buttonSize));
+			mapInfoPanel.add(createButtonPanel("Elemento Dinâmico: " + dynamicElem, buttonSize));
 		}
 
 		// Atualiza o painel para exibir os novos componentes
-		cellInfoPanel.revalidate();
-		cellInfoPanel.repaint();
+		mapInfoPanel.revalidate();
+		mapInfoPanel.repaint();
 	}
 
 	private JPanel createButtonPanel(String text, Dimension buttonSize) {
@@ -173,7 +155,7 @@ public class Map extends JPanel implements Serializable {
 			}
 	}
 
-	public JPanel getCellInfoPanel() {
-		return cellInfoPanel;
+	public MapInfoPanel getMapInfoPanel() {
+		return mapInfoPanel;
 	}
 }
