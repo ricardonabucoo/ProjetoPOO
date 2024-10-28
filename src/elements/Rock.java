@@ -14,7 +14,7 @@ public final class Rock extends StaticElem {
 		this.setIcon(icon);
 
 	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE)
-	        System.out.println("Imagem carregada com sucesso.");
+	        System.out.println("Imagem carregada com sucesso. (Pedra)");
 	    else
 	        System.out.println("Erro ao carregar a imagem.");
 	}

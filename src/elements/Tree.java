@@ -23,7 +23,7 @@ public final class Tree extends StaticElem {
 		currentRoundCount = 0;
 
 	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE)
-	        System.out.println("Imagem carregada com sucesso.");
+	        System.out.println("Imagem carregada com sucesso (Arvore).");
 	    else
 	        System.out.println("Erro ao carregar a imagem.");
 	}

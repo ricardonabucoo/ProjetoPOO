@@ -11,7 +11,7 @@ public class InputField extends JPanel {
     }
 
     public InputField(JLabel label) {
-        field = new JTextField(4);
+        field = new JTextField("0",4);
         setLayout(new FlowLayout());
         //Dimension textFieldDimension = new Dimension(100, 30);
         //textField.setPreferredSize(textFieldDimension);
@@ -19,7 +19,7 @@ public class InputField extends JPanel {
         add(field);
     }
     public InputField(JLabel label, int size) {
-        field = new JTextField(size);
+        field = new JTextField("nome",size);
         setLayout(new FlowLayout());
         add(label);
         add(field);

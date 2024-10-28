@@ -14,7 +14,7 @@ public final class Grass extends StaticElem {
 		this.setIcon(icon);
 
 		if (icon.getImageLoadStatus() == MediaTracker.COMPLETE)
-			System.out.println("Imagem carregada com sucesso.");
+			System.out.println("Imagem carregada com sucesso. (Grama)");
 		else
 			System.out.println("Erro ao carregar a imagem.");
 	}

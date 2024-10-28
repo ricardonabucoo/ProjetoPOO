@@ -21,13 +21,26 @@ public class Map extends JPanel implements Serializable{
 		fillDefaultCells();
 	}
 
+	public Map(int size) {
+		grid = null;
+		gridSize = size;
+		setLayout(new GridBagLayout());
+		gbc = new GridBagConstraints();
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		fillDefaultCells();
+	}
+
+	public Cell[][] getGrid() {
+		return grid;
+	}
+
 	private void fillDefaultCells() {
 		grid = new Cell[gridSize][gridSize];
 		for (int i = 0; i < gridSize; i++) {
 			for (int j = 0; j < gridSize; j++) {
-				Cell cell = new Cell(i, j);
-				grid[i][j] = cell;
-				addCell(cell, i, j);
+				addCell(new Cell(i, j), i, j);
 			}
 		}
 	}
@@ -35,15 +48,17 @@ public class Map extends JPanel implements Serializable{
 	public void addCell(Cell cell, int row,int col){
 		gbc.gridx = row;
 		gbc.gridy = col;
+		grid[row][col] = cell;
 		add(cell, gbc);
 	}
-
+	/*
 	@Override
 	public void revalidate() {
 		super.revalidate();
 		for (int i = 0; i < gridSize; i++)
 			for (int j = 0; j < gridSize; j++)
 				grid[i][j].revalidate();
+		super.revalidate();
 	}
 
 	@Override
@@ -52,6 +67,7 @@ public class Map extends JPanel implements Serializable{
 		for (int i = 0; i < gridSize; i++)
 			for (int j = 0; j < gridSize; j++)
 				grid[i][j].repaint();
+		super.repaint();
 	}
 
 	public Map(Cell[][] grid) {
@@ -63,12 +79,12 @@ public class Map extends JPanel implements Serializable{
 				add(grid[i][j],i,j);
 	}
 
+	*/
 	public void update() {
 		for(int i = 0; i < gridSize; i++)
 			for(int j = 0; j < gridSize; j++) {
 				grid[i][j].update();
 			}
 	}
-
-
+	
 }

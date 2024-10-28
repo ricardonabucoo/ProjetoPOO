@@ -1,8 +1,8 @@
-package UI;
+package temporario;
 
 import elements.FruitType;
 import essentials.Map;
-import essentials.MapBuilder;
+import builders.MapBuilder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -109,13 +109,13 @@ public class Quiz extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
             	MapBuilder builder = new MapBuilder();
-        		
+        		/*
         		builder.buildCellGrid(GetSize());
         		builder.buildRockCells(GetRocksAmount());
         		builder.buildTreeCells(GetNumberOfTrees());
         		builder.buildGrassCells();
         		builder.buildFruitsCells(GetFruitsAmount());
-        		
+        		*/
         		SetMap(builder.getResult());
             	frame.dispose(); 
             }

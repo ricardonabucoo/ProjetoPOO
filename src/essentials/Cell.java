@@ -9,11 +9,16 @@ import java.io.Serializable;
 public class Cell extends JPanel implements Serializable{
 
 	private static Cell[][] gridMap;
+	public boolean isEmpty;
 	private int row, col;
 	private StaticElem staticElem;
 	private DynamicElem dynamicElem;
 	private ImageIcon staticImageIcon;  // Para armazenar a imagem original do botão estático
     private ImageIcon dynamicImageIcon;
+
+	public static void setGridMap(Cell[][] grid){
+		gridMap = grid;
+	}
 
 	public Cell(int row, int col) {
 
@@ -44,19 +49,31 @@ public class Cell extends JPanel implements Serializable{
 	}
 	
 	public Cell getCellUp()	{
-		return gridMap[row][col-1];
+		if(col != 0 )
+			return gridMap[row][col-1];
+		else
+			return null;
 	}
 	
 	public Cell getCellDown() {
-		return gridMap[row][col+1];
+		if(col != gridMap.length-1)
+			return gridMap[row][col+1];
+		else
+			return null;
 	}
 	
 	public Cell getCellLeft() {
-		return gridMap[row-1][col];
+		if(row != 0)
+			return gridMap[row-1][col];
+		else
+			return null;
 	}
 	
 	public Cell getCellRight() {
-		return gridMap[row+1][col];
+		if(row != gridMap.length-1)
+			return gridMap[row+1][col];
+		else
+			return null;
 	}
 	
 	public void update() {
@@ -102,6 +119,17 @@ public class Cell extends JPanel implements Serializable{
         this.setComponentZOrder(staticElem, 1);
         this.revalidate();
         this.repaint();
+	}
+
+	public void removeDynamic(DynamicElem elem) {
+		if(elem != this.dynamicElem){
+			System.out.println("opaopaopa erro");
+			return;
+		}
+		remove(dynamicElem);
+		dynamicElem = null;
+		revalidate();
+		repaint();
 	}
 	
 	
@@ -153,7 +181,12 @@ public class Cell extends JPanel implements Serializable{
         }
     }
 
-	public static void main(String[] args) {
+
+	public boolean withoutDynamicElem() {
+		return dynamicElem == null; // Retorna true se a célula estiver vazia
+	}
+
+    public static void main(String[] args) {
 
 		JFrame frame = new JFrame();
 
