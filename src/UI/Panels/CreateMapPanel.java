@@ -24,7 +24,11 @@ public class CreateMapPanel extends JPanel {
         leftPanel = createSetConfigsPanel();
         rightPanel = createMapViewerPanel();
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        JSplitPane splitPane = new JSplitPane(
+                JSplitPane.HORIZONTAL_SPLIT,
+                leftPanel,
+                rightPanel
+        );
         splitPane.setResizeWeight(0.3);
         splitPane.setDividerLocation(300);
         add(splitPane, BorderLayout.CENTER);
@@ -58,7 +62,14 @@ public class CreateMapPanel extends JPanel {
         JPanel configPanel = new JPanel();
         configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.Y_AXIS));
         configPanel.setBackground(Color.decode("#f0f0f0"));
-        configPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Configurações Avançadas", TitledBorder.CENTER, TitledBorder.TOP));
+        configPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createLineBorder(Color.BLACK),
+                        "Configurações Avançadas",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP
+                )
+        );
 
         //dados gerais
         configPanel.add(createGeneralDataPanel());
@@ -116,8 +127,6 @@ public class CreateMapPanel extends JPanel {
 
         return initalFruitsPanel;
     }
-
-
 
     private JPanel createButtonsPanel(){
         JPanel buttonsPanel = new JPanel();

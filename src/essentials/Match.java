@@ -26,5 +26,8 @@ public class Match {
     	return this.player2;
     }
 
+    public Map getMap() {
+        return this.map;
+    }
 
 }
