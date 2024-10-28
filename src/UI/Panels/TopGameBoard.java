@@ -35,7 +35,7 @@ public class TopGameBoard extends JPanel {
 	private JPanel createCenterPanel() {
 		JPanel panel = new JPanel();
 		setLayout(new FlowLayout());
-		panel.add(gameMatch.getRoundCount());
+		//panel.add(gameMatch.getRoundCount());
 		panel.add(new CloseMainFrameButton());
 		return panel;
 	}
