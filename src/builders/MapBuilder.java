@@ -84,7 +84,7 @@ public class MapBuilder implements Builder {
 	}
 
 	private Player buildPlayer(String playerName, int bagCapacity) {
-		Cell cell = getRandomEmptyCell();
+		Cell cell = getRandomWithoutFruitCell();
 		Player player = new Player(playerName,new Bag(bagCapacity),cell);
 		cell.setDynamicElem(player);
 		return player;
@@ -133,7 +133,7 @@ public class MapBuilder implements Builder {
 	}
 
 	private MapBuilder buildGrassCells() {
-		int grassCount = gridSize * gridSize - treeCellList.size() - rocksCellList.size();
+		int grassCount = availableCells.size();
 			for(int i = 0; i < grassCount; i++) {
 				Cell cell = getRandomEmptyCell();
 				cell.setStaticElem(new Grass(cell));

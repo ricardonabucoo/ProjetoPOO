@@ -61,7 +61,7 @@ public class CreateMatchPanel extends JPanel {
 
 
 
-            mainFrame.setCurrentPanel(new GamePanel(new Match(map,player1,player2,passionFruitFactory)));
+            //mainFrame.setCurrentPanel(new GamePanel(new Match(map,player1,player2,passionFruitFactory)));
         });
 
         panel.add(button);

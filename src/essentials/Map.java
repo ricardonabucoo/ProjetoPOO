@@ -20,6 +20,7 @@ public class Map extends JPanel implements Serializable{
 	private  JLabel infoLabel;
 
 	public Map() {
+		infoLabel = new JLabel();
 		player1 = null;
 		player2 = null;
 		grid = null;
@@ -33,6 +34,7 @@ public class Map extends JPanel implements Serializable{
 	}
 
 	public Map(int size) {
+		infoLabel = new JLabel();
 		player1 = null;
 		player2 = null;
 		grid = null;
@@ -85,35 +87,6 @@ public class Map extends JPanel implements Serializable{
 									} );
 	}
 
-	/*
-	@Override
-	public void revalidate() {
-		super.revalidate();
-		for (int i = 0; i < gridSize; i++)
-			for (int j = 0; j < gridSize; j++)
-				grid[i][j].revalidate();
-		super.revalidate();
-	}
-
-	@Override
-	public void repaint() {
-		super.repaint();
-		for (int i = 0; i < gridSize; i++)
-			for (int j = 0; j < gridSize; j++)
-				grid[i][j].repaint();
-		super.repaint();
-	}
-
-	public Map(Cell[][] grid) {
-		this.grid = grid;
-		this.gridSize = grid.length;
-		setLayout(new GridLayout(gridSize, gridSize));
-		for(int i = 0; i < gridSize; i++)
-			for(int j = 0; j < gridSize; j++)
-				add(grid[i][j],i,j);
-	}
-
-	*/
 	public void update() {
 		for(int i = 0; i < gridSize; i++)
 			for(int j = 0; j < gridSize; j++) {
