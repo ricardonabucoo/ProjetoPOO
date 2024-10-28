@@ -17,10 +17,10 @@ public class Map extends JPanel implements Serializable{
 	private Player player2;
 	private int gridSize;
 	private GridBagConstraints gbc;
-	private  JLabel infoLabel;
+	private JPanel cellInfoPanel;
 
 	public Map() {
-		infoLabel = new JLabel();
+		cellInfoPanel = new JPanel();
 		player1 = null;
 		player2 = null;
 		grid = null;
@@ -34,7 +34,7 @@ public class Map extends JPanel implements Serializable{
 	}
 
 	public Map(int size) {
-		infoLabel = new JLabel();
+		cellInfoPanel = new JPanel();
 		player1 = null;
 		player2 = null;
 		grid = null;
@@ -61,18 +61,37 @@ public class Map extends JPanel implements Serializable{
 			}
 		}
 	}
-	private void showCellInfo(int i, int j) {
+
+
+
+
+	private void cellInfoPanel(int i, int j) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
 		Cell cell = grid[i][j];
+
 		StringBuilder info = new StringBuilder(String.format("Posição: (%d, %d), Elemento: %s,",
 				cell.getRow(), cell.getCol(), cell.getStaticElem() ));
 
-		// Verifica e exibe o elemento dinâmico, se houver
+		JButton button = new JButton(Integer.toString(cell.getRow()));
+		button.setBounds(350, 100, 200, 30);
+		JButton button1 = new JButton(Integer.toString(cell.getCol()));
+		button1.setBounds(350, 100, 200, 30);
+		JButton button2 = new JButton(String.valueOf(cell.getStaticElem()));
+		button2.setBounds(350, 100, 200, 30);
+		panel.add(button);
+		panel.add(button1);
+		panel.add(button2);
+
 		DynamicElem dynamicElem = cell.getDynamicElem();
 		if (dynamicElem != null) {
-			info.append(", Dinâmico: ").append(cell.getDynamicElem());
+			JButton button3 = new JButton(String.valueOf(cell.getDynamicElem()));
+			panel.add(button3);
+			button3.setBounds(350, 100, 200, 30);
 		}
 
-		infoLabel.setText(info.toString());
+		this.cellInfoPanel = panel;
 	}
 	public void addCell(Cell cell, int row,int col){
 		gbc.gridx = row;
@@ -82,7 +101,7 @@ public class Map extends JPanel implements Serializable{
 		cell.addMouseMotionListener(new MouseMotionAdapter() {
 										@Override
 										public void mouseMoved(MouseEvent e) {
-											showCellInfo(row, col);
+											cellInfoPanel(row, col);
 										}
 									} );
 	}
@@ -94,7 +113,7 @@ public class Map extends JPanel implements Serializable{
 			}
 	}
 
-	public JLabel getInfoLabel() {
-		return infoLabel;
+	public JPanel getCellInfoPanel() {
+		return cellInfoPanel;
 	}
 }
