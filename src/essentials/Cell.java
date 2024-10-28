@@ -43,7 +43,15 @@ public class Cell extends JPanel implements Serializable{
             }
         });
 	}
-	
+
+	public int getRow() {
+		return row;
+	}
+	public int getCol() {
+		return col;
+	}
+
+
 	public static void initializeGridMap(Cell[][] grid) {
 	    Cell.gridMap = grid;
 	}
@@ -107,6 +115,9 @@ public class Cell extends JPanel implements Serializable{
 	public DynamicElem getDynamicElem(){
 		return this.dynamicElem;
 	}
+	public StaticElem getStaticElem(){
+		return this.staticElem;
+	}
 	
 	public void setDynamicElem(DynamicElem elem) {
         this.dynamicElem = elem;
@@ -133,9 +144,7 @@ public class Cell extends JPanel implements Serializable{
 	}
 	
 	
-	public StaticElem getStaticElem(){
-		return this.staticElem;
-	}
+
 	
 	public void setStaticElem(StaticElem elem) {
 		this.staticElem = elem;
@@ -195,10 +204,6 @@ public class Cell extends JPanel implements Serializable{
 		frame.setVisible(true);
 
 	}
-
-
-
-
 
 
 

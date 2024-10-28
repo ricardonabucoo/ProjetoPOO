@@ -12,4 +12,7 @@ public class DynamicElem extends Elem
 	{
 		this.ownPlace = newPosition;
 	}
+
+
+
 }
