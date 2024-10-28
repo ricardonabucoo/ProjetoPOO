@@ -128,6 +128,11 @@ public class CreateMatchPanel extends JPanel {
         panel.add(inputField);
         inputFields.put(key,inputField);
     }
+    
+    public Match getMatch() {
+    	
+    	return this.match;
+    }
 
     public static void main(String[] args) {
         MainFrame mainFrame = MainFrame.getInstance();
