@@ -1,6 +1,7 @@
 package essentials;
 
 import elements.DynamicElem;
+import elements.Player;
 import temporario.CellInfoDisplay;
 
 import javax.swing.*;
@@ -12,11 +13,15 @@ import java.io.Serializable;
 public class Map extends JPanel implements Serializable{
 
 	public static Cell[][] grid;
+	private Player player1;
+	private Player player2;
 	private int gridSize;
 	private GridBagConstraints gbc;
 	private  JLabel infoLabel;
 
 	public Map() {
+		player1 = null;
+		player2 = null;
 		grid = null;
 		gridSize = 3;
 		setLayout(new GridBagLayout());
@@ -28,6 +33,8 @@ public class Map extends JPanel implements Serializable{
 	}
 
 	public Map(int size) {
+		player1 = null;
+		player2 = null;
 		grid = null;
 		gridSize = size;
 		setLayout(new GridBagLayout());

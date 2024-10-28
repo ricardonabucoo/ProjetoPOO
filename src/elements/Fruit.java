@@ -138,7 +138,7 @@ public class Fruit extends DynamicElem {
 		Collections.shuffle(cellList);
 		for (Cell cell : cellList) {
 			if (cell.withoutDynamicElem()) {
-				ownPlace.removeDynamic(this);
+				ownPlace.removeDynamicElem(this);
 				cell.setDynamicElem(this);
 				setOwnPlace(cell);
 				return true;

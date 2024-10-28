@@ -20,6 +20,7 @@ public class MapBuilder implements Builder {
 	private List<Cell> availableCells;
 	private Player player1;
 	private Player player2;
+	private PassionFruitFactory passionFruitFactory;
 
 	public MapBuilder(){
 		reset();
@@ -28,12 +29,15 @@ public class MapBuilder implements Builder {
 	@Override
 	public void build() {}
 
-	public MapBuilder buildMap(int size, int rocksAmount, HashMap<FruitType, Integer> treeMap, HashMap<FruitType, Integer> fruitMap) {
+	public MapBuilder buildMap(int size, int rocksAmount, HashMap<FruitType, Integer> treeMap, HashMap<FruitType, Integer> fruitMap, int passionFruitsAmount, String name_p1, String name_p2, int bagCapacity) {
 		buildCellGrid(size)
 				.buildRockCells(rocksAmount)
 				.buildTreeCells(treeMap)
 				.buildGrassCells()
-				.buildFruitsCells(fruitMap);
+				.buildFruitsCells(fruitMap)
+				.buildPassionFruitFactory(passionFruitsAmount)
+				.buildPlayerOne(name_p1,bagCapacity)
+				.buildPlayerTwo(name_p2,bagCapacity);
 		return this;
 	}
 
@@ -55,19 +59,13 @@ public class MapBuilder implements Builder {
 		return mapAux;
 	}
 
-	public Player buildPlayer(String playerName, int bagCapacity) {
-		Cell cell = getRandomEmptyCell();
-		Player player = new Player(playerName,new Bag(bagCapacity),cell);
-		cell.setDynamicElem(player);
-		return player;
-	}
-
-	public List<Cell> getTreeCellList() {
-		return this.treeCellList;
-	}
-
 	public List<Cell> getFruitCellList() {
 		return this.fruitCellList;
+	}
+
+	private MapBuilder buildPassionFruitFactory(int PassionFruitsAmount){
+		passionFruitFactory = PassionFruitFactory.getInstance(treeCellList, PassionFruitsAmount);
+		return this;
 	}
 
 	private MapBuilder buildCellGrid(int size) {
@@ -82,6 +80,23 @@ public class MapBuilder implements Builder {
 		Cell.setGridMap(map.getGrid());
 		map.revalidate();
 		map.repaint();
+		return this;
+	}
+
+	private Player buildPlayer(String playerName, int bagCapacity) {
+		Cell cell = getRandomEmptyCell();
+		Player player = new Player(playerName,new Bag(bagCapacity),cell);
+		cell.setDynamicElem(player);
+		return player;
+	}
+
+	private MapBuilder buildPlayerOne(String name, int bagCapacity){
+		player1 = buildPlayer(name,bagCapacity);
+		return this;
+	}
+
+	private MapBuilder buildPlayerTwo(String name, int bagCapacity){
+		player2 = buildPlayer(name,bagCapacity);
 		return this;
 	}
 

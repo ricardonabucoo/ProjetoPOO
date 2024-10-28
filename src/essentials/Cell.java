@@ -132,7 +132,7 @@ public class Cell extends JPanel implements Serializable{
         this.repaint();
 	}
 
-	public void removeDynamic(DynamicElem elem) {
+	public void removeDynamicElem(DynamicElem elem) {
 		if(elem != this.dynamicElem){
 			System.out.println("opaopaopa erro");
 			return;
