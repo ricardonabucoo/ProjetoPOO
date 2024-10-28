@@ -21,6 +21,7 @@ public class MatchBuilder implements Builder {
 
     @Override
     public void build() {
+
         match = new Match(map, player1, player2, passionFruitFactory);
     }
 
@@ -38,16 +39,6 @@ public class MatchBuilder implements Builder {
         Match aux = match;
         reset();
         return aux;
-    }
-
-    private MatchBuilder buildPlayerOne(String name, int bagCapacity){
-        player1 = mapBuilder.buildPlayer(name,bagCapacity);
-        return this;
-    }
-
-    private MatchBuilder buildPlayerTwo(String name, int bagCapacity){
-        player2 = mapBuilder.buildPlayer(name,bagCapacity);
-        return this;
     }
 
     private MatchBuilder buildPassionFruitFactory(int PassionFruitsAmount){

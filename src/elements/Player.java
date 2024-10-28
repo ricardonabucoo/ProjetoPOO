@@ -56,7 +56,7 @@ public class Player extends DynamicElem{
 		int difference = (int) Math.floor(logFa - logFd);
 
 		if (difference > 0) {
-			bag.droppedFuit(difference);
+			bag.dropFruit(difference);
 		}
 	}
 

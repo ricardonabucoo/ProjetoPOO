@@ -57,7 +57,11 @@ public class CreateMatchPanel extends JPanel {
         JButton button = new JButton("Play");
         button.addActionListener(e -> {
             MainFrame mainFrame = MainFrame.getInstance();
-            mainFrame.setCurrentPanel(new MainMenuPanel()); // new GamePanel()
+
+
+
+
+            mainFrame.setCurrentPanel(new GamePanel(new Match(map,player1,player2,passionFruitFactory)));
         });
 
         panel.add(button);
@@ -85,16 +89,7 @@ public class CreateMatchPanel extends JPanel {
             else{
                 imageIcon = new ImageIcon("images/Female02.png");
             }
-            if (imageIcon.getImageLoadStatus() == MediaTracker.COMPLETE)
-                System.out.println("Imagem carregada com sucesso. (personagem)");
-            else
-                System.out.println("Erro ao carregar a imagem.");
-
-            JLabel imageLabel = new JLabel(imageIcon);
-            characterPanel.removeAll();
-            characterPanel.add(imageLabel);
-            characterPanel.revalidate();
-            characterPanel.repaint();
+            setImage(characterPanel, imageIcon);
         });
         buttonPanel.add(button1);
         JButton button2 = new JButton("Male");
@@ -107,21 +102,25 @@ public class CreateMatchPanel extends JPanel {
                 imageIcon = new ImageIcon("images/Male02.png");
             }
 
-            if (imageIcon.getImageLoadStatus() == MediaTracker.COMPLETE)
-                System.out.println("Imagem carregada com sucesso. (personagem)");
-            else
-                System.out.println("Erro ao carregar a imagem.");
-
-            JLabel imageLabel = new JLabel(imageIcon);
-            characterPanel.removeAll();
-            characterPanel.add(imageLabel);
-            characterPanel.revalidate();
-            characterPanel.repaint();
+            setImage(characterPanel, imageIcon);
         });
         buttonPanel.add(button2);
         panel.add(buttonPanel);
         
         return panel;
+    }
+
+    private void setImage(JPanel characterPanel, ImageIcon imageIcon) {
+        if (imageIcon.getImageLoadStatus() == MediaTracker.COMPLETE)
+            System.out.println("Imagem carregada com sucesso. (personagem)");
+        else
+            System.out.println("Erro ao carregar a imagem.");
+
+        JLabel imageLabel = new JLabel(imageIcon);
+        characterPanel.removeAll();
+        characterPanel.add(imageLabel);
+        characterPanel.revalidate();
+        characterPanel.repaint();
     }
 
     private void addNewInputFieldToHashMap(JPanel panel, String key){
