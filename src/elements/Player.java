@@ -10,6 +10,7 @@ public class Player extends DynamicElem{
 	private Bag bag;
 	private EffectList effectList;
 	private int movimentPoints;
+	private boolean canMoveNextRound;
 	
 	public Player(String name, Bag bag, Cell ownPlace) {
 		super(ownPlace);
@@ -18,6 +19,7 @@ public class Player extends DynamicElem{
 		this.effectList = new EffectList();
 		this.movimentPoints = 0;
 		this.power = 0;
+		this.canMoveNextRound = true;
 	}
 
 	public void addFruitBag(Fruit fruit) {
@@ -50,6 +52,14 @@ public class Player extends DynamicElem{
 		}
 	}
 
+	public void eatFruit(FruitType fruitType) {
+		Fruit fruitToConsume = bag.take(fruitType);
+
+		if (fruitToConsume != null) {
+			fruitToConsume.giveEffect(this);
+		}
+	}
+
 	public void receivedDamage (int power) {
 		double logFa = Math.log(power + 1) / Math.log(2);
 		double logFd = Math.log(this.power + 1) / Math.log(2);
@@ -60,7 +70,26 @@ public class Player extends DynamicElem{
 		}
 	}
 
+	public boolean getCanMoveNextRound () {
+		return canMoveNextRound;
+	}
+	public void setCanMoveNextRound (boolean canMoveNextRound) {
+		this.canMoveNextRound = canMoveNextRound;
+	}
+
+	public int getPower () {
+		return power;
+	}
+
+	public void setPower (int power) {
+		this.power = power;
+	}
+
 	public int getMovimentPoints () {
 		return movimentPoints;
+	}
+
+	public void setMovimentPoints (int movimentPoints) {
+		this.movimentPoints = movimentPoints;
 	}
 }
