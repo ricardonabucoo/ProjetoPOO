@@ -13,11 +13,13 @@ public final class Tree extends StaticElem {
 	private int currentRoundCount;
 	private FruitType producedFruit;
 	private boolean hasfruit = false;
+	public String currentImagePath;
 	
 	public Tree(Cell ownPlace, FruitType fruitType)
 	{
 		super(ownPlace);
-		ImageIcon icon = new ImageIcon("images/tree.png");
+		currentImagePath = "images/tree.png";
+		ImageIcon icon = new ImageIcon(currentImagePath);
 		this.setIcon(icon);
 		this.producedFruit = fruitType;
 		currentRoundCount = 0;
@@ -57,6 +59,7 @@ public final class Tree extends StaticElem {
 		}
 	}
 
+
 	public void collectFruit() {
 		if (hasfruit) {
 			hasfruit = false;
@@ -69,5 +72,9 @@ public final class Tree extends StaticElem {
 	}
 
 	public FruitType getProducedFruit() { return this.producedFruit; }
+
+	public String getCurrentImagePath () {
+		return this.currentImagePath;
+	}
 
 }

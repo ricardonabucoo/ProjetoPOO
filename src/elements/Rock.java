@@ -7,10 +7,12 @@ import javax.swing.ImageIcon;
 public final class Rock extends StaticElem {
 
 	public static final int MP_REQUIRED_FOR_ROCK=2;
+	private String currentImagePath;
 
 	public Rock(Cell ownPlace) {
 		super(ownPlace);
-		ImageIcon icon = new ImageIcon("images/rock.png");
+		currentImagePath = "images/rock.png";
+		ImageIcon icon = new ImageIcon(currentImagePath);
 		this.setIcon(icon);
 
 	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE)
@@ -37,4 +39,8 @@ public final class Rock extends StaticElem {
 	private void jumpTo(Cell exitDirection) {
 
 	}
+	public String getCurrentImagePath () {
+		return this.currentImagePath;
+	}
+
 }

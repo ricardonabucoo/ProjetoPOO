@@ -1,7 +1,6 @@
 package essentials;
 
-import elements.DynamicElem;
-import elements.Player;
+import elements.*;
 import temporario.CellInfoDisplay;
 
 import javax.swing.*;
@@ -10,14 +9,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.Serializable;
 
-public class Map extends JPanel implements Serializable{
+public class Map extends JPanel implements Serializable {
 
 	public static Cell[][] grid;
 	private Player player1;
 	private Player player2;
 	private int gridSize;
 	private GridBagConstraints gbc;
-	private JPanel cellInfoPanel;
+	private JPanel cellInfoPanel; // Painel de informações da célula
+	private JPanel gridPanel; // Painel que contém a grade
 
 	public Map() {
 		cellInfoPanel = new JPanel();
@@ -25,12 +25,17 @@ public class Map extends JPanel implements Serializable{
 		player2 = null;
 		grid = null;
 		gridSize = 3;
-		setLayout(new GridBagLayout());
+		setLayout(new BorderLayout()); // Define o layout como BorderLayout
 		gbc = new GridBagConstraints();
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
+
+		gridPanel = new JPanel(new GridBagLayout()); // Painel para a grade
 		fillDefaultCells();
+
+		add(cellInfoPanel, BorderLayout.EAST); // Coloca o painel de informações no lado direito
+		add(gridPanel, BorderLayout.CENTER); // Coloca a grade no centro
 	}
 
 	public Map(int size) {
@@ -39,15 +44,18 @@ public class Map extends JPanel implements Serializable{
 		player2 = null;
 		grid = null;
 		gridSize = size;
-		setLayout(new GridBagLayout());
+		setLayout(new BorderLayout()); // Define o layout como BorderLayout
 		gbc = new GridBagConstraints();
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
+
+		gridPanel = new JPanel(new GridBagLayout()); // Painel para a grade
 		fillDefaultCells();
 
+		add(cellInfoPanel, BorderLayout.EAST); // Coloca o painel de informações no lado direito
+		add(gridPanel, BorderLayout.CENTER); // Coloca a grade no centro
 	}
-
 
 	public Cell[][] getGrid() {
 		return grid;
@@ -62,55 +70,87 @@ public class Map extends JPanel implements Serializable{
 		}
 	}
 
-
-
-
 	private void cellInfoPanel(int i, int j) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		cellInfoPanel.removeAll();
+
+		cellInfoPanel.setLayout(new BoxLayout(cellInfoPanel, BoxLayout.Y_AXIS));
 
 		Cell cell = grid[i][j];
 
-		StringBuilder info = new StringBuilder(String.format("Posição: (%d, %d), Elemento: %s,",
-				cell.getRow(), cell.getCol(), cell.getStaticElem() ));
+		Dimension buttonSize = new Dimension(200, 40); // Largura 200px, altura 40px
 
-		JButton button = new JButton(Integer.toString(cell.getRow()));
-		button.setBounds(350, 100, 200, 30);
-		JButton button1 = new JButton(Integer.toString(cell.getCol()));
-		button1.setBounds(350, 100, 200, 30);
-		JButton button2 = new JButton(String.valueOf(cell.getStaticElem()));
-		button2.setBounds(350, 100, 200, 30);
-		panel.add(button);
-		panel.add(button1);
-		panel.add(button2);
+		// Cria e adiciona os botões de informações
+		cellInfoPanel.add(createButtonPanel("Célula", buttonSize));
+		cellInfoPanel.add(createButtonPanel("Linha: " + cell.getRow(), buttonSize));
+		cellInfoPanel.add(createButtonPanel("Coluna: " + cell.getCol(), buttonSize));
 
+		// Exibe o elemento estático como um painel de imagem
+		JPanel staticElemPanel = new JPanel();
+		staticElemPanel.setPreferredSize(new Dimension(200, 200));
+
+		// Obtém o caminho da imagem com base no elemento estático
+		String imagePath = getStaticElementImagePath(cell.getStaticElem());
+		ImageIcon staticElemIcon = new ImageIcon(imagePath);
+
+		JButton button = new JButton();
+		button.setIcon(staticElemIcon);
+
+		staticElemPanel.add(button);
+		cellInfoPanel.add(staticElemPanel);
+
+
+		// Verifica se há um elemento dinâmico e cria um botão para ele
 		DynamicElem dynamicElem = cell.getDynamicElem();
 		if (dynamicElem != null) {
-			JButton button3 = new JButton(String.valueOf(cell.getDynamicElem()));
-			panel.add(button3);
-			button3.setBounds(350, 100, 200, 30);
+			cellInfoPanel.add(createButtonPanel("Elemento Dinâmico: " + dynamicElem, buttonSize));
 		}
 
-		this.cellInfoPanel = panel;
+		// Atualiza o painel para exibir os novos componentes
+		cellInfoPanel.revalidate();
+		cellInfoPanel.repaint();
 	}
-	public void addCell(Cell cell, int row,int col){
+
+	private JPanel createButtonPanel(String text, Dimension buttonSize) {
+		JButton button = new JButton(text);
+		button.setPreferredSize(buttonSize);
+
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		panel.add(button);
+		panel.setPreferredSize(buttonSize); // Define o tamanho do painel também
+
+		return panel;
+	}
+
+	private String getStaticElementImagePath (Object staticElem) {
+		if (staticElem instanceof Tree) {
+			return ((Tree) staticElem).getCurrentImagePath();
+		} else if (staticElem instanceof Grass) {
+			return ((Grass) staticElem).getCurrentImagePath();
+		} else {
+			return ((Rock) staticElem).getCurrentImagePath();
+		}
+	}
+
+	public void addCell(Cell cell, int row, int col) {
 		gbc.gridx = row;
 		gbc.gridy = col;
 		grid[row][col] = cell;
-		add(cell, gbc);
+		gridPanel.add(cell, gbc);
 		cell.addMouseMotionListener(new MouseMotionAdapter() {
-										@Override
-										public void mouseMoved(MouseEvent e) {
-											cellInfoPanel(row, col);
-										}
-									} );
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				cellInfoPanel(row, col);
+			}
+		});
 	}
 
 	public void update() {
-		for(int i = 0; i < gridSize; i++)
-			for(int j = 0; j < gridSize; j++) {
+		for (int i = 0; i < gridSize; i++) {
+			for (int j = 0; j < gridSize; j++) {
 				grid[i][j].update();
 			}
+		}
 	}
 
 	public JPanel getCellInfoPanel() {

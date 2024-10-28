@@ -38,11 +38,11 @@ public class Teste_colisaofruta {
         JPanel panel = new JPanel();
         panel.setBackground(Color.lightGray);
         panel.setPreferredSize(new Dimension(300,500));
-        mapViewer.add(panel, BorderLayout.WEST);
+        mapViewer.add(panel, BorderLayout.EAST);
         JPanel panel2 = map.getCellInfoPanel();
         panel2.setBackground(Color.lightGray);
         panel2.setPreferredSize(new Dimension(300,500));
-        mapViewer.add(panel2, BorderLayout.EAST);
+        mapViewer.add(panel2, BorderLayout.WEST);
 
         mapViewer.revalidate();;
         mapViewer.repaint();
