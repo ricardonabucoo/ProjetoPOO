@@ -1,5 +1,6 @@
 package essentials;
 
+import elements.Bag;
 import elements.PassionFruitFactory;
 import elements.Player;
 
