@@ -1,10 +1,12 @@
 package UI.Panels;
 
+import UI.Frames.MainFrame;
 import elements.FruitType;
 import elements.Player;
 import essentials.Match;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.Serializable;
 
@@ -18,81 +20,107 @@ public class PlayerInfoPanel extends JPanel implements Serializable {
     public PlayerInfoPanel(Match match,Player player) {
         this.match = match;
         this.player = player;
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(
+            BorderFactory.createTitledBorder(
+                    BorderFactory.createLineBorder(Color.BLACK),
+                    "Informações do Jogador",
+                    TitledBorder.CENTER,
+                    TitledBorder.TOP
+            )
+        );
         setBackground(Color.lightGray);
         setPreferredSize(new Dimension(300,500));
 
-        GridBagConstraints playerInfo = new GridBagConstraints();
-        playerInfo.gridx = 0;
-        playerInfo.gridy = 0;
-        playerInfo.gridwidth = 6;
-        playerInfo.gridheight = 6;
-        add(new JButton("Informações do Jogador"), playerInfo);
-        GridBagConstraints playerPower = new GridBagConstraints();
-        playerPower.gridx = 0;
-        playerPower.gridy = 7;
-        playerPower.gridwidth = 1;
-        playerPower.gridheight = 2;
-        add(new JButton("Poder:" + player.getPower()), playerPower);
-        GridBagConstraints playerMovementPoints = new GridBagConstraints();
-        playerMovementPoints.gridx = 0;
-        playerMovementPoints.gridy = 9;
-        playerMovementPoints.gridwidth = 1;
-        playerMovementPoints.gridheight = 2;
-        add(new JButton("Pontos de Movimento:" + player.getMovementPoints()), playerMovementPoints);
-        GridBagConstraints playerEffects = new GridBagConstraints();
-        playerEffects.gridx = 0;
-        playerEffects.gridy = 11;
-        playerEffects.gridwidth = 8;
-        playerEffects.gridheight = 2;
-        playerEffects.ipady = 1;
-        add(new JButton("==Effect List=="), playerEffects);
+        JPanel generalData = new JPanel();
+        generalData.setLayout(new BoxLayout(generalData, BoxLayout.Y_AXIS));
+        generalData.setBackground(Color.decode("#f0f0f0"));
+        generalData.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createLineBorder(Color.BLACK),
+                        "Configurações Avançadas",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP
+                )
+        );
+        generalData.setBackground(Color.lightGray);
+
+
+
+        generalData.add(new JButton("Poder:" + player.getPower()));
+        generalData.add(new JButton("Pontos de Movimento:" + player.getMovementPoints()));
+
+        JPanel effectPanel = new JPanel();
+        effectPanel.setLayout(new BoxLayout(effectPanel, BoxLayout.Y_AXIS));
+        effectPanel.setBackground(Color.decode("#f0f0f0"));
+        effectPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createLineBorder(Color.BLACK),
+                        "Efeitos ativos:",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP
+                )
+        );
+        effectPanel.setBackground(Color.lightGray);
+
         if (player.getEffectList().containsEffect(EffectType.MOVIMENTEFFECT)) {
-            add(new JButton("Effect: Speed x2"));
+            effectPanel.add(new JButton("Effect: Speed x2"));
         } else {
-            add(new JButton("Effect: "));
+            effectPanel.add(new JButton("Effect: "));
         }
         if (player.getEffectList().containsEffect(EffectType.POWEREFFECT)) {
-            add(new JButton("Effect: Power x2"));
+            effectPanel.add(new JButton("Effect: Power x2"));
         } else {
-            add(new JButton("Effect: "));
+            effectPanel.add(new JButton("Effect: "));
         }
         if (player.getEffectList().containsEffect(EffectType.WHORMYEFFECT)) {
-            add(new JButton("Effect: Enjoado"));
+            effectPanel.add(new JButton("Effect: Enjoado"));
         } else {
-            add(new JButton("Effect: "));
+            effectPanel.add(new JButton("Effect: "));
         }
-        GridBagConstraints playerFruits = new GridBagConstraints();
-        playerEffects.gridx = 2;
-        playerEffects.gridy = 7;
-        playerEffects.gridwidth = 14;
-        playerEffects.gridheight = 2;
-        playerEffects.ipady = 1;
-        if (player.getBag().getFruitList().contains(FruitType.PASSIONFRUIT))
-            add(new JButton(new ImageIcon("images/passionfruit.png")), playerFruits);
-        else add(new JButton(), playerFruits);
-        if (player.getBag().getFruitList().contains(FruitType.AVOCADO))
-            add(new JButton(new ImageIcon("images/avocado.png")), playerFruits);
-        else add(new JButton(), playerFruits);
-        if (player.getBag().getFruitList().contains(FruitType.BARBADOSCHERRY))
-            add(new JButton(new ImageIcon("images/barbadoscherry.png")), playerFruits);
-        else add(new JButton(), playerFruits);
-        if (player.getBag().getFruitList().contains(FruitType.BLACKBERRY))
-            add(new JButton(new ImageIcon("images/blackberry.png")), playerFruits);
-        else add(new JButton(), playerFruits);
 
-        if (player.getBag().getFruitList().contains(FruitType.COCONUT))
-            add(new JButton(new ImageIcon("images/coconut.png")), playerFruits);
-        else add(new JButton(), playerFruits);
+        JPanel fruitPanel = new JPanel();
+        fruitPanel.setLayout(new BoxLayout(fruitPanel, BoxLayout.Y_AXIS));
+        fruitPanel.setBackground(Color.decode("#f0f0f0"));
+        fruitPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createLineBorder(Color.BLACK),
+                        "Frutas na mochila:",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP
+                )
+        );
+        fruitPanel.setBackground(Color.lightGray);
 
-        if (player.getBag().getFruitList().contains(FruitType.GUAVA))
-            add(new JButton(new ImageIcon("images/guava.png")), playerFruits);
-        else add(new JButton(), playerFruits);
+        if (player.getBag().contains(FruitType.PASSIONFRUIT))
+            fruitPanel.add(new JButton(new ImageIcon("images/passionfruit.png")));
+        else fruitPanel.add(new JButton());
+        if (player.getBag().contains(FruitType.AVOCADO))
+            fruitPanel.add(new JButton(new ImageIcon("images/avocado.png")));
+        else fruitPanel.add(new JButton());
+        if (player.getBag().contains(FruitType.BARBADOSCHERRY))
+            fruitPanel.add(new JButton(new ImageIcon("images/barbadoscherry.png")));
+        else fruitPanel.add(new JButton());
+        if (player.getBag().contains(FruitType.BLACKBERRY))
+            fruitPanel.add(new JButton(new ImageIcon("images/blackberry.png")));
+        else fruitPanel.add(new JButton());
 
-        if (player.getBag().getFruitList().contains(FruitType.ORANGE))
-            add(new JButton(new ImageIcon("images/orange.png")), playerFruits);
-        else add(new JButton(), playerFruits);
+        if (player.getBag().contains(FruitType.COCONUT))
+            fruitPanel.add(new JButton(new ImageIcon("images/coconut.png")));
+        else fruitPanel.add(new JButton());
 
+        if (player.getBag().contains(FruitType.GUAVA))
+            fruitPanel.add(new JButton(new ImageIcon("images/guava.png")));
+        else fruitPanel.add(new JButton());
+
+        if (player.getBag().contains(FruitType.ORANGE))
+            fruitPanel.add(new JButton(new ImageIcon("images/orange.png")));
+        else fruitPanel.add(new JButton());
+
+        add(generalData);
+        add(fruitPanel);
+        add(effectPanel);
 
     }
 
@@ -103,8 +131,6 @@ public class PlayerInfoPanel extends JPanel implements Serializable {
         });
         return button;
     }
-
-
 
 
 }

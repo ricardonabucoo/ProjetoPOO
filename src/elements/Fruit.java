@@ -125,14 +125,12 @@ public class Fruit extends DynamicElem {
 
 	}
 
-	// Método que adiciona ao conjunto se não for nulo
 	private void addNeighbor(Set<Cell> cellSet, Cell cell) {
 		if (cell != null) {
 			cellSet.add(cell);
 		}
 	}
 
-	// Método  mover para a primeira célula disponível no conjunto
 	private boolean moveToAvailableCell(Set<Cell> cells) {
 		List<Cell> cellList = new ArrayList<>(cells);
 		Collections.shuffle(cellList);

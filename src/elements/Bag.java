@@ -72,8 +72,13 @@ public class Bag implements Serializable {
         }
     }
 
-    public ArrayList<Fruit> getFruitList() {
-        return this.fruitList;
+    public boolean contains(FruitType fruitType) {
+        for (Fruit fruit : fruitList) {
+            if (fruit.getFruitType() == fruitType) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

@@ -5,7 +5,6 @@ import elements.PassionFruitFactory;
 import elements.Player;
 import UI.Panels.MapInfoPanel;
 import elements.*;
-import temporario.CellInfoDisplay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,13 +61,13 @@ public class Map extends JPanel implements Serializable {
 		Dimension buttonSize = new Dimension(200, 40); // Largura 200px, altura 40px
 
 		// Cria e adiciona os botões de informações
-		mapInfoPanel.add(createButtonPanel("Célula", buttonSize));
-		mapInfoPanel.add(createButtonPanel("Linha: " + cell.getRow(), buttonSize));
-		mapInfoPanel.add(createButtonPanel("Coluna: " + cell.getCol(), buttonSize));
+		mapInfoPanel.add( new JButton("Célula"));
+		mapInfoPanel.add( new JButton("Linha: " + cell.getRow()));
+		mapInfoPanel.add( new JButton("Coluna: " + cell.getCol()));
 
 		// Exibe o elemento estático como um painel de imagem
-		JPanel staticElemPanel = new JPanel();
-		staticElemPanel.setPreferredSize(new Dimension(200, 200));
+		//JPanel staticElemPanel = new JPanel();
+		//staticElemPanel.setPreferredSize(new Dimension(200, 200));
 
 		// Obtém o caminho da imagem com base no elemento estático
 		String imagePath = getStaticElementImagePath(cell.getStaticElem());
@@ -76,15 +75,19 @@ public class Map extends JPanel implements Serializable {
 
 		JButton button = new JButton();
 		button.setIcon(staticElemIcon);
-
-		staticElemPanel.add(button);
-		mapInfoPanel.add(staticElemPanel);
+		mapInfoPanel.add(button);
 
 
 		// Verifica se há um elemento dinâmico e cria um botão para ele
 		DynamicElem dynamicElem = cell.getDynamicElem();
 		if (dynamicElem != null) {
-			mapInfoPanel.add(createButtonPanel("Elemento Dinâmico: " + dynamicElem, buttonSize));
+			String imagePath2 = getDynamicElemImagePath(cell.getDynamicElem());
+			ImageIcon dynamicElemIcon2 = new ImageIcon(imagePath2);
+
+			JButton button2 = new JButton();
+		
+			button2.setIcon(dynamicElemIcon2);
+			mapInfoPanel.add(button2);
 		}
 
 		// Atualiza o painel para exibir os novos componentes
@@ -113,6 +116,16 @@ public class Map extends JPanel implements Serializable {
 			return ((Rock) staticElem).getCurrentImagePath();
 		}
 	}
+
+	private String getDynamicElemImagePath (Object dynamicElem) {
+		if (dynamicElem instanceof Player) {
+			return (((Player) dynamicElem).getIcon()).toString();
+		}
+	 	else{
+			return ((Fruit) dynamicElem).getIcon().toString();
+		}
+	}
+
 	public void addCell(Cell cell, int row,int col){
 		gbc.gridx = row;
 		gbc.gridy = col;
