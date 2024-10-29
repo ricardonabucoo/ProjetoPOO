@@ -13,12 +13,16 @@ import java.awt.*;
 public class Match extends JPanel {
 
     private TopGameBoard topBoard;
+    private final Map map;
     private MapInfoPanel mapInfo;
-    private PlayerInfoPanel player1Info;
-    private PlayerInfoPanel player2Info;
-    private Map map;
-    private Player player1;
-    private Player player2;
+
+    private final PlayerInfoPanel player1Info;
+    private final PlayerInfoPanel player2Info;
+    private PlayerInfoPanel currentPlayerInfo;
+
+    private final Player player1;
+    private final Player player2;
+    private Player currentPlayer;
     private PassionFruitFactory passionFruitFactory;
     private int roundCount;
 
@@ -31,26 +35,32 @@ public class Match extends JPanel {
 
         setLayout(new BorderLayout());
         setBackground(Color.decode("#008b8b"));
-        mapInfo = new MapInfoPanel(map);
+        mapInfo = map.getMapInfoPanel();
         player1Info = new PlayerInfoPanel(this,player1);
+        add(player1Info, BorderLayout.EAST);
         player2Info = new PlayerInfoPanel(this,player2);
         add(mapInfo, BorderLayout.WEST);
-        add(player1Info, BorderLayout.EAST);
         add(map, BorderLayout.CENTER);
-        add(new TopGameBoard(this), BorderLayout.NORTH);
+        //add(new TopGameBoard(this), BorderLayout.NORTH);
 
     }
 
     public void endTurn(Player player) {
-        if(player == player1)
-            setTurn(player2);
-
+        roundCount++;
+        map.update();
+        beginTurn(player);
     }
 
-    private void setTurn(Player player) {
-
+    public void beginTurn(Player player) {
+        if(player == player1){
+            currentPlayer = player2;
+            currentPlayerInfo = player2Info;
+        }
+        else{
+            currentPlayer = player1;
+            currentPlayerInfo = player1Info;
+        }
     }
-
 
     public Player getPlayerOne() {
     	return this.player1;
@@ -67,11 +77,5 @@ public class Match extends JPanel {
     public int getRoundCount() {
         return this.roundCount;
     }
-
-
-
-
-
-
 
 }

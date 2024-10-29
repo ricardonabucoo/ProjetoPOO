@@ -1,5 +1,6 @@
 package essentials;
 
+import UI.Panels.MapInfoPanel;
 import elements.*;
 import temporario.CellInfoDisplay;
 
@@ -15,47 +16,27 @@ public class Map extends JPanel implements Serializable {
 	private Player player1;
 	private Player player2;
 	private int gridSize;
+	private PassionFruitFactory passionFruitFactory;
 	private GridBagConstraints gbc;
-	private JPanel cellInfoPanel; // Painel de informações da célula
-	private JPanel gridPanel; // Painel que contém a grade
+	private MapInfoPanel mapInfoPanel;
 
-	public Map() {
-		cellInfoPanel = new JPanel();
-		player1 = null;
-		player2 = null;
-		grid = null;
-		gridSize = 3;
-		setLayout(new BorderLayout()); // Define o layout como BorderLayout
-		gbc = new GridBagConstraints();
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		gbc.fill = GridBagConstraints.BOTH;
-
-		gridPanel = new JPanel(new GridBagLayout()); // Painel para a grade
-		fillDefaultCells();
-
-		add(cellInfoPanel, BorderLayout.EAST); // Coloca o painel de informações no lado direito
-		add(gridPanel, BorderLayout.CENTER); // Coloca a grade no centro
-	}
 
 	public Map(int size) {
-		cellInfoPanel = new JPanel();
+		passionFruitFactory = null;
+		mapInfoPanel = new MapInfoPanel(this);
 		player1 = null;
 		player2 = null;
 		grid = null;
 		gridSize = size;
-		setLayout(new BorderLayout()); // Define o layout como BorderLayout
+		setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
-
-		gridPanel = new JPanel(new GridBagLayout()); // Painel para a grade
 		fillDefaultCells();
 
-		add(cellInfoPanel, BorderLayout.EAST); // Coloca o painel de informações no lado direito
-		add(gridPanel, BorderLayout.CENTER); // Coloca a grade no centro
 	}
+
 
 	public Cell[][] getGrid() {
 		return grid;
@@ -70,19 +51,21 @@ public class Map extends JPanel implements Serializable {
 		}
 	}
 
-	private void cellInfoPanel(int i, int j) {
-		cellInfoPanel.removeAll();
 
-		cellInfoPanel.setLayout(new BoxLayout(cellInfoPanel, BoxLayout.Y_AXIS));
+
+
+	private void cellInfoPanel(int i, int j) {
+
+		mapInfoPanel.removeAll();
 
 		Cell cell = grid[i][j];
 
 		Dimension buttonSize = new Dimension(200, 40); // Largura 200px, altura 40px
 
 		// Cria e adiciona os botões de informações
-		cellInfoPanel.add(createButtonPanel("Célula", buttonSize));
-		cellInfoPanel.add(createButtonPanel("Linha: " + cell.getRow(), buttonSize));
-		cellInfoPanel.add(createButtonPanel("Coluna: " + cell.getCol(), buttonSize));
+		mapInfoPanel.add(createButtonPanel("Célula", buttonSize));
+		mapInfoPanel.add(createButtonPanel("Linha: " + cell.getRow(), buttonSize));
+		mapInfoPanel.add(createButtonPanel("Coluna: " + cell.getCol(), buttonSize));
 
 		// Exibe o elemento estático como um painel de imagem
 		JPanel staticElemPanel = new JPanel();
@@ -96,18 +79,18 @@ public class Map extends JPanel implements Serializable {
 		button.setIcon(staticElemIcon);
 
 		staticElemPanel.add(button);
-		cellInfoPanel.add(staticElemPanel);
+		mapInfoPanel.add(staticElemPanel);
 
 
 		// Verifica se há um elemento dinâmico e cria um botão para ele
 		DynamicElem dynamicElem = cell.getDynamicElem();
 		if (dynamicElem != null) {
-			cellInfoPanel.add(createButtonPanel("Elemento Dinâmico: " + dynamicElem, buttonSize));
+			mapInfoPanel.add(createButtonPanel("Elemento Dinâmico: " + dynamicElem, buttonSize));
 		}
 
 		// Atualiza o painel para exibir os novos componentes
-		cellInfoPanel.revalidate();
-		cellInfoPanel.repaint();
+		mapInfoPanel.revalidate();
+		mapInfoPanel.repaint();
 	}
 
 	private JPanel createButtonPanel(String text, Dimension buttonSize) {
@@ -131,29 +114,48 @@ public class Map extends JPanel implements Serializable {
 			return ((Rock) staticElem).getCurrentImagePath();
 		}
 	}
-
-	public void addCell(Cell cell, int row, int col) {
+	public void addCell(Cell cell, int row,int col){
 		gbc.gridx = row;
 		gbc.gridy = col;
 		grid[row][col] = cell;
-		gridPanel.add(cell, gbc);
+		add(cell, gbc);
 		cell.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				cellInfoPanel(row, col);
-			}
-		});
+										@Override
+										public void mouseMoved(MouseEvent e) {
+											cellInfoPanel(row, col);
+										}
+									} );
+	}
+
+	public void setPassionFruitFactory(PassionFruitFactory passionFruitFactory) {
+		this.passionFruitFactory = passionFruitFactory;
+	}
+
+	public void setPlayer1(Player player1) {
+		this.player1 = player1;
+	}
+
+	public void setPlayerOneName(String name){
+		player1.setName(name);
+	}
+
+
+	public void setPlayer2(Player player2) {
+		this.player2 = player2;
+	}
+
+	public void setPlayerTwoName(String name){
+		player2.setName(name);
 	}
 
 	public void update() {
-		for (int i = 0; i < gridSize; i++) {
-			for (int j = 0; j < gridSize; j++) {
+		for(int i = 0; i < gridSize; i++)
+			for(int j = 0; j < gridSize; j++) {
 				grid[i][j].update();
 			}
-		}
 	}
 
-	public JPanel getCellInfoPanel() {
-		return cellInfoPanel;
+	public MapInfoPanel getMapInfoPanel() {
+		return mapInfoPanel;
 	}
 }

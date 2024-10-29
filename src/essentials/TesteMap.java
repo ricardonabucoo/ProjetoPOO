@@ -7,13 +7,13 @@ import java.io.ObjectOutputStream;
 
 public class TesteMap {
     public static void main(String[] args) {
-        Map map = new Map();
-        saveMap(map, "mapa.bin");
-
-        Map loadedMap = carregarMapa("mapa.bin");
-        if (loadedMap != null) {
-            System.out.println("Mapa carregado com sucesso!");
-        }
+//        Map map = new Map();
+//        saveMap(map, "mapa.bin");
+//
+//        Map loadedMap = carregarMapa("mapa.bin");
+//        if (loadedMap != null) {
+//            System.out.println("Mapa carregado com sucesso!");
+//        }
     }
 
     // Método para salvar o mapa em um arquivo binário
