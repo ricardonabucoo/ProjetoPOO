@@ -20,14 +20,15 @@ public class MapBuilder implements Builder {
 	private List<Cell> availableCells;
 	private Player player1;
 	private Player player2;
-	private PassionFruitFactory passionFruitFactory;
 
 	public MapBuilder(){
 		reset();
 	}
 
 	@Override
-	public void build() {}
+	public MapBuilder build() {
+		return this;
+	}
 
 	public MapBuilder buildMap(int size, int rocksAmount, HashMap<FruitType, Integer> treeMap, HashMap<FruitType, Integer> fruitMap, int passionFruitsAmount, String name_p1, String name_p2, int bagCapacity) {
 		buildCellGrid(size)
@@ -54,9 +55,7 @@ public class MapBuilder implements Builder {
 		player2 = null;
 	}
 	public Map getResult() {
-		Map mapAux = map;
-		reset();
-		return mapAux;
+		return map;
 	}
 
 	public List<Cell> getFruitCellList() {
@@ -64,7 +63,7 @@ public class MapBuilder implements Builder {
 	}
 
 	private MapBuilder buildPassionFruitFactory(int PassionFruitsAmount){
-		passionFruitFactory = PassionFruitFactory.getInstance(treeCellList, PassionFruitsAmount);
+		map.setPassionFruitFactory(PassionFruitFactory.getInstance(treeCellList, PassionFruitsAmount));
 		return this;
 	}
 
@@ -92,11 +91,13 @@ public class MapBuilder implements Builder {
 
 	private MapBuilder buildPlayerOne(String name, int bagCapacity){
 		player1 = buildPlayer(name,bagCapacity);
+		map.setPlayer1(player1);
 		return this;
 	}
 
 	private MapBuilder buildPlayerTwo(String name, int bagCapacity){
 		player2 = buildPlayer(name,bagCapacity);
+		map.setPlayer2(player2);
 		return this;
 	}
 
@@ -117,18 +118,6 @@ public class MapBuilder implements Builder {
 				treeCellList.add(cell);
 			}
 		});
-		/*
-		int treesAmount = 0;
-		for(java.util.Map.Entry<FruitType, Integer> entry : treeMap.entrySet()) {
-			int value = entry.getValue();
-			treesAmount += value;
-			for(int i = 0; i < value; i++){
-				Cell cell = getRandomEmptyCell();
-				cell.setStaticElem(new Tree(cell,entry.getKey()));
-				treeCellList.add(cell);
-			}
-		}
-		*/
 		return this;
 	}
 
@@ -151,22 +140,6 @@ public class MapBuilder implements Builder {
 				fruitCellList.add(cell);
 			}
 		});
-		/*
-		int totalFruits = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
-		if (totalFruits > grassCellList.size()) {
-			throw new IllegalArgumentException("numero de frutas maior que o numero de celular disponiveis");
-		}
-		else
-		{
-			for(java.util.Map.Entry<FruitType, Integer> entry : fruitMap.entrySet()) {
-				int value = entry.getValue();
-				for(int i = 0; i < value; i++){
-					Cell cell = getRandomWithoutFruitCell();
-					cell.setDynamicElem(new Fruit(cell,entry.getKey()));
-				}
-			}
-		}
-		*/
 		return this;
 	}
 

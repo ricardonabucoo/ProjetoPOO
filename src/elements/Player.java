@@ -6,13 +6,31 @@ import javax.swing.ImageIcon;
 import java.awt.*;
 
 public class Player extends DynamicElem{
-	public final String name;
+	public String name;
 	private int power;
 	private Bag bag;
 	private EffectList effectList;
 	private int movimentPoints;
 	private boolean canMoveNextRound;
-	
+
+	public Player(Bag bag, Cell ownPlace) {
+		super(ownPlace);
+		this.name = "Player";
+		this.bag = bag;
+		this.effectList = new EffectList();
+		this.movimentPoints = 0;
+		this.power = 0;
+		this.canMoveNextRound = true;
+
+		ImageIcon imageIcon = new ImageIcon("images/Female01.png");
+
+		Image scaledImage = imageIcon.getImage().getScaledInstance(60, 100, Image.SCALE_SMOOTH);
+		setIcon(new ImageIcon(scaledImage));
+		setPreferredSize(new Dimension(100, 100));
+		revalidate();
+		repaint();
+	}
+
 	public Player(String name, Bag bag, Cell ownPlace) {
 		super(ownPlace);
 		this.name = name;
@@ -24,9 +42,9 @@ public class Player extends DynamicElem{
 
 		ImageIcon imageIcon = new ImageIcon("images/Female01.png");
 
-		Image scaledImage = imageIcon.getImage().getScaledInstance(60, 100, Image.SCALE_SMOOTH); // Defina o tamanho desejado
+		Image scaledImage = imageIcon.getImage().getScaledInstance(60, 100, Image.SCALE_SMOOTH);
 		setIcon(new ImageIcon(scaledImage));
-		setPreferredSize(new java.awt.Dimension(100, 100));
+		setPreferredSize(new Dimension(100, 100));
 		revalidate();
 		repaint();
 	}
@@ -59,6 +77,11 @@ public class Player extends DynamicElem{
 				opponent.receivedDamage(this.power);
 			}
 		}
+	}
+
+	@Override
+	public void update(){
+
 	}
 
 	public void eatFruit(FruitType fruitType) {
@@ -101,7 +124,11 @@ public class Player extends DynamicElem{
 	public void setMovimentPoints (int movimentPoints) {
 		this.movimentPoints = movimentPoints;
 	}
-	
+
+	public void setName(String name){
+		this.name = name;
+	}
+
 	public Bag getBag() {
 		return this.bag;
 	}

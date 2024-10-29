@@ -10,7 +10,7 @@ import elements.*;
 
 public class TopGameBoard extends JPanel {
 
-	private Match gameMatch;
+	private final Match gameMatch;
 
 
 	public TopGameBoard(Match gameMatch) {
@@ -35,7 +35,7 @@ public class TopGameBoard extends JPanel {
 	private JPanel createCenterPanel() {
 		JPanel panel = new JPanel();
 		setLayout(new FlowLayout());
-		//panel.add(gameMatch.getRoundCount());
+		panel.add(new JButton(Integer.toString(gameMatch.getRoundCount())));
 		panel.add(new CloseMainFrameButton());
 		return panel;
 	}
