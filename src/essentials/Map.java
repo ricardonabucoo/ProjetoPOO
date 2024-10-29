@@ -1,5 +1,8 @@
 package essentials;
 
+import elements.DynamicElem;
+import elements.PassionFruitFactory;
+import elements.Player;
 import UI.Panels.MapInfoPanel;
 import elements.*;
 import temporario.CellInfoDisplay;
@@ -37,7 +40,6 @@ public class Map extends JPanel implements Serializable {
 
 	}
 
-
 	public Cell[][] getGrid() {
 		return grid;
 	}
@@ -50,9 +52,6 @@ public class Map extends JPanel implements Serializable {
 			}
 		}
 	}
-
-
-
 
 	private void cellInfoPanel(int i, int j) {
 
@@ -158,4 +157,13 @@ public class Map extends JPanel implements Serializable {
 	public MapInfoPanel getMapInfoPanel() {
 		return mapInfoPanel;
 	}
+
+	public Player getPlayerOne() {
+		return player1;
+	}
+
+	public Player getPlayerTwo() {
+		return player2;
+	}
+
 }

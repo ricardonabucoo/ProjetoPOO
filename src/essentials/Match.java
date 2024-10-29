@@ -1,9 +1,8 @@
 package essentials;
 
+import UI.Buttons.CloseMainFrameButton;
 import UI.Panels.MapInfoPanel;
 import UI.Panels.PlayerInfoPanel;
-import UI.Panels.TopGameBoard;
-import elements.Bag;
 import elements.PassionFruitFactory;
 import elements.Player;
 
@@ -12,7 +11,7 @@ import java.awt.*;
 
 public class Match extends JPanel {
 
-    private TopGameBoard topBoard;
+    private JPanel gameBoard;
     private final Map map;
     private MapInfoPanel mapInfo;
 
@@ -41,7 +40,8 @@ public class Match extends JPanel {
         player2Info = new PlayerInfoPanel(this,player2);
         add(mapInfo, BorderLayout.WEST);
         add(map, BorderLayout.CENTER);
-        //add(new TopGameBoard(this), BorderLayout.NORTH);
+        gameBoard = createGameBoard();
+        add(gameBoard, BorderLayout.NORTH);
 
     }
 
@@ -78,4 +78,29 @@ public class Match extends JPanel {
         return this.roundCount;
     }
 
+
+    private JPanel createGameBoard() {
+        JPanel gameBoard = new JPanel();
+        gameBoard.setLayout(new GridLayout(0, 3));
+        gameBoard.setBackground(Color.decode("#008b8b"));
+        gameBoard.add(createPanel(player1));
+        gameBoard.add(createCenterPanel());
+        gameBoard.add(createPanel(player2));
+        return gameBoard;
+    }
+
+    private JPanel createPanel(Player player) {
+        JPanel panel = new JPanel();
+        panel.add(new JButton(Integer.toString(player.getBag().getPassionFruitAmount())));
+        panel.add( new JButton(player.getName()));
+        panel.add(new JButton(Integer.toString(player.getBag().getPassionFruitAmount())));
+        return panel;
+    }
+
+    private JPanel createCenterPanel() {
+        JPanel panel = new JPanel();
+        panel.add(new JButton(Integer.toString(roundCount)));
+        panel.add(new CloseMainFrameButton());
+        return panel;
+    }
 }

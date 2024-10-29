@@ -8,35 +8,17 @@ import java.awt.*;
 public class Player extends DynamicElem{
 	public String name;
 	private int power;
-	private Bag bag;
+	private final Bag bag;
 	private EffectList effectList;
-	private int movimentPoints;
+	private int movementPoints;
 	private boolean canMoveNextRound;
 
 	public Player(Bag bag, Cell ownPlace) {
 		super(ownPlace);
-		this.name = "Player";
+		this.name = "";
 		this.bag = bag;
 		this.effectList = new EffectList();
-		this.movimentPoints = 0;
-		this.power = 0;
-		this.canMoveNextRound = true;
-
-		ImageIcon imageIcon = new ImageIcon("images/Female01.png");
-
-		Image scaledImage = imageIcon.getImage().getScaledInstance(60, 100, Image.SCALE_SMOOTH);
-		setIcon(new ImageIcon(scaledImage));
-		setPreferredSize(new Dimension(100, 100));
-		revalidate();
-		repaint();
-	}
-
-	public Player(String name, Bag bag, Cell ownPlace) {
-		super(ownPlace);
-		this.name = name;
-		this.bag = bag;
-		this.effectList = new EffectList();
-		this.movimentPoints = 0;
+		this.movementPoints = 0;
 		this.power = 0;
 		this.canMoveNextRound = true;
 
@@ -60,7 +42,7 @@ public class Player extends DynamicElem{
 	public void playerMove(Cell newcell) {
 		try {
 
-			if (movimentPoints < newcell.getMPNeeded()) {
+			if (movementPoints < newcell.getMPNeeded()) {
 				throw new Exception("Movimento insuficiente: o jogador não possui pontos de movimento suficientes.");
 			}
 
@@ -84,7 +66,7 @@ public class Player extends DynamicElem{
 
 
 	private void handleRockObstacle(Cell newcell) throws Exception {
-		movimentPoints -= 2;
+		movementPoints -= 2;
 		Cell[] surroundingCells = {
 				newcell.getCellUp(),
 				newcell.getCellDown(),
@@ -108,10 +90,10 @@ public class Player extends DynamicElem{
 	private void handleStandardMove(Cell newcell, DynamicElem dynamicElem) throws Exception {
 		if (dynamicElem == null) {
 			moveToCell(newcell);
-			movimentPoints--;
+			movementPoints--;
 		} else if (dynamicElem instanceof Fruit) {
 			collectFruit(newcell, (Fruit) dynamicElem);
-			movimentPoints--;
+			movementPoints--;
 		} else if (dynamicElem instanceof Player) {
 			Player opponent = (Player) dynamicElem;
 			opponent.receivedDamage(this.power);
@@ -175,12 +157,12 @@ public class Player extends DynamicElem{
 		this.power = power;
 	}
 
-	public int getMovimentPoints () {
-		return movimentPoints;
+	public int getMovementPoints() {
+		return movementPoints;
 	}
 
-	public void setMovimentPoints (int movimentPoints) {
-		this.movimentPoints = movimentPoints;
+	public void setMovementPoints(int movementPoints) {
+		this.movementPoints = movementPoints;
 	}
 
 	public void setName(String name){
