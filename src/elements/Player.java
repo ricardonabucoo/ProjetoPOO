@@ -113,4 +113,17 @@ public class Player extends DynamicElem{
 	public Bag getBag() {
 		return this.bag;
 	}
+
+	public EffectList getEffectList() {
+		return this.effectList;
+	}
+
+	public void setImage(ImageIcon playerImage) {
+		Image scaledImage = playerImage.getImage().getScaledInstance(60, 100, Image.SCALE_SMOOTH);
+		setIcon(new ImageIcon(scaledImage));
+		setPreferredSize(new Dimension(100, 100));
+		revalidate();
+		repaint();
+	}
 }
+

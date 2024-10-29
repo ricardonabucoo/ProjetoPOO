@@ -30,7 +30,7 @@ public class Teste_colisaofruta {
         //fruitMap.put(FruitType.COCONUT,1);
         //fruitMap.put(FruitType.ORANGE,2);
 
-        builder.buildMap(5,5,treeMap,fruitMap,5,"sla","sla",5);
+        builder.buildMap(5,5,treeMap,fruitMap,5,5);
         Fruit fruita = (Fruit) builder.getFruitCellList().get(0).getDynamicElem();
         Map map = builder.getResult();
         mapViewer.add(map, BorderLayout.CENTER);

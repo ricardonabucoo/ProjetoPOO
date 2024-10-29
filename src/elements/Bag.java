@@ -70,5 +70,9 @@ public class Bag {
         }
     }
 
+    public ArrayList<Fruit> getFruitList() {
+        return this.fruitList;
+    }
+
 }
 

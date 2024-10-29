@@ -166,4 +166,11 @@ public class Map extends JPanel implements Serializable {
 		return player2;
 	}
 
+	public void setPlayer1Image(ImageIcon playerImage) {
+		player1.setImage(playerImage);
+	}
+	public void setPlayer2Image(ImageIcon playerImage) {
+		player2.setImage(playerImage);
+	}
+
 }
