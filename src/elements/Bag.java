@@ -1,11 +1,13 @@
 package elements;
 
 import essentials.Cell;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
-public class Bag {
+public class Bag implements Serializable {
     private static int capacity;
     private ArrayList<Fruit> fruitList;
     private int fruitsAmount;

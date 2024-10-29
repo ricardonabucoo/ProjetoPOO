@@ -7,16 +7,13 @@ import UI.Panels.PlayerInfoPanel;
 import elements.Bag;
 import elements.PassionFruitFactory;
 import elements.Player;
-import java.io.FileOutputStream;
+
+import java.io.*;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import javax.swing.*;
 import java.awt.*;
 
-public class Match extends JPanel {
+public class Match extends JPanel implements Serializable {
 
     private JPanel gameBoard;
     private final Map map;
@@ -85,33 +82,6 @@ public class Match extends JPanel {
         return this.roundCount;
     }
 
-    public void saveMatch (String fileName) throws IOException {
-        try (FileOutputStream fileOut = new FileOutputStream(fileName);
-             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
-            objectOut.writeObject(this);
-            System.out.println("Objeto Match salvo com sucesso em " + fileName);
-    } catch (IOException e) {
-        System.err.println("Erro ao salvar o objeto Match: " + e.getMessage());
-        e.printStackTrace();
-    }
-    }
-
-    public static Match loadMatch (String fileName) throws IOException {
-        Match match = null;
-        try (FileInputStream fileIn = new FileInputStream(fileName);
-        ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
-            match = (Match) objectIn.readObject();
-            System.out.println("Objeto Match carregado com sucesso!");
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Erro ao carregar o arquivo.");
-        }
-
-        return match;
-    }
-
-
     private JPanel createGameBoard() {
         JPanel gameBoard = new JPanel();
         gameBoard.setLayout(new GridLayout(0, 3));
@@ -133,7 +103,26 @@ public class Match extends JPanel {
     private JPanel createCenterPanel() {
         JPanel panel = new JPanel();
         panel.add(new JButton(Integer.toString(roundCount)));
+        JButton button = new JButton("Salvar");
+        button.addActionListener(e -> {
+            try {
+                saveMatch("saved_match/match_data.ser");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        panel.add(button);
         panel.add(new CloseMainFrameButton());
         return panel;
+    }
+
+    private void saveMatch (String fileName) throws IOException {
+        try (FileOutputStream fileOut = new FileOutputStream(fileName);
+             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+            objectOut.writeObject(this);
+            System.out.println("Objeto Match salvo com sucesso em " + fileName);
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar o objeto Match: " + e.getMessage());
+            e.printStackTrace();}
     }
 }
