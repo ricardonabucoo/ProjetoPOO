@@ -20,7 +20,6 @@ public class PlayerInfoPanel extends JPanel {
         setBackground(Color.lightGray);
         setPreferredSize(new Dimension(300,500));
 
-        setLayout(new GridBagLayout());
         GridBagConstraints playerInfo = new GridBagConstraints();
         playerInfo.gridx = 0;
         playerInfo.gridy = 0;
