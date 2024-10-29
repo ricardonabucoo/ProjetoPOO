@@ -1,11 +1,12 @@
 package elements;
 import essentials.Cell;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PassionFruitFactory {
+public class PassionFruitFactory implements Serializable {
 
 	public final int maxPassionFruitsAmount;
 	private int passionFruitsCount;

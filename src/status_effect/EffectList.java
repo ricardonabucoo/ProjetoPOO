@@ -1,11 +1,12 @@
 package status_effect;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import elements.Player;
 
-public class EffectList implements StatusEffect {
+public class EffectList implements StatusEffect, Serializable {
 	
 	private List<StatusEffect> effectList;
 	

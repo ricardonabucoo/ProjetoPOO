@@ -13,7 +13,7 @@ import java.awt.*;
 import java.io.*;
 import java.util.HashMap;
 
-public class CreateMapPanel extends JPanel {
+public class CreateMapPanel extends JPanel implements Serializable{
     private HashMap<String,InputField> inputFields;
     private MapBuilder mapBuilder;
     private Map map;

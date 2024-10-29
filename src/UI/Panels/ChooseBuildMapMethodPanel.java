@@ -7,8 +7,9 @@ import UI.Frames.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class ChooseBuildMapMethodPanel extends JPanel {
+public class ChooseBuildMapMethodPanel extends JPanel implements Serializable {
 
     public ChooseBuildMapMethodPanel() {
         setLayout(new FlowLayout(FlowLayout.CENTER, 50, 275));

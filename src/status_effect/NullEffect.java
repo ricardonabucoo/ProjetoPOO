@@ -2,7 +2,9 @@ package status_effect;
 
 import elements.Player;
 
-public class NullEffect implements StatusEffect {
+import java.io.Serializable;
+
+public class NullEffect implements StatusEffect, Serializable {
 	 @Override
 	 public void applyEffect (Player player) {
 

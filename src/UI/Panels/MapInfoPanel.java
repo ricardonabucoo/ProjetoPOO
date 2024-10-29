@@ -4,8 +4,9 @@ import essentials.Map;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class MapInfoPanel extends JPanel {
+public class MapInfoPanel extends JPanel implements Serializable {
 
     private Map map;
 

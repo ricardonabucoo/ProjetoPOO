@@ -9,9 +9,10 @@ import essentials.Match;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class CreateMatchPanel extends JPanel {
+public class CreateMatchPanel extends JPanel implements Serializable {
 
     private MatchBuilder matchBuilder;
     private Match match;

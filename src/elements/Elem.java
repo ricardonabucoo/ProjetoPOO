@@ -3,8 +3,9 @@ package elements;
 import essentials.Cell;
 
 import javax.swing.*;
+import java.io.Serializable;
 
-public abstract class Elem extends JButton
+public abstract class Elem extends JButton implements Serializable
 {
 	protected Cell ownPlace;
 		

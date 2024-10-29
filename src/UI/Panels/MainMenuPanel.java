@@ -6,8 +6,9 @@ import UI.Buttons.NewMatchButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class MainMenuPanel extends JPanel{
+public class MainMenuPanel extends JPanel implements Serializable {
 
     public MainMenuPanel() {
 

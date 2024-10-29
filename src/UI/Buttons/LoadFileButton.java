@@ -12,31 +12,13 @@ import java.io.ObjectInputStream;
 
 public class LoadFileButton extends JButton {
 
-    /*
-    public LoadFileButton(String title) {
-        super(title);
-        setPreferredSize(new Dimension(100, 50));
-
-        this.addActionListener((e -> {
-            JFileChooser fileChooser = new JFileChooser();
-            int returnValue = fileChooser.showOpenDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION){
-                File file = fileChooser.getSelectedFile();
-                ObjectInputStream objectIn = new ObjectInputStream(file)) {
-                match = (Match) objectIn.readObject();
-                MainFrame mainFrame = MainFrame.getInstance();
-                mainFrame.setCurrentPanel(match);
-            }
-        }));
-    }
-    */
 
     public LoadFileButton(String title) {
         super(title);
         setPreferredSize(new Dimension(100, 50));
 
         this.addActionListener((e -> {
-            JFileChooser fileChooser = new JFileChooser();
+            JFileChooser fileChooser = new JFileChooser("saved_match");
             int returnValue = fileChooser.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();

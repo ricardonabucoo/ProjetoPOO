@@ -6,9 +6,11 @@ import essentials.Match;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
+
 import status_effect.*;
 
-public class PlayerInfoPanel extends JPanel {
+public class PlayerInfoPanel extends JPanel implements Serializable {
 
     private final Match match;
     private final Player player;
