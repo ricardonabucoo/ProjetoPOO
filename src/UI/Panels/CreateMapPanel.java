@@ -53,7 +53,7 @@ public class CreateMapPanel extends JPanel {
         treeMap.put(FruitType.COCONUT,1);
         HashMap<FruitType,Integer> fruitMap = new HashMap<FruitType,Integer>();
         fruitMap.put(FruitType.BLACKBERRY,1);
-        return mapBuilder.buildMap(3,1,treeMap,fruitMap,5,"claudinho","giovanny",5).getResult();
+        return mapBuilder.buildMap(3,1,treeMap,fruitMap,5,5).getResult();
     }
 
     private JPanel createSetConfigsPanel(){
@@ -145,7 +145,7 @@ public class CreateMapPanel extends JPanel {
             int bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
 
             rightPanel.remove(map);
-            map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap, passionFruitAmount, "giovanny", "calebe", bagCapacity).getResult();
+            map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap, passionFruitAmount, bagCapacity).getResult();
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;

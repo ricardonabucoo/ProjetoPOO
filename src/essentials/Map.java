@@ -157,4 +157,13 @@ public class Map extends JPanel implements Serializable {
 	public MapInfoPanel getMapInfoPanel() {
 		return mapInfoPanel;
 	}
+
+	public Player getPlayerOne() {
+		return player1;
+	}
+
+	public Player getPlayerTwo() {
+		return player2;
+	}
+
 }

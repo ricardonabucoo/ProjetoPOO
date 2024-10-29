@@ -8,35 +8,17 @@ import java.awt.*;
 public class Player extends DynamicElem{
 	public String name;
 	private int power;
-	private Bag bag;
+	private final Bag bag;
 	private EffectList effectList;
-	private int movimentPoints;
+	private int movementPoints;
 	private boolean canMoveNextRound;
 
 	public Player(Bag bag, Cell ownPlace) {
 		super(ownPlace);
-		this.name = "Player";
+		this.name = "";
 		this.bag = bag;
 		this.effectList = new EffectList();
-		this.movimentPoints = 0;
-		this.power = 0;
-		this.canMoveNextRound = true;
-
-		ImageIcon imageIcon = new ImageIcon("images/Female01.png");
-
-		Image scaledImage = imageIcon.getImage().getScaledInstance(60, 100, Image.SCALE_SMOOTH);
-		setIcon(new ImageIcon(scaledImage));
-		setPreferredSize(new Dimension(100, 100));
-		revalidate();
-		repaint();
-	}
-
-	public Player(String name, Bag bag, Cell ownPlace) {
-		super(ownPlace);
-		this.name = name;
-		this.bag = bag;
-		this.effectList = new EffectList();
-		this.movimentPoints = 0;
+		this.movementPoints = 0;
 		this.power = 0;
 		this.canMoveNextRound = true;
 
@@ -59,19 +41,18 @@ public class Player extends DynamicElem{
 
 	public void playerMove (Cell newcell) {
 		DynamicElem dynamicElem = newcell.getDynamicElem();
-		if (movimentPoints >= newcell.getMPNeeded()) {
+		if (movementPoints >= newcell.getMPNeeded()) {
 			if (dynamicElem == null) {
 				ownPlace.removeDynamicElem(this);
 				newcell.setDynamicElem(this);
 				this.ownPlace = newcell;
-				movimentPoints--;
-			} else if (dynamicElem instanceof Fruit) {
-				Fruit fruit = (Fruit) dynamicElem;
-				ownPlace.removeDynamicElem(this);
+				movementPoints--;
+			} else if (dynamicElem instanceof Fruit fruit) {
+                ownPlace.removeDynamicElem(this);
 				newcell.setDynamicElem(this);
 				addFruitBag(fruit);
 				this.ownPlace = newcell;
-				movimentPoints--;
+				movementPoints--;
 			} else {
 				Player opponent = (Player) dynamicElem;
 				opponent.receivedDamage(this.power);
@@ -117,12 +98,12 @@ public class Player extends DynamicElem{
 		this.power = power;
 	}
 
-	public int getMovimentPoints () {
-		return movimentPoints;
+	public int getMovementPoints() {
+		return movementPoints;
 	}
 
-	public void setMovimentPoints (int movimentPoints) {
-		this.movimentPoints = movimentPoints;
+	public void setMovementPoints(int movementPoints) {
+		this.movementPoints = movementPoints;
 	}
 
 	public void setName(String name){
