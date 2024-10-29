@@ -2,6 +2,7 @@ package essentials;
 
 
 import UI.Buttons.CloseMainFrameButton;
+import UI.Frames.MainFrame;
 import UI.Panels.MapInfoPanel;
 import UI.Panels.PlayerInfoPanel;
 import elements.Bag;
@@ -14,6 +15,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Match extends JPanel implements Serializable {
+
+    private final MainFrame mainFrame;
 
     private JPanel gameBoard;
     private final Map map;
@@ -30,6 +33,7 @@ public class Match extends JPanel implements Serializable {
     private int roundCount;
 
     public Match(Map map, Player player1, Player player2, PassionFruitFactory passionFruitFactory) {
+        mainFrame = MainFrame.getInstance();
         this.map = map;
         this.player1 = player1;
         this.player2 = player2;
