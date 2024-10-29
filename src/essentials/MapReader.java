@@ -17,7 +17,7 @@ public class MapReader {
     private int initialPassionFruitAmount;
     private HashMap<FruitType, Integer> numberOfTrees;
     private HashMap<FruitType, Integer> initialFruitsNumber;
-    private int wormyFruitAmount;
+    private int wormyFruitChance;
     private int bagCapacity;
     private Map map;
 
@@ -57,7 +57,7 @@ public class MapReader {
                         rocksAmount = Integer.parseInt(parts[1]);
                         break;
                     case "bichadas":
-                        wormyFruitAmount = Integer.parseInt(parts[1]);
+                        wormyFruitChance = Integer.parseInt(parts[1]);
                         break;
                     case "mochila":
                         bagCapacity = Integer.parseInt(parts[1]);
@@ -100,8 +100,8 @@ public class MapReader {
         return initialPassionFruitAmount;
     }
 
-    public int getWormyFruitAmount() {
-        return wormyFruitAmount;
+    public int getWormyFruitChance() {
+        return wormyFruitChance;
     }
 
     public int getBagCapacity() {
