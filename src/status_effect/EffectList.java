@@ -28,8 +28,8 @@ public class EffectList implements StatusEffect {
 	    effectList.removeIf(effect -> effect.getClass().equals(se.getClass()));
 	}
 
+
 	public boolean containsEffect(EffectType effectType) {
 		return effectList.stream().anyMatch(effectType::isInstance);
 	}
-
 }

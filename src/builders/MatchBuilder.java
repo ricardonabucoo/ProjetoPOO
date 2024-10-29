@@ -5,11 +5,11 @@ import elements.Player;
 import essentials.Map;
 import essentials.Match;
 
+import javax.swing.*;
+
 public class MatchBuilder implements Builder {
     private MapBuilder mapBuilder;
     private Map map;
-    private Player player1;
-    private Player player2;
     private PassionFruitFactory passionFruitFactory;
     private Match match;
 
@@ -21,7 +21,7 @@ public class MatchBuilder implements Builder {
 
     @Override
     public MatchBuilder build() {
-        match = new Match(map, player1, player2, passionFruitFactory);
+        match = new Match(map, map.getPlayerOne(), map.getPlayerTwo(), passionFruitFactory);
         return this;
     }
 
@@ -31,12 +31,17 @@ public class MatchBuilder implements Builder {
         return this;
     }
 
+    public void setPlayerImage(ImageIcon playerImage, int parameter) {
+        if(parameter == 1)
+            map.setPlayer1Image(playerImage);
+        else
+            map.setPlayer2Image(playerImage);
+    }
+
     @Override
     public void reset() {
         mapBuilder = null;
         map = null;
-        player1 = null;
-        player2 = null;
         passionFruitFactory = null;
         match = null;
     }
