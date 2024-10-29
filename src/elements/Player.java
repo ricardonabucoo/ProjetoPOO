@@ -190,4 +190,6 @@ public class Player extends DynamicElem{
 	public Bag getBag() {
 		return this.bag;
 	}
+
+	public EffectList getEffectList() {return this.effectList;}
 }
