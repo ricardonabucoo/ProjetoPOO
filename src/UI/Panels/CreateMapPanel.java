@@ -17,6 +17,15 @@ public class CreateMapPanel extends JPanel {
     private JPanel leftPanel;
     private JPanel rightPanel;
 
+    int size = inputFields.get("Size").getInputAsInt();
+    int rocksAmount = inputFields.get("Rocks_amount").getInputAsInt();
+    HashMap<FruitType, Integer> treeMap = createTreesTypesHashMap();
+    HashMap<FruitType, Integer> fruitMap = createInitialFruitHashMap();
+    int passionFruitAmount = inputFields.get("PassionFruit_amount").getInputAsInt();
+    int bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
+    int fruitAmount = treeMap.values().stream().mapToInt(Integer::intValue).sum();
+    int treesAmount = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
+
     public CreateMapPanel() {
         setLayout(new BorderLayout());
         setBackground(Color.decode("#008b8b"));
@@ -130,47 +139,77 @@ public class CreateMapPanel extends JPanel {
 
     private JPanel createButtonsPanel(){
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(0,3));
+        buttonsPanel.setLayout(new GridLayout(2,3));
+        GridBagConstraints gbc = new GridBagConstraints();
 
         mapBuilder = new MapBuilder();
 
-        JButton submitButton = new JButton("Submit");
-        submitButton.addActionListener(e -> {
+        JButton validateButton = new JButton();
+        if(size>=3||bagCapacity>=(passionFruitAmount/2+1)||fruitAmount+treesAmount+2<=size*size)
+        {
+            validateButton.setText("===Valores válidos===");
+        }
+        else{
+            validateButton.setText("===Valores pendentes===");}
 
-            int size = inputFields.get("Size").getInputAsInt();
-            int rocksAmount = inputFields.get("Rocks_amount").getInputAsInt();
-            HashMap<FruitType, Integer> treeMap = createTreesTypesHashMap();
-            HashMap<FruitType, Integer> fruitMap = createInitialFruitHashMap();
-            int passionFruitAmount = inputFields.get("PassionFruit_amount").getInputAsInt();
-            int bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
+        gbc.gridx=0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 3;
+        gbc.anchor = GridBagConstraints.CENTER;
+        buttonsPanel.add(validateButton, gbc);
+
+
+        JButton submitButton = new JButton("Submit");
+        submitButton.setEnabled(false);
+        if(size>=3||bagCapacity>=(passionFruitAmount/2+1)||fruitAmount+treesAmount+2<=size*size)
+        {
+            submitButton.setEnabled(true);
+        }
+        submitButton.addActionListener(e -> {
 
             rightPanel.remove(map);
             map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap, passionFruitAmount, bagCapacity).getResult();
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.anchor = GridBagConstraints.CENTER;
-            gbc.weightx = 0;
-            gbc.weighty = 0;
+            GridBagConstraints gbcMap = new GridBagConstraints();
+            gbcMap.gridx = 0;
+            gbcMap.gridy = 1;
+            gbcMap.anchor = GridBagConstraints.CENTER;
+            gbcMap.weightx = 0;
+            gbcMap.weighty = 0;
             rightPanel.add(map, gbc);
             rightPanel.revalidate();
             rightPanel.repaint();
         });
 
         JButton shuffleButton = new JButton("Shuffle");
+        shuffleButton.setEnabled(false);
+        if(size>=3||bagCapacity>=(passionFruitAmount/2+1)||fruitAmount+treesAmount+2<=size*size)
+        {
+            shuffleButton.setEnabled(true);
+        }
         shuffleButton.addActionListener(e -> {
 
         });
 
         JButton nextButton = new JButton("Next");
+        nextButton.setEnabled(false);
+        if(size>=3||bagCapacity>=(passionFruitAmount/2+1)||fruitAmount+treesAmount+2<=size*size)
+        {
+            nextButton.setEnabled(true);
+        }
         nextButton.addActionListener(e -> {
            MainFrame mainFrame = MainFrame.getInstance();
            mainFrame.setCurrentPanel(new CreateMatchPanel(mapBuilder,map));
+
+
         });
 
-        buttonsPanel.add(submitButton);
-        buttonsPanel.add(shuffleButton);
-        buttonsPanel.add(nextButton);
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        buttonsPanel.add(submitButton, gbc);
+        gbc.gridx = 1;
+        buttonsPanel.add(shuffleButton, gbc);
+        gbc.gridx = 2;
+        buttonsPanel.add(nextButton, gbc);
 
         return buttonsPanel;
     }
