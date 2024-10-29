@@ -6,7 +6,12 @@ import UI.Panels.TopGameBoard;
 import elements.Bag;
 import elements.PassionFruitFactory;
 import elements.Player;
-
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import javax.swing.*;
 import java.awt.*;
 
@@ -41,7 +46,7 @@ public class Match extends JPanel {
         player2Info = new PlayerInfoPanel(this,player2);
         add(mapInfo, BorderLayout.WEST);
         add(map, BorderLayout.CENTER);
-        //add(new TopGameBoard(this), BorderLayout.NORTH);
+        add(new TopGameBoard(this), BorderLayout.NORTH);
 
     }
 
@@ -62,6 +67,7 @@ public class Match extends JPanel {
         }
     }
 
+
     public Player getPlayerOne() {
     	return this.player1;
     }
@@ -76,6 +82,32 @@ public class Match extends JPanel {
 
     public int getRoundCount() {
         return this.roundCount;
+    }
+
+    public void saveMatch (String fileName) throws IOException {
+        try (FileOutputStream fileOut = new FileOutputStream(fileName);
+             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+            objectOut.writeObject(this);
+            System.out.println("Objeto Match salvo com sucesso em " + fileName);
+    } catch (IOException e) {
+        System.err.println("Erro ao salvar o objeto Match: " + e.getMessage());
+        e.printStackTrace();
+    }
+    }
+
+    public static Match loadMatch (String fileName) throws IOException {
+        Match match = null;
+        try (FileInputStream fileIn = new FileInputStream(fileName);
+        ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+            match = (Match) objectIn.readObject();
+            System.out.println("Objeto Match carregado com sucesso!");
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao carregar o arquivo.");
+        }
+
+        return match;
     }
 
 }

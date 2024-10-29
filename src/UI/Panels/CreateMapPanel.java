@@ -4,10 +4,13 @@ import UI.Frames.MainFrame;
 import elements.FruitType;
 import essentials.Map;
 import builders.MapBuilder;
+import essentials.Match;
+
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.*;
 import java.util.HashMap;
 
 public class CreateMapPanel extends JPanel {
@@ -219,5 +222,30 @@ public class CreateMapPanel extends JPanel {
         mainFrame.setCurrentPanel(new CreateMapPanel());
     }
 
+    public void saveMap (String fileName) throws IOException {
+        try (FileOutputStream fileOut = new FileOutputStream(fileName);
+             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+            objectOut.writeObject(this);
+            System.out.println("Objeto Map salvo com sucesso em " + fileName);
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar o objeto Map " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static Match loadMap (String fileName) throws IOException {
+        Match match = null;
+        try (FileInputStream fileIn = new FileInputStream(fileName);
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+            match = (Match) objectIn.readObject();
+            System.out.println("Objeto Map carregado com sucesso!");
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao carregar o arquivo.");
+        }
+
+        return match;
+    }
 
 }
