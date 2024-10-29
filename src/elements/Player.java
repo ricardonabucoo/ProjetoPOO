@@ -57,26 +57,84 @@ public class Player extends DynamicElem{
 		return this.ownPlace;
 	}
 
-	public void playerMove (Cell newcell) {
-		DynamicElem dynamicElem = newcell.getDynamicElem();
-		if (movimentPoints >= newcell.getMPNeeded()) {
-			if (dynamicElem == null) {
-				ownPlace.removeDynamicElem(this);
-				newcell.setDynamicElem(this);
-				this.ownPlace = newcell;
-				movimentPoints--;
-			} else if (dynamicElem instanceof Fruit) {
-				Fruit fruit = (Fruit) dynamicElem;
-				ownPlace.removeDynamicElem(this);
-				newcell.setDynamicElem(this);
-				addFruitBag(fruit);
-				this.ownPlace = newcell;
-				movimentPoints--;
-			} else {
-				Player opponent = (Player) dynamicElem;
-				opponent.receivedDamage(this.power);
+	public void playerMove(Cell newcell) {
+		try {
+
+			if (movimentPoints < newcell.getMPNeeded()) {
+				throw new Exception("Movimento insuficiente: o jogador não possui pontos de movimento suficientes.");
+			}
+
+			DynamicElem dynamicElem = newcell.getDynamicElem();
+			StaticElem staticElem = newcell.getStaticElem();
+
+
+			if (staticElem instanceof Rock) {
+				handleRockObstacle(newcell);
+				return;  // Sai após lidar com a pedra
+			}
+
+			// Executa movimentação padrão
+			handleStandardMove(newcell, dynamicElem);
+
+		} catch (Exception e) {
+			System.err.println("Erro ao mover jogador: " + e.getMessage());
+
+		}
+	}
+
+
+	private void handleRockObstacle(Cell newcell) throws Exception {
+		movimentPoints -= 2;
+		Cell[] surroundingCells = {
+				newcell.getCellUp(),
+				newcell.getCellDown(),
+				newcell.getCellLeft(),
+				newcell.getCellRight()
+		};
+
+
+		for (Cell cell : surroundingCells) {
+			if (cell != null && !(cell.getStaticElem() instanceof Rock)) {
+				moveToCell(cell);
+				return;
 			}
 		}
+
+
+		throw new Exception("Movimento inválido: Nenhuma célula ao redor da pedra está disponível para o jogador.");
+	}
+
+
+	private void handleStandardMove(Cell newcell, DynamicElem dynamicElem) throws Exception {
+		if (dynamicElem == null) {
+			moveToCell(newcell);
+			movimentPoints--;
+		} else if (dynamicElem instanceof Fruit) {
+			collectFruit(newcell, (Fruit) dynamicElem);
+			movimentPoints--;
+		} else if (dynamicElem instanceof Player) {
+			Player opponent = (Player) dynamicElem;
+			opponent.receivedDamage(this.power);
+		} else {
+			throw new Exception("Elemento dinâmico inesperado: " + dynamicElem.getClass().getName());
+		}
+	}
+
+	// Move o jogador para uma nova célula
+	private void moveToCell(Cell cell) {
+		if (ownPlace != null) {
+			ownPlace.removeDynamicElem(this);  // Remove o jogador da célula atual
+		}
+		cell.setDynamicElem(this);
+		this.ownPlace = cell;
+	}
+
+	// Método para coletar frutas e adicionar à bolsa
+	private void collectFruit(Cell cell, Fruit fruit) {
+		ownPlace.removeDynamicElem(this); // Remove o jogador da célula atual
+		cell.setDynamicElem(this);
+		addFruitBag(fruit);
+		this.ownPlace = cell;
 	}
 
 	@Override
