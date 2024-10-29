@@ -16,7 +16,7 @@ import java.awt.*;
 
 public class Match extends JPanel implements Serializable {
 
-    private final MainFrame mainFrame;
+    private MainFrame mainFrame;
 
     private JPanel gameBoard;
     private final Map map;
@@ -116,7 +116,11 @@ public class Match extends JPanel implements Serializable {
             }
         });
         panel.add(button);
-        panel.add(new CloseMainFrameButton());
+        JButton closeButton = new JButton("Sair");
+        closeButton.addActionListener(e -> {
+           mainFrame.dispose();
+        });
+        panel.add(closeButton);
         return panel;
     }
 
@@ -128,5 +132,9 @@ public class Match extends JPanel implements Serializable {
         } catch (IOException e) {
             System.err.println("Erro ao salvar o objeto Match: " + e.getMessage());
             e.printStackTrace();}
+    }
+
+    public void setMainFrame(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
     }
 }

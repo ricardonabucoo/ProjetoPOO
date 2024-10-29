@@ -27,6 +27,10 @@ public class LoadFileButton extends JButton {
                     match = (Match) objectIn.readObject();
                     MainFrame mainFrame = MainFrame.getInstance();
                     mainFrame.setCurrentPanel(match);
+                    match.setMainFrame(mainFrame);
+                    mainFrame.revalidate();
+                    mainFrame.repaint();
+
                 } catch (IOException ex) {
                     ex.printStackTrace(); // Trate a exceção conforme necessário
                 } catch (ClassNotFoundException ex) {
