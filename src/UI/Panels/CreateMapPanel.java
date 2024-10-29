@@ -142,40 +142,24 @@ public class CreateMapPanel extends JPanel {
 
     private JPanel createButtonsPanel(){
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(2,3));
+        buttonsPanel.setLayout(new GridLayout(1,3));
         GridBagConstraints gbc = new GridBagConstraints();
 
         mapBuilder = new MapBuilder();
 
-        JButton validateButton = new JButton();
-        size = inputFields.get("Size").getInputAsInt();
-        rocksAmount = inputFields.get("Rocks_amount").getInputAsInt();
-        treeMap = createTreesTypesHashMap();
-        fruitMap = createInitialFruitHashMap();
-        passionFruitAmount = inputFields.get("PassionFruit_amount").getInputAsInt();
-        bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
-        fruitAmount = treeMap.values().stream().mapToInt(Integer::intValue).sum();
-        treesAmount = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
+        JButton nextButton = new JButton("<html>Criar <br>Partida</html>");
+        nextButton.setEnabled(false);
+        nextButton.addActionListener(e -> {
+            MainFrame mainFrame = MainFrame.getInstance();
+            mainFrame.setCurrentPanel(new CreateMatchPanel(mapBuilder,map));
 
-        if(size>=3||bagCapacity>=(passionFruitAmount/2+1)||fruitAmount+treesAmount+2<=size*size)
-        {
-            validateButton.setText("Válidos");
-        }
-        else{
-            validateButton.setText("Pendentes");}
+        });
 
-        gbc.gridx=0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 3;
-        gbc.anchor = GridBagConstraints.CENTER;
-        buttonsPanel.add(validateButton, gbc);
-
-
-        JButton submitButton = new JButton("Submit");
+        JButton submitButton = new JButton("Gerar");
+        submitButton.setEnabled(false);
         submitButton.addActionListener(e -> {
 
             rightPanel.remove(map);
-
             map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap, passionFruitAmount, bagCapacity).getResult();
             GridBagConstraints gbcMap = new GridBagConstraints();
             gbcMap.gridx = 0;
@@ -186,8 +170,41 @@ public class CreateMapPanel extends JPanel {
             rightPanel.add(map, gbc);
             rightPanel.revalidate();
             rightPanel.repaint();
+            nextButton.setEnabled(true);
         });
 
+        JButton validateButton = new JButton("Validar");
+        validateButton.addActionListener(e -> {
+            size = inputFields.get("Size").getInputAsInt();
+            rocksAmount = inputFields.get("Rocks_amount").getInputAsInt();
+            treeMap = createTreesTypesHashMap();
+            fruitMap = createInitialFruitHashMap();
+            passionFruitAmount = inputFields.get("PassionFruit_amount").getInputAsInt();
+            bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
+            treesAmount = treeMap.values().stream().mapToInt(Integer::intValue).sum();
+            fruitAmount = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
+            if(size>=3 && passionFruitAmount > 0 && bagCapacity > 0 && bagCapacity >= (passionFruitAmount/2+1) && treesAmount > 0 && size*size >= fruitAmount+treesAmount+rocksAmount+rocksAmount+2)
+            {
+                submitButton.setEnabled(true);
+            }
+            else{
+                submitButton.setEnabled(false);
+                nextButton.setEnabled(false);
+            }
+
+        });
+
+
+        gbc.gridx=0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 3;
+        gbc.anchor = GridBagConstraints.CENTER;
+        buttonsPanel.add(validateButton, gbc);
+
+
+
+
+        /*
         JButton shuffleButton = new JButton("Shuffle");
         shuffleButton.setEnabled(false);
         if(size>=3||bagCapacity>=(passionFruitAmount/2+1)||fruitAmount+treesAmount+2<=size*size)
@@ -197,25 +214,15 @@ public class CreateMapPanel extends JPanel {
         shuffleButton.addActionListener(e -> {
 
         });
-
-        JButton nextButton = new JButton("Next");
-        nextButton.setEnabled(false);
-        if(size>=3||bagCapacity>=(passionFruitAmount/2+1)||fruitAmount+treesAmount+2<=size*size)
-        {
-            nextButton.setEnabled(true);
-        }
-        nextButton.addActionListener(e -> {
-           MainFrame mainFrame = MainFrame.getInstance();
-           mainFrame.setCurrentPanel(new CreateMatchPanel(mapBuilder,map));
+        */
 
 
-        });
 
         gbc.gridy = 1;
         gbc.gridwidth = 1;
         buttonsPanel.add(submitButton, gbc);
-        gbc.gridx = 1;
-        buttonsPanel.add(shuffleButton, gbc);
+        //gbc.gridx = 1;
+        //buttonsPanel.add(shuffleButton, gbc);
         gbc.gridx = 2;
         buttonsPanel.add(nextButton, gbc);
 
