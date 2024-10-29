@@ -5,6 +5,8 @@ import elements.Player;
 import essentials.Map;
 import essentials.Match;
 
+import javax.swing.*;
+
 public class MatchBuilder implements Builder {
     private MapBuilder mapBuilder;
     private Map map;
@@ -27,6 +29,13 @@ public class MatchBuilder implements Builder {
         map.setPlayerOneName(player1Name);
         map.setPlayerTwoName(player2Name);
         return this;
+    }
+
+    public void setPlayerImage(ImageIcon playerImage, int parameter) {
+        if(parameter == 1)
+            map.setPlayer1Image(playerImage);
+        else
+            map.setPlayer2Image(playerImage);
     }
 
     @Override

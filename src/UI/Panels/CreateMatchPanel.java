@@ -91,8 +91,10 @@ public class CreateMatchPanel extends JPanel {
                 imageIcon = new ImageIcon("images/Female02.png");
             }
             setImage(characterPanel, imageIcon);
+            matchBuilder.setPlayerImage(imageIcon,parameter);
         });
         buttonPanel.add(button1);
+
         JButton button2 = new JButton("Male");
         button2.addActionListener(e -> {
             ImageIcon imageIcon;
@@ -104,10 +106,21 @@ public class CreateMatchPanel extends JPanel {
             }
 
             setImage(characterPanel, imageIcon);
+            matchBuilder.setPlayerImage(imageIcon,parameter);
         });
         buttonPanel.add(button2);
+
+        ImageIcon imageIcon;
+        if(parameter == 1){
+            imageIcon = new ImageIcon("images/Female01.png");
+        }
+        else{
+            imageIcon = new ImageIcon("images/Female02.png");
+        }
+        setImage(characterPanel, imageIcon);
+
         panel.add(buttonPanel);
-        
+
         return panel;
     }
 
