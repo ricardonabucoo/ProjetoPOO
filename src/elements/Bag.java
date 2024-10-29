@@ -9,11 +9,13 @@ public class Bag {
     private static int capacity;
     private ArrayList<Fruit> fruitList;
     private int fruitsAmount;
+    private int passionFruitAmount;
 
     public Bag(int capacity) {
         this.capacity = capacity;
         this.fruitList = new ArrayList<Fruit>();
         this.fruitsAmount = 0;
+        this.passionFruitAmount = 0;
     }
 
     public void add(Fruit fruit) {
@@ -22,6 +24,9 @@ public class Bag {
         else {
             fruitList.add(fruit);
             fruitsAmount++;
+            if(fruit.getFruitType() == FruitType.PASSIONFRUIT) {
+            	passionFruitAmount++;
+            }
         }
     }
 
@@ -37,6 +42,10 @@ public class Bag {
 
     public int getFruitsAmount() {
         return this.fruitsAmount;
+    }
+    
+    public int getPassionFruitAmount() {
+    	return this.passionFruitAmount;
     }
 
     public void changeBagPosition(Cell newPosition) {
@@ -59,6 +68,10 @@ public class Bag {
             fruit.drop();
             fruitsAmount--;
         }
+    }
+
+    public ArrayList<Fruit> getFruitList() {
+        return this.fruitList;
     }
 
 }

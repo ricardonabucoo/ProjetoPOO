@@ -58,10 +58,11 @@ public class CreateMatchPanel extends JPanel {
         button.addActionListener(e -> {
             MainFrame mainFrame = MainFrame.getInstance();
 
-
-
-
-            //mainFrame.setCurrentPanel(new GamePanel(new Match(map,player1,player2,passionFruitFactory)));
+            matchBuilder.setPlayersName(
+                    inputFields.get("Player1").getInput(),
+                    inputFields.get("Player2").getInput()
+            );
+            mainFrame.setCurrentPanel(matchBuilder.build().getResult());
         });
 
         panel.add(button);
@@ -128,10 +129,15 @@ public class CreateMatchPanel extends JPanel {
         panel.add(inputField);
         inputFields.put(key,inputField);
     }
+    
+    public Match getMatch() {
+    	
+    	return this.match;
+    }
 
     public static void main(String[] args) {
         MainFrame mainFrame = MainFrame.getInstance();
-        //mainFrame.setCurrentPanel(new CreateMatchPanel(new Map()));
+        //mainFrame.setCurrentPanel(new CreateMatchPanel());
 
     }
 
