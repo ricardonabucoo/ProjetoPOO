@@ -16,15 +16,15 @@ public class CreateMapPanel extends JPanel {
     private Map map;
     private JPanel leftPanel;
     private JPanel rightPanel;
+    int size;
+    int rocksAmount;
+    HashMap<FruitType, Integer> treeMap;
+    HashMap<FruitType, Integer> fruitMap;
+    int passionFruitAmount;
+    int bagCapacity;
+    int fruitAmount;
+    int treesAmount;
 
-    int size = inputFields.get("Size").getInputAsInt();
-    int rocksAmount = inputFields.get("Rocks_amount").getInputAsInt();
-    HashMap<FruitType, Integer> treeMap = createTreesTypesHashMap();
-    HashMap<FruitType, Integer> fruitMap = createInitialFruitHashMap();
-    int passionFruitAmount = inputFields.get("PassionFruit_amount").getInputAsInt();
-    int bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
-    int fruitAmount = treeMap.values().stream().mapToInt(Integer::intValue).sum();
-    int treesAmount = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
 
     public CreateMapPanel() {
         setLayout(new BorderLayout());
@@ -145,12 +145,21 @@ public class CreateMapPanel extends JPanel {
         mapBuilder = new MapBuilder();
 
         JButton validateButton = new JButton();
+        size = inputFields.get("Size").getInputAsInt();
+        rocksAmount = inputFields.get("Rocks_amount").getInputAsInt();
+        treeMap = createTreesTypesHashMap();
+        fruitMap = createInitialFruitHashMap();
+        passionFruitAmount = inputFields.get("PassionFruit_amount").getInputAsInt();
+        bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
+        fruitAmount = treeMap.values().stream().mapToInt(Integer::intValue).sum();
+        treesAmount = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
+
         if(size>=3||bagCapacity>=(passionFruitAmount/2+1)||fruitAmount+treesAmount+2<=size*size)
         {
-            validateButton.setText("===Valores válidos===");
+            validateButton.setText("Válidos");
         }
         else{
-            validateButton.setText("===Valores pendentes===");}
+            validateButton.setText("Pendentes");}
 
         gbc.gridx=0;
         gbc.gridy = 0;
@@ -160,14 +169,10 @@ public class CreateMapPanel extends JPanel {
 
 
         JButton submitButton = new JButton("Submit");
-        submitButton.setEnabled(false);
-        if(size>=3||bagCapacity>=(passionFruitAmount/2+1)||fruitAmount+treesAmount+2<=size*size)
-        {
-            submitButton.setEnabled(true);
-        }
         submitButton.addActionListener(e -> {
 
             rightPanel.remove(map);
+
             map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap, passionFruitAmount, bagCapacity).getResult();
             GridBagConstraints gbcMap = new GridBagConstraints();
             gbcMap.gridx = 0;
