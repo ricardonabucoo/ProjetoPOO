@@ -27,7 +27,7 @@ public class MapReader {
         readFile(file);
     }
 
-    private void readFile(File file) {
+    public void readFile(File file) {
         // Mapeamento de termos em português para enums e variáveis em inglês, acho que a professora
     	//vai passar arquivos em português, aí criei o hashmap com a tradução
         HashMap<String, String> translationMap = new HashMap<>();
