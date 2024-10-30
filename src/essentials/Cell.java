@@ -132,25 +132,35 @@ public class Cell extends JPanel implements Serializable{
 
 		final Point[] initialClick = {null};
 
-		// Adiciona um MouseListener para registrar o clique inicial
 		elem.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				initialClick[0] = e.getPoint();
+				System.out.println("Mouse pressed at: " + initialClick[0]);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				Component target = SwingUtilities.getDeepestComponentAt(getParent(), e.getXOnScreen(), e.getYOnScreen());
+				if (target instanceof Cell && target != Cell.this) {
+					Cell targetCell = (Cell) target;
+					Cell.this.removeDynamicElem(elem);
+					targetCell.setDynamicElem(elem);
+					System.out.println("Moved to cell at row: " + targetCell.getRow() + " col: " + targetCell.getCol());
+				}
 			}
 		});
 
-		// Adiciona um MouseMotionListener para mover o elemento
+		// Listener para realizar o arraste
 		elem.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				if (initialClick[0] != null) {
+				if (initialClick[0] != null) {  // Certifique-se de que initialClick foi definido
 					int deltaX = e.getX() - initialClick[0].x;
 					int deltaY = e.getY() - initialClick[0].y;
-					Point location = elem.getLocation();
-					elem.setLocation(location.x + deltaX, location.y + deltaY);
-					elem.revalidate();
-					elem.repaint();
+					elem.setLocation(elem.getX() + deltaX, elem.getY() + deltaY);
+					System.out.println("Moving to location: " + elem.getLocation());
+					repaint();  // Atualiza o componente enquanto arrasta
 				}
 			}
 		});

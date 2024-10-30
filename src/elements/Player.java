@@ -4,6 +4,7 @@ import essentials.Cell;
 import status_effect.EffectList;
 import javax.swing.ImageIcon;
 import java.awt.*;
+import java.awt.event.MouseMotionAdapter;
 
 public class Player extends DynamicElem{
 	public String name;
@@ -26,25 +27,6 @@ public class Player extends DynamicElem{
 		Image scaledImage = imageIcon.getImage().getScaledInstance(60, 100, Image.SCALE_SMOOTH);
 		setIcon(new ImageIcon(scaledImage));
 		setPreferredSize(new Dimension(100, 100));
-
-		addMouseMotionListener(new MouseMotionAdapter() {
-			private Point initialClick;
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				initialClick = e.getPoint();
-			}
-
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				int deltaX = e.getX() - initialClick.x;
-				int deltaY = e.getY() - initialClick.y;
-				Point location = elem.getLocation();
-				elem.setLocation(location.x + deltaX, location.y + deltaY);
-				elem.revalidate();
-				elem.repaint();
-			}
-		});
 
 		revalidate();
 		repaint();
