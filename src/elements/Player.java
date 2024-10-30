@@ -31,6 +31,7 @@ public class Player extends DynamicElem{
 		repaint();
 	}
 
+
 	public void addFruitBag(Fruit fruit) {
 		bag.add(fruit);
 	}
