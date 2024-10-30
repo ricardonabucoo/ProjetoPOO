@@ -1,8 +1,7 @@
 package essentials;
 import elements.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import javax.swing.*;
 import java.io.Serializable;
 
@@ -130,6 +129,33 @@ public class Cell extends JPanel implements Serializable{
         this.setComponentZOrder(staticElem, 1);
         this.revalidate();
         this.repaint();
+
+		final Point[] initialClick = {null};
+
+		// Adiciona um MouseListener para registrar o clique inicial
+		elem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				initialClick[0] = e.getPoint();
+			}
+		});
+
+		// Adiciona um MouseMotionListener para mover o elemento
+		elem.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				if (initialClick[0] != null) {
+					int deltaX = e.getX() - initialClick[0].x;
+					int deltaY = e.getY() - initialClick[0].y;
+					Point location = elem.getLocation();
+					elem.setLocation(location.x + deltaX, location.y + deltaY);
+					elem.revalidate();
+					elem.repaint();
+				}
+			}
+		});
+
+
 	}
 
 	public void removeDynamicElem(DynamicElem elem) {
