@@ -15,11 +15,13 @@ import java.io.Serializable;
 public class ChooseBuildMapMethodPanel extends JPanel implements Serializable {
 
     public ChooseBuildMapMethodPanel() {
-        setLayout(new FlowLayout(FlowLayout.CENTER, 50, 275));
+        setLayout(new FlowLayout(FlowLayout.CENTER, 200, 275));
         setBackground(Color.darkGray);
+        Font fontButton = new Font("Arial", Font.BOLD, 20);
 
-        JButton createButton = new JButton("<html>Criar novo <br> mapa</html>");
-        createButton.setPreferredSize(new Dimension(100, 50));
+        JButton createButton = new JButton("Criar novo mapa");
+        createButton.setPreferredSize(new Dimension(400, 100));
+        createButton.setFont(fontButton);
         createButton.addActionListener(e -> {
             MainFrame mainFrame = MainFrame.getInstance();
             mainFrame.setCurrentPanel(new CreateMapPanel());
@@ -27,8 +29,9 @@ public class ChooseBuildMapMethodPanel extends JPanel implements Serializable {
 
         add(createButton);
 
-        JButton loadButton = new JButton("<html>Carregar <br> configurações <br> do mapa </html>");
-        loadButton.setPreferredSize(new Dimension(100, 50));
+        JButton loadButton = new JButton("Carregar  configurações do mapa");
+        loadButton.setPreferredSize(new Dimension(400, 100));
+        loadButton.setFont(fontButton);
         loadButton.addActionListener((e -> {
             JFileChooser fileChooser = new JFileChooser();
             int returnValue = fileChooser.showOpenDialog(null);
