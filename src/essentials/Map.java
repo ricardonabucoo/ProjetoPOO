@@ -28,11 +28,12 @@ public class Map extends JPanel implements Serializable {
 	private GridBagConstraints gbc;
 	private JPanel mapInfoPanel;
 
-	private ArrayList<Point> avaliablePoints;
-	private ArrayList<Cell> emptyCells;
-	private ArrayList<Tree> treeCellList;
-	private ArrayList<Grass> grassCellList;
-	private ArrayList<Cell> avaliableCellsForPlayer;
+	private ArrayList<Point> avaliablePoints = new ArrayList<>();
+	private ArrayList<Cell> emptyCells = new ArrayList<>();
+	private ArrayList<Tree> treeCellList = new ArrayList<>();
+	private ArrayList<Grass> grassCellList = new ArrayList<>();
+	private ArrayList<Cell> avaliableCellsForPlayer = new ArrayList<>();
+
 
 	public JPanel createMapInfoPanel(){
 		JPanel panel = new JPanel();
@@ -149,15 +150,14 @@ public class Map extends JPanel implements Serializable {
 		////// arvores
 
 		treeCellList = new ArrayList<>();
-		int treeAmount = treeMap.get(FruitType.AVOCADO);
-		for(int i = 0; i < treeAmount; i++){
+		int treeAmount = treeMap.getOrDefault(FruitType.AVOCADO, 0);
+		for (int i = 0; i < treeAmount; i++) {
 			Point freePoint = getUnoccupedRandomPoint();
-			AvocadoTree tree = new AvocadoTree(freePoint.x,freePoint.y);
+			AvocadoTree tree = new AvocadoTree(freePoint.x, freePoint.y);
 			grid[freePoint.x][freePoint.y] = tree;
 			treeCellList.add(tree);
 		}
-
-		treeAmount = treeMap.get(FruitType.GUAVA);
+		 treeAmount = treeMap.getOrDefault(FruitType.GUAVA, 0);
 		for(int i = 0; i < treeAmount; i++){
 			Point freePoint = getUnoccupedRandomPoint();
 			GuavaTree tree = new GuavaTree(freePoint.x,freePoint.y);
@@ -165,7 +165,7 @@ public class Map extends JPanel implements Serializable {
 			treeCellList.add(tree);
 		}
 
-		treeAmount = treeMap.get(FruitType.ORANGE);
+		treeAmount = treeMap.getOrDefault(FruitType.ORANGE, 0);
 		for(int i = 0; i < treeAmount; i++){
 			Point freePoint = getUnoccupedRandomPoint();
 			OrangeTree tree = new OrangeTree(freePoint.x,freePoint.y);
@@ -173,7 +173,7 @@ public class Map extends JPanel implements Serializable {
 			treeCellList.add(tree);
 		}
 
-		treeAmount = treeMap.get(FruitType.BARBADOSCHERRY);
+		treeAmount = treeMap.getOrDefault(FruitType.BARBADOSCHERRY, 0);
 		for(int i = 0; i < treeAmount; i++){
 			Point freePoint = getUnoccupedRandomPoint();
 			BarbadosCherryTree tree = new BarbadosCherryTree(freePoint.x,freePoint.y);
@@ -181,7 +181,7 @@ public class Map extends JPanel implements Serializable {
 			treeCellList.add(tree);
 		}
 
-		treeAmount = treeMap.get(FruitType.COCONUT);
+		treeAmount = treeMap.getOrDefault(FruitType.COCONUT, 0);
 		for(int i = 0; i < treeAmount; i++){
 			Point freePoint = getUnoccupedRandomPoint();
 			CoconutTree tree = new CoconutTree(freePoint.x,freePoint.y);
@@ -189,7 +189,7 @@ public class Map extends JPanel implements Serializable {
 			treeCellList.add(tree);
 		}
 
-		treeAmount = treeMap.get(FruitType.BLACKBERRY);
+		treeAmount = treeMap.getOrDefault(FruitType.BLACKBERRY, 0);
 		for(int i = 0; i < treeAmount; i++){
 			Point freePoint = getUnoccupedRandomPoint();
 			BlackBerryTree tree = new BlackBerryTree(freePoint.x,freePoint.y);
@@ -210,21 +210,21 @@ public class Map extends JPanel implements Serializable {
 		////// frutas
 
 		Fruit.setWormyChance(wormyChance);
-		int fruitAmount = fruitMap.get(FruitType.AVOCADO);
+		int fruitAmount = fruitMap.getOrDefault(FruitType.AVOCADO, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			Avocado fruit = new Avocado(grass);
 			grass.setElem(fruit);
 		}
 
-		fruitAmount = fruitMap.get(FruitType.GUAVA);
+		fruitAmount = fruitMap.getOrDefault(FruitType.GUAVA, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			Guava fruit = new Guava(grass);
 			grass.setElem(fruit);
 		}
 
-		fruitAmount = fruitMap.get(FruitType.ORANGE);
+		fruitAmount = fruitMap.getOrDefault(FruitType.ORANGE, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			Orange fruit = new Orange(grass);
@@ -232,28 +232,28 @@ public class Map extends JPanel implements Serializable {
 		}
 
 
-		fruitAmount = fruitMap.get(FruitType.BARBADOSCHERRY);
+		fruitAmount = fruitMap.getOrDefault(FruitType.AVOCADO, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			BarbadosCherry fruit = new BarbadosCherry(grass);
 			grass.setElem(fruit);
 		}
 
-		fruitAmount = fruitMap.get(FruitType.COCONUT);
+		fruitAmount = fruitMap.getOrDefault(FruitType.COCONUT, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			Coconut fruit = new Coconut(grass);
 			grass.setElem(fruit);
 		}
 
-		fruitAmount = fruitMap.get(FruitType.BLACKBERRY);
+		fruitAmount = fruitMap.getOrDefault(FruitType.BLACKBERRY, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			BlackBerry fruit = new BlackBerry(grass);
 			grass.setElem(fruit);
 		}
 
-		fruitAmount = fruitMap.get(FruitType.PASSIONFRUIT);
+		fruitAmount = fruitMap.getOrDefault(FruitType.PASSIONFRUIT, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			PassionFruit fruit = new PassionFruit(grass);
