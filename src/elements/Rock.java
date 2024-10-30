@@ -1,24 +1,20 @@
 package elements;
 
 import essentials.Cell;
-import java.awt.MediaTracker;
+
+import java.awt.*;
 import javax.swing.ImageIcon;
 
-public final class Rock extends StaticElem {
+public final class Rock extends Cell {
 
 	public static final int MP_REQUIRED_FOR_ROCK=2;
 
-	public Rock(Cell ownPlace) {
-		super(ownPlace);
+	public Rock(int row, int col) {
+		super(row,col);
 		imageIcon = new ImageIcon("images/rock.png");
-		this.setIcon(imageIcon);
-
-	    if (imageIcon.getImageLoadStatus() == MediaTracker.COMPLETE)
-	        System.out.println("Imagem carregada com sucesso. (Pedra)");
-	    else
-	        System.out.println("Erro ao carregar a imagem.");
+		setIcon(imageIcon);
 	}
-	
+
 	@Override
 	public int getMPNeeded() {
 		return MP_REQUIRED_FOR_ROCK;
@@ -29,12 +25,5 @@ public final class Rock extends StaticElem {
 
 	}
 
-	public Cell getExitDirection() {
-		return null;
-	}
-
-	private void jumpTo(Cell exitDirection) {
-
-	}
 
 }

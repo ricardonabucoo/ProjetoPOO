@@ -8,10 +8,6 @@ public class DynamicElem extends Elem
 	{
 		super(ownPlace);
 	}
-	protected void changePosition(Cell newPosition)
-	{
-		this.ownPlace = newPosition;
-	}
 
 
 

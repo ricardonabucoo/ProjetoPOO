@@ -1,7 +1,7 @@
 package UI.Panels;
 
 import UI.Frames.MainFrame;
-import elements.FruitType;
+import elements.Fruits.FruitType;
 import essentials.Map;
 import builders.MapBuilder;
 import essentials.Match;

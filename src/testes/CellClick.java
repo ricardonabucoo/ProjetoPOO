@@ -1,9 +1,8 @@
 package testes;
 
-import UI.Buttons.BotaoTransparente;
 import UI.Frames.MainFrame;
-import elements.Fruit;
-import elements.FruitType;
+import elements.Fruits.Fruit;
+import elements.Fruits.FruitType;
 import elements.Grass;
 import essentials.Cell;
 

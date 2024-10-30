@@ -1,27 +1,29 @@
 package elements;
 
+import elements.Fruits.Fruit;
+import elements.Fruits.FruitType;
 import essentials.Cell;
 import status_effect.EffectList;
 import javax.swing.ImageIcon;
 import java.awt.*;
-import java.awt.event.MouseMotionAdapter;
 
-public class Player extends DynamicElem{
+public class Player extends Elem{
 	public String name;
 	private int power;
 	private final Bag bag;
-	private EffectList effectList;
+	private final EffectList effectList;
 	private int movementPoints;
 	private boolean canMoveNextRound;
 
-	public Player(Bag bag, Cell ownPlace) {
+	public Player(Cell ownPlace) {
 		super(ownPlace);
-		this.name = "";
-		this.bag = bag;
-		this.effectList = new EffectList();
-		this.movementPoints = 0;
-		this.power = 0;
-		this.canMoveNextRound = true;
+		bag = new Bag();
+		effectList = new EffectList();
+		movementPoints = 0;
+		power = 0;
+		name = "";
+
+		canMoveNextRound = true;
 
 		ImageIcon imageIcon = new ImageIcon("images/Female01.png");
 		Image scaledImage = imageIcon.getImage().getScaledInstance(60, 100, Image.SCALE_SMOOTH);
@@ -37,28 +39,19 @@ public class Player extends DynamicElem{
 		bag.add(fruit);
 	}
 
-	public Cell getOwnPlace() {
-		return this.ownPlace;
-	}
-
 	public void playerMove(Cell newcell) {
+		if (movementPoints < newcell.getMPNeeded()) {
+			System.out.println("jogador nao tem pontos de movimentos suficientes para se mover para essa celula");
+			return;
+		}
 		try {
 
-			if (movementPoints < newcell.getMPNeeded()) {
-				throw new Exception("Movimento insuficiente: o jogador não possui pontos de movimento suficientes.");
-			}
-
-			DynamicElem dynamicElem = newcell.getDynamicElem();
-			StaticElem staticElem = newcell.getStaticElem();
-
-
-			if (staticElem instanceof Rock) {
+			if (newcell instanceof Rock) {
 				handleRockObstacle(newcell);
-				return;  // Sai após lidar com a pedra
+				return;
 			}
 
-			// Executa movimentação padrão
-			handleStandardMove(newcell, dynamicElem);
+			handleStandardMove(newcell, newcell.getElem());
 
 		} catch (Exception e) {
 			System.err.println("Erro ao mover jogador: " + e.getMessage());
@@ -78,60 +71,51 @@ public class Player extends DynamicElem{
 
 
 		for (Cell cell : surroundingCells) {
-			if (cell != null && !(cell.getStaticElem() instanceof Rock)) {
+			if (cell != null && !(cell instanceof Rock)) {
 				moveToCell(cell);
 				return;
 			}
 		}
-
-
 		throw new Exception("Movimento inválido: Nenhuma célula ao redor da pedra está disponível para o jogador.");
 	}
 
 
-	private void handleStandardMove(Cell newcell, DynamicElem dynamicElem) throws Exception {
-		if (dynamicElem == null) {
-			moveToCell(newcell);
-			movementPoints--;
-		} else if (dynamicElem instanceof Fruit) {
-			collectFruit(newcell, (Fruit) dynamicElem);
-			movementPoints--;
-		} else if (dynamicElem instanceof Player) {
-			Player opponent = (Player) dynamicElem;
-			opponent.receivedDamage(this.power);
-		} else {
-			throw new Exception("Elemento dinâmico inesperado: " + dynamicElem.getClass().getName());
-		}
+	private void handleStandardMove(Cell newcell, Elem elem) throws Exception {
+        switch (elem) {
+            case null -> {
+                moveToCell(newcell);
+            }
+            case Fruit fruit -> {
+                collectFruit(newcell, fruit);
+            }
+            case Player otherPlayer -> otherPlayer.receivedDamage(power);
+            default -> throw new Exception("Elemento dinâmico inesperado: " + elem.getClass().getName());
+        }
 	}
 
-	// Move o jogador para uma nova célula
 	private void moveToCell(Cell cell) {
-		if (ownPlace != null) {
-			ownPlace.removeDynamicElem(this);  // Remove o jogador da célula atual
-		}
-		cell.setDynamicElem(this);
-		this.ownPlace = cell;
+		this.cell.removeElem();
+		movementPoints-=cell.getMPNeeded();
+		cell.setElem(this);
+		this.cell = cell;
 	}
 
-	// Método para coletar frutas e adicionar à bolsa
 	private void collectFruit(Cell cell, Fruit fruit) {
-		ownPlace.removeDynamicElem(this); // Remove o jogador da célula atual
-		cell.setDynamicElem(this);
+		this.cell.removeElem();
+		cell.setElem(this);
 		addFruitBag(fruit);
-		this.ownPlace = cell;
+		this.cell = cell;
 	}
 
 	@Override
 	public void update(){
-
+		power = bag.getFruitsAmount();
 	}
 
 	public void eatFruit(FruitType fruitType) {
-		Fruit fruitToConsume = bag.take(fruitType);
-
-		if (fruitToConsume != null) {
-			fruitToConsume.giveEffect(this);
-		}
+		Fruit fruit = bag.take(fruitType);
+		if (fruit != null)
+			fruit.giveEffect(this);
 	}
 
 	public void receivedDamage (int power) {
@@ -173,6 +157,10 @@ public class Player extends DynamicElem{
 
 	public Bag getBag() {
 		return this.bag;
+	}
+
+	public boolean isBagFull(){
+		return bag.isFull();
 	}
 
 	public EffectList getEffectList() {

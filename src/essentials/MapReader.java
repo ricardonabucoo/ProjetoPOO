@@ -1,6 +1,6 @@
 package essentials;
 
-import elements.FruitType;
+import elements.Fruits.FruitType;
 
 import java.io.BufferedReader;
 import java.io.File;

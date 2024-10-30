@@ -1,8 +1,8 @@
 package builders;
 
 import elements.*;
-import essentials.Cell;
-import essentials.Map;
+import elements.Trees.Tree;
+import essentials.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,9 +13,9 @@ public class MapBuilder implements Builder {
 
 	private Map map;
 	private int gridSize;
-	private List<Cell> rocksCellList;
-	private List<Cell> grassCellList;
-	private List<Cell> treeCellList;
+	private List<Rock> rocksCellList;
+	private List<Grass> grassCellList;
+	private List<Tree> treeCellList;
 	private List<Cell> fruitCellList;
 	private List<Cell> availableCells;
 	private Player player1;
@@ -30,7 +30,7 @@ public class MapBuilder implements Builder {
 		return this;
 	}
 
-	public MapBuilder buildMap(int size, int rocksAmount, HashMap<FruitType, Integer> treeMap, HashMap<FruitType, Integer> fruitMap, int passionFruitsAmount, int bagCapacity) {
+	public MapBuilder buildMap() {
 		buildCellGrid(size)
 				.buildRockCells(rocksAmount)
 				.buildTreeCells(treeMap)
@@ -84,7 +84,7 @@ public class MapBuilder implements Builder {
 
 	private Player buildPlayer(int bagCapacity) {
 		Cell cell = getRandomWithoutFruitCell();
-		Player player = new Player(new Bag(bagCapacity),cell);
+		Player player = new Player(cell);
 		cell.setDynamicElem(player);
 		return player;
 	}
