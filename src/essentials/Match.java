@@ -94,29 +94,60 @@ public class Match extends JPanel implements Serializable {
     }
 
     private JPanel createPanel(Player player) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,5));
-        JButton nameButton = new JButton("Player: "+ player.getName());
-        nameButton.setPreferredSize(new Dimension(150,50));
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER,25,5));
+        panel.setBackground(Color.lightGray);
+        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK)));
+        Font font = new Font("Arial", Font.BOLD, 18);
+        JButton nameButton = new JButton("PLAYER: "+ player.getName());
+        nameButton.setPreferredSize(new Dimension(250,100));
+        nameButton.setFont(font);
+        nameButton.setContentAreaFilled(false);
+        nameButton.setOpaque(false);
+        nameButton.setBorderPainted(false);
         panel.add(nameButton);
+        JButton powerButton = new JButton("PODER: "+ player.getPower());
+        powerButton.setPreferredSize(new Dimension(150,100));
+        powerButton.setFont(font);
+        powerButton.setContentAreaFilled(false);
+        powerButton.setOpaque(false);
+        powerButton.setBorderPainted(false);
+        panel.add(powerButton);
         ImageIcon icon = new ImageIcon("images/passionfruit.png");
-        panel.add(new JButton(Integer.toString(player.getBag().getPassionFruitAmount()), icon));
-        panel.add(new JButton("Power: "+ (player.getPower())));
+        JButton passionFruitButton = new JButton(Integer.toString(player.getBag().getPassionFruitAmount()), icon) ;
+        passionFruitButton.setFont(font);
+        passionFruitButton.setContentAreaFilled(false);
+        passionFruitButton.setOpaque(false);
+        passionFruitButton.setBorderPainted(false);
+        panel.add(passionFruitButton);
         return panel;
     }
 
     private JPanel createCenterPanel() {
-        JPanel panel = new JPanel();
-        panel.add(new JButton(Integer.toString(roundCount)));
-        JButton button = new JButton("Salvar");
-        button.addActionListener(e -> {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER,25,5));
+        panel.setBackground(Color.lightGray);
+        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK)));
+        Font font = new Font("Arial", Font.BOLD, 20);
+        JButton saveButton = new JButton("Salvar");
+        saveButton.setPreferredSize(new Dimension(150,100));
+        saveButton.setFont(font);
+        saveButton.addActionListener(e -> {
             try {
                 saveMatch("saved_match/match_data.ser");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
-        panel.add(button);
+        panel.add(saveButton);
+        JButton roundButton = new JButton("Round: "+ roundCount);
+        roundButton.setPreferredSize(new Dimension(200,100));
+        roundButton.setFont(font);
+        roundButton.setContentAreaFilled(false);
+        roundButton.setOpaque(false);
+        roundButton.setBorderPainted(false);
+        panel.add(roundButton);
         JButton closeButton = new JButton("Sair");
+        closeButton.setPreferredSize(new Dimension(150,100));
+        closeButton.setFont(font);
         closeButton.addActionListener(e -> {
            mainFrame.dispose();
         });
