@@ -1,5 +1,8 @@
 package elements;
-import essentials.Cell;
+import elements.fruits.Fruit;
+import elements.fruits.PassionFruit;
+import cells.trees.Tree;
+import cells.Cell;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,18 +13,19 @@ public class PassionFruitFactory implements Serializable {
 
 	public final int maxPassionFruitsAmount;
 	private int passionFruitsCount;
-	public final List<Cell> treeList;
+	public final ArrayList<Tree> treeList;
 	private static PassionFruitFactory instance;
 	
-	public static PassionFruitFactory getInstance(List<Cell> treeCells, int passionFruitsAmount) {
+	public static PassionFruitFactory getInstance(ArrayList<Tree> treeCells, int passionFruitsAmount, int initialPassionFruitsCount) {
         if (instance == null) {
-            instance = new PassionFruitFactory(treeCells, passionFruitsAmount);
+            instance = new PassionFruitFactory(treeCells, passionFruitsAmount, initialPassionFruitsCount);
         }
         return instance;
     }
 	
-	private PassionFruitFactory(List<Cell> treeCells, int PassionFruitsAmount) {
+	private PassionFruitFactory(ArrayList<Tree> treeCells, int PassionFruitsAmount, int initialPassionFruitsCount) {
 		this.maxPassionFruitsAmount = PassionFruitsAmount;
+		this.passionFruitsCount = initialPassionFruitsCount;
 		this.treeList = treeCells;
 	}
 ///////////////////////////////acho interessante definir um padrão temporal para o aparecimento de maracujás
@@ -42,11 +46,10 @@ public class PassionFruitFactory implements Serializable {
 
 			Collections.shuffle(neighboringCells);
 
-
 			for (Cell cell : neighboringCells) {
-				if (cell != null && cell.withoutDynamicElem()) {
-					Fruit passionFruit = new Fruit(cell, FruitType.PASSIONFRUIT);
-					cell.setDynamicElem(passionFruit);
+				if (cell != null && cell.isUnoccupied()) {
+					Fruit passionFruit = new PassionFruit(cell);
+					cell.setElem(passionFruit);
 					passionFruitsCount++;
 					return;
 				}

@@ -1,16 +1,12 @@
 package elements;
 
-import essentials.Cell;
+import cells.Cell;
 
 public class DynamicElem extends Elem
 {
 	public DynamicElem(Cell ownPlace)
 	{
 		super(ownPlace);
-	}
-	protected void changePosition(Cell newPosition)
-	{
-		this.ownPlace = newPosition;
 	}
 
 

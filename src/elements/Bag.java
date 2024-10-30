@@ -1,40 +1,40 @@
 package elements;
 
-import essentials.Cell;
+import elements.fruits.Fruit;
+import elements.fruits.FruitType;
+import cells.Cell;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
 
 public class Bag implements Serializable {
     private static int capacity;
-    private ArrayList<Fruit> fruitList;
-    private int fruitsAmount;
+    private final ArrayList<Fruit> fruitList;
     private int passionFruitAmount;
 
-    public Bag(int capacity) {
-        this.capacity = capacity;
+    public Bag() {
         this.fruitList = new ArrayList<Fruit>();
-        this.fruitsAmount = 0;
         this.passionFruitAmount = 0;
     }
 
+    public static void setCapacity(int capacity) {
+        Bag.capacity = capacity;
+    }
+
     public void add(Fruit fruit) {
-        if(fruitsAmount >= capacity)
+        if(fruitList.size() == capacity)
             System.out.println("mochila atingiu a capacidade maxima");
         else {
             fruitList.add(fruit);
-            fruitsAmount++;
-            if(fruit.getFruitType() == FruitType.PASSIONFRUIT) {
+            if(FruitType.PASSIONFRUIT.isInstance(fruit))
             	passionFruitAmount++;
-            }
         }
     }
 
-    public Fruit take(FruitType fruitType) {
+    public Fruit take(FruitType type) {
         for(Fruit fruit : fruitList) {
-            if(fruit.getFruitType() == fruitType) {
+            if(type.isInstance(fruit)) {
                 fruitList.remove(fruit);
                 return fruit;
             }
@@ -43,43 +43,39 @@ public class Bag implements Serializable {
     }
 
     public int getFruitsAmount() {
-        return this.fruitsAmount;
+        return fruitList.size();
     }
     
     public int getPassionFruitAmount() {
-    	return this.passionFruitAmount;
+    	return passionFruitAmount;
     }
 
     public void changeBagPosition(Cell newPosition) {
         for(Fruit fruit : fruitList) {
-            fruit.setOwnPlace(newPosition);
+            fruit.setCell(newPosition);
         }
     }
 
     public void dropFruit(int dropFruitAmount) {
 
-        int value = 0;
-        if(dropFruitAmount <= fruitsAmount)
-            value = dropFruitAmount;
-        else
-            value = fruitsAmount;
+        int value = Math.min(dropFruitAmount, fruitList.size());
 
         for(int i = 0; i < value; i++) {
             Collections.shuffle(fruitList);
             Fruit fruit = fruitList.getFirst();
             fruit.drop();
-            fruitsAmount--;
         }
     }
 
     public boolean contains(FruitType fruitType) {
         for (Fruit fruit : fruitList) {
-            if (fruit.getFruitType() == fruitType) {
+            if (fruitType.isInstance(fruit)) {
                 return true;
             }
         }
         return false;
     }
 
+    public boolean isFull() { return fruitList.size() == capacity; }
 }
 
