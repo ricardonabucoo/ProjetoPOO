@@ -138,7 +138,7 @@ public class Match extends JPanel implements Serializable {
             }
         });
         panel.add(saveButton);
-        JButton roundButton = new JButton("Round: "+ roundCount);
+        JButton roundButton = new JButton("ROUND: "+ roundCount);
         roundButton.setPreferredSize(new Dimension(200,100));
         roundButton.setFont(font);
         roundButton.setContentAreaFilled(false);
