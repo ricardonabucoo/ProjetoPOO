@@ -94,10 +94,13 @@ public class Match extends JPanel implements Serializable {
     }
 
     private JPanel createPanel(Player player) {
-        JPanel panel = new JPanel();
-        panel.add(new JButton(Integer.toString(player.getBag().getPassionFruitAmount())));
-        panel.add( new JButton(player.getName()));
-        panel.add(new JButton(Integer.toString(player.getBag().getPassionFruitAmount())));
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,5));
+        JButton nameButton = new JButton("Player: "+ player.getName());
+        nameButton.setPreferredSize(new Dimension(150,50));
+        panel.add(nameButton);
+        ImageIcon icon = new ImageIcon("images/passionfruit.png");
+        panel.add(new JButton(Integer.toString(player.getBag().getPassionFruitAmount()), icon));
+        panel.add(new JButton("Power: "+ (player.getPower())));
         return panel;
     }
 
