@@ -3,10 +3,9 @@ package essentials;
 import elements.DynamicElem;
 import elements.PassionFruitFactory;
 import elements.Player;
-import UI.Panels.MapInfoPanel;
-import elements.*;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -20,12 +19,12 @@ public class Map extends JPanel implements Serializable {
 	private int gridSize;
 	private PassionFruitFactory passionFruitFactory;
 	private GridBagConstraints gbc;
-	private MapInfoPanel mapInfoPanel;
+	private JPanel mapInfoPanel;
 
 
 	public Map(int size) {
 		passionFruitFactory = null;
-		mapInfoPanel = new MapInfoPanel(this);
+		mapInfoPanel = new JPanel();
 		player1 = null;
 		player2 = null;
 		grid = null;
@@ -54,43 +53,33 @@ public class Map extends JPanel implements Serializable {
 
 	private void cellInfoPanel(int i, int j) {
 
+
+		mapInfoPanel.setLayout(new BoxLayout(mapInfoPanel, BoxLayout.Y_AXIS));
+		mapInfoPanel.setBorder(
+				BorderFactory.createTitledBorder(
+						BorderFactory.createLineBorder(Color.BLACK),
+						"Informações da célula",
+						TitledBorder.CENTER,
+						TitledBorder.TOP
+				)
+		);
+		mapInfoPanel.setBackground(Color.lightGray);
+		mapInfoPanel.setPreferredSize(new Dimension(300,500));
 		mapInfoPanel.removeAll();
-
 		Cell cell = grid[i][j];
-
-		Dimension buttonSize = new Dimension(200, 40); // Largura 200px, altura 40px
-
+		Dimension buttonSize = new Dimension(200, 40);
 		// Cria e adiciona os botões de informações
 		mapInfoPanel.add( new JButton("Célula"));
 		mapInfoPanel.add( new JButton("Linha: " + cell.getRow()));
 		mapInfoPanel.add( new JButton("Coluna: " + cell.getCol()));
 
-		// Exibe o elemento estático como um painel de imagem
-		//JPanel staticElemPanel = new JPanel();
-		//staticElemPanel.setPreferredSize(new Dimension(200, 200));
+		mapInfoPanel.add(new JButton(cell.getStaticElem().getImageIcon()));
 
-		// Obtém o caminho da imagem com base no elemento estático
-		String imagePath = getStaticElementImagePath(cell.getStaticElem());
-		ImageIcon staticElemIcon = new ImageIcon(imagePath);
-
-		JButton button = new JButton();
-		button.setIcon(staticElemIcon);
-		mapInfoPanel.add(button);
-
-
-		// Verifica se há um elemento dinâmico e cria um botão para ele
 		DynamicElem dynamicElem = cell.getDynamicElem();
 		if (dynamicElem != null) {
-			String imagePath2 = getDynamicElemImagePath(cell.getDynamicElem());
-			ImageIcon dynamicElemIcon2 = new ImageIcon(imagePath2);
-
-			JButton button2 = new JButton();
-		
-			button2.setIcon(dynamicElemIcon2);
-			mapInfoPanel.add(button2);
+			mapInfoPanel.add(new JButton(dynamicElem.getImageIcon()));
 		}
 
-		// Atualiza o painel para exibir os novos componentes
 		mapInfoPanel.revalidate();
 		mapInfoPanel.repaint();
 	}
@@ -105,25 +94,6 @@ public class Map extends JPanel implements Serializable {
 		panel.setPreferredSize(buttonSize); // Define o tamanho do painel também
 
 		return panel;
-	}
-
-	private String getStaticElementImagePath (Object staticElem) {
-		if (staticElem instanceof Tree) {
-			return ((Tree) staticElem).getCurrentImagePath();
-		} else if (staticElem instanceof Grass) {
-			return ((Grass) staticElem).getCurrentImagePath();
-		} else {
-			return ((Rock) staticElem).getCurrentImagePath();
-		}
-	}
-
-	private String getDynamicElemImagePath (Object dynamicElem) {
-		if (dynamicElem instanceof Player) {
-			return (((Player) dynamicElem).getIcon()).toString();
-		}
-	 	else{
-			return ((Fruit) dynamicElem).getIcon().toString();
-		}
 	}
 
 	public void addCell(Cell cell, int row,int col){
@@ -167,7 +137,7 @@ public class Map extends JPanel implements Serializable {
 			}
 	}
 
-	public MapInfoPanel getMapInfoPanel() {
+	public JPanel getMapInfoPanel() {
 		return mapInfoPanel;
 	}
 

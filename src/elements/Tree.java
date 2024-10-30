@@ -12,19 +12,18 @@ public final class Tree extends StaticElem {
 	public static final int ROUNDS_REQUIRED_FOR_FRUIT= 5;
 	private int currentRoundCount;
 	private FruitType producedFruit;
-	private boolean hasfruit = false;
-	public String currentImagePath;
+	private boolean hasfruit;
 	
 	public Tree(Cell ownPlace, FruitType fruitType)
 	{
 		super(ownPlace);
-		currentImagePath = "images/tree.png";
-		ImageIcon icon = new ImageIcon(currentImagePath);
-		this.setIcon(icon);
+		imageIcon = new ImageIcon("images/tree.png");
+		this.setIcon(imageIcon);
 		this.producedFruit = fruitType;
 		currentRoundCount = 0;
+		hasfruit = false;
 
-	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE)
+	    if (imageIcon.getImageLoadStatus() == MediaTracker.COMPLETE)
 	        System.out.println("Imagem carregada com sucesso (Arvore).");
 	    else
 	        System.out.println("Erro ao carregar a imagem.");
@@ -73,8 +72,5 @@ public final class Tree extends StaticElem {
 
 	public FruitType getProducedFruit() { return this.producedFruit; }
 
-	public String getCurrentImagePath () {
-		return this.currentImagePath;
-	}
 
 }

@@ -1,11 +1,8 @@
 package essentials;
 
 
-import UI.Buttons.CloseMainFrameButton;
 import UI.Frames.MainFrame;
-import UI.Panels.MapInfoPanel;
 import UI.Panels.PlayerInfoPanel;
-import elements.Bag;
 import elements.PassionFruitFactory;
 import elements.Player;
 
@@ -20,7 +17,7 @@ public class Match extends JPanel implements Serializable {
 
     private JPanel gameBoard;
     private final Map map;
-    private MapInfoPanel mapInfo;
+    private JPanel mapInfo;
 
     private final PlayerInfoPanel player1Info;
     private final PlayerInfoPanel player2Info;

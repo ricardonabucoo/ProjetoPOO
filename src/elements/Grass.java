@@ -7,15 +7,13 @@ import javax.swing.ImageIcon;
 public final class Grass extends StaticElem {
 
 	public static final int MP_REQUIRED_FOR_GRASS = 1;
-	private String currentImagePath;
 
 	public Grass(Cell ownPlace) {
 		super(ownPlace);
-		currentImagePath = "images/grass.png";
-		ImageIcon icon = new ImageIcon(currentImagePath);
-		this.setIcon(icon);
+		imageIcon = new ImageIcon("images/grass.png");
+		this.setIcon(imageIcon);
 
-		if (icon.getImageLoadStatus() == MediaTracker.COMPLETE)
+		if (imageIcon.getImageLoadStatus() == MediaTracker.COMPLETE)
 			System.out.println("Imagem carregada com sucesso. (Grama)");
 		else
 			System.out.println("Erro ao carregar a imagem.");
@@ -23,10 +21,8 @@ public final class Grass extends StaticElem {
 
 	@Override
 	public int getMPNeeded() {
-		return this.MP_REQUIRED_FOR_GRASS;
+		return MP_REQUIRED_FOR_GRASS;
 	}
-	public String getCurrentImagePath () {
-		return this.currentImagePath;
-	}
+
 
 }

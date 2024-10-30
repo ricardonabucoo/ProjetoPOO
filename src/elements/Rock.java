@@ -7,15 +7,13 @@ import javax.swing.ImageIcon;
 public final class Rock extends StaticElem {
 
 	public static final int MP_REQUIRED_FOR_ROCK=2;
-	private String currentImagePath;
 
 	public Rock(Cell ownPlace) {
 		super(ownPlace);
-		currentImagePath = "images/rock.png";
-		ImageIcon icon = new ImageIcon(currentImagePath);
-		this.setIcon(icon);
+		imageIcon = new ImageIcon("images/rock.png");
+		this.setIcon(imageIcon);
 
-	    if (icon.getImageLoadStatus() == MediaTracker.COMPLETE)
+	    if (imageIcon.getImageLoadStatus() == MediaTracker.COMPLETE)
 	        System.out.println("Imagem carregada com sucesso. (Pedra)");
 	    else
 	        System.out.println("Erro ao carregar a imagem.");
@@ -23,8 +21,7 @@ public final class Rock extends StaticElem {
 	
 	@Override
 	public int getMPNeeded() {
-		// TODO Auto-generated method stub
-		return this.MP_REQUIRED_FOR_ROCK;
+		return MP_REQUIRED_FOR_ROCK;
 	}
 	
 	@Override
@@ -38,9 +35,6 @@ public final class Rock extends StaticElem {
 
 	private void jumpTo(Cell exitDirection) {
 
-	}
-	public String getCurrentImagePath () {
-		return this.currentImagePath;
 	}
 
 }

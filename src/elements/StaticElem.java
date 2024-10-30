@@ -5,7 +5,6 @@ import javax.swing.ImageIcon;
 
 public abstract class StaticElem extends Elem
 {
-
 	public StaticElem(Cell ownPlace)
 	{
 		super(ownPlace);
