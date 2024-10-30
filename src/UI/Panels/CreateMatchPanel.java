@@ -53,9 +53,11 @@ public class CreateMatchPanel extends JPanel implements Serializable {
 
     private JPanel createTopPanel(){
         JPanel panel = new JPanel();
-        panel.setBackground(Color.WHITE);
-
-        JButton button = new JButton("Play");
+        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK)));
+        JButton button = new JButton("PLAY");
+        Font font = new Font("Arial", Font.BOLD, 20);
+        button.setPreferredSize(new Dimension(200,50));
+        button.setFont(font);
         button.addActionListener(e -> {
             MainFrame mainFrame = MainFrame.getInstance();
 
