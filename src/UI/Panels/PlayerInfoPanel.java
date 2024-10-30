@@ -1,6 +1,6 @@
 package UI.Panels;
 
-import elements.Fruits.FruitType;
+import elements.fruits.FruitType;
 import elements.Player;
 import essentials.Match;
 

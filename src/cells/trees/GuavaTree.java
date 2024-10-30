@@ -1,6 +1,6 @@
-package elements.Trees;
+package cells.trees;
 
-import elements.Fruits.Guava;
+import elements.fruits.Guava;
 
 import javax.swing.*;
 

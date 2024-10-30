@@ -1,4 +1,4 @@
-	package elements.Fruits;
+	package elements.fruits;
 	
 	public enum FruitType {
 		

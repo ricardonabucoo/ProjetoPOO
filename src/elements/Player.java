@@ -1,8 +1,9 @@
 package elements;
 
-import elements.Fruits.Fruit;
-import elements.Fruits.FruitType;
-import essentials.Cell;
+import cells.Rock;
+import elements.fruits.Fruit;
+import elements.fruits.FruitType;
+import cells.Cell;
 import status_effect.EffectList;
 import javax.swing.ImageIcon;
 import java.awt.*;

@@ -1,11 +1,9 @@
-package elements.Trees;
+package cells.trees;
 
-import elements.Fruits.Fruit;
-import elements.Fruits.FruitType;
+import elements.fruits.Fruit;
+import elements.fruits.FruitType;
 import elements.Player;
-import essentials.Cell;
-
-import java.awt.*;
+import cells.Cell;
 
 import javax.swing.ImageIcon;
 

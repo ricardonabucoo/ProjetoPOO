@@ -1,9 +1,8 @@
 package UI.Panels;
 
 import UI.Frames.MainFrame;
-import elements.Fruits.FruitType;
+import elements.fruits.FruitType;
 import essentials.Map;
-import builders.MapBuilder;
 import essentials.Match;
 
 
@@ -15,7 +14,6 @@ import java.util.HashMap;
 
 public class CreateMapPanel extends JPanel implements Serializable{
     private HashMap<String,InputField> inputFields;
-    private MapBuilder mapBuilder;
     private Map map;
     private JPanel leftPanel;
     private JPanel rightPanel;
@@ -27,6 +25,7 @@ public class CreateMapPanel extends JPanel implements Serializable{
     int bagCapacity;
     int fruitAmount;
     int treesAmount;
+    int wormychance;
 
 
     public CreateMapPanel() {
@@ -65,7 +64,7 @@ public class CreateMapPanel extends JPanel implements Serializable{
         treeMap.put(FruitType.COCONUT,1);
         HashMap<FruitType,Integer> fruitMap = new HashMap<FruitType,Integer>();
         fruitMap.put(FruitType.BLACKBERRY,1);
-        return mapBuilder.buildMap(3,1,treeMap,fruitMap,5,5).getResult();
+        return new Map(3,1,treeMap,fruitMap,5,5,0);
     }
 
     private JPanel createSetConfigsPanel(){
@@ -145,14 +144,11 @@ public class CreateMapPanel extends JPanel implements Serializable{
         buttonsPanel.setLayout(new GridLayout(1,3));
         GridBagConstraints gbc = new GridBagConstraints();
 
-        mapBuilder = new MapBuilder();
-
         JButton nextButton = new JButton("<html>Criar <br>Partida</html>");
         nextButton.setEnabled(false);
         nextButton.addActionListener(e -> {
             MainFrame mainFrame = MainFrame.getInstance();
-            mainFrame.setCurrentPanel(new CreateMatchPanel(mapBuilder,map));
-
+            mainFrame.setCurrentPanel(new CreateMatchPanel(map));
         });
 
         JButton submitButton = new JButton("Gerar");
@@ -160,7 +156,7 @@ public class CreateMapPanel extends JPanel implements Serializable{
         submitButton.addActionListener(e -> {
 
             rightPanel.remove(map);
-            map = mapBuilder.buildMap(size, rocksAmount, treeMap, fruitMap, passionFruitAmount, bagCapacity).getResult();
+            map = new Map(size, rocksAmount, treeMap, fruitMap, passionFruitAmount, bagCapacity, wormychance);
             GridBagConstraints gbcMap = new GridBagConstraints();
             gbcMap.gridx = 0;
             gbcMap.gridy = 1;
@@ -183,6 +179,7 @@ public class CreateMapPanel extends JPanel implements Serializable{
             bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
             treesAmount = treeMap.values().stream().mapToInt(Integer::intValue).sum();
             fruitAmount = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
+            wormychance = inputFields.get("WormyChance").getInputAsInt();
             if(size>=3 && passionFruitAmount > 0 && bagCapacity > 0 && bagCapacity >= (passionFruitAmount/2+1) && treesAmount > 0 && size*size >= fruitAmount+treesAmount+rocksAmount+rocksAmount+2)
             {
                 submitButton.setEnabled(true);
@@ -200,22 +197,6 @@ public class CreateMapPanel extends JPanel implements Serializable{
         gbc.gridwidth = 3;
         gbc.anchor = GridBagConstraints.CENTER;
         buttonsPanel.add(validateButton, gbc);
-
-
-
-
-        /*
-        JButton shuffleButton = new JButton("Shuffle");
-        shuffleButton.setEnabled(false);
-        if(size>=3||bagCapacity>=(passionFruitAmount/2+1)||fruitAmount+treesAmount+2<=size*size)
-        {
-            shuffleButton.setEnabled(true);
-        }
-        shuffleButton.addActionListener(e -> {
-
-        });
-        */
-
 
 
         gbc.gridy = 1;

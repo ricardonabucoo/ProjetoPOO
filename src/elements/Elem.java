@@ -1,6 +1,6 @@
 package elements;
 
-import essentials.Cell;
+import cells.Cell;
 
 import javax.swing.*;
 import java.io.Serializable;

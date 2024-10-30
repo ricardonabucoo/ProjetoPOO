@@ -1,6 +1,6 @@
-package elements.Fruits;
+package elements.fruits;
 
-import essentials.Cell;
+import cells.Cell;
 import status_effect.PowerEffect;
 
 import javax.swing.*;

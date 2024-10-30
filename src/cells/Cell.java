@@ -1,7 +1,6 @@
-package essentials;
+package cells;
 import elements.*;
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import java.io.Serializable;
 

@@ -1,8 +1,7 @@
-package elements;
+package cells;
 
-import essentials.Cell;
+import elements.Player;
 
-import java.awt.*;
 import javax.swing.ImageIcon;
 
 public final class Rock extends Cell {

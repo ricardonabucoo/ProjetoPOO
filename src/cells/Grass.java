@@ -1,8 +1,5 @@
-package elements;
+package cells;
 
-import essentials.Cell;
-
-import java.awt.*;
 import javax.swing.ImageIcon;
 
 public final class Grass extends Cell {

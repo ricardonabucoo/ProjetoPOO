@@ -1,7 +1,6 @@
 package elements;
 
-import essentials.Cell;
-import javax.swing.ImageIcon;
+import cells.Cell;
 
 public abstract class StaticElem extends Elem
 {

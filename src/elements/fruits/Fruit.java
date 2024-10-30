@@ -1,13 +1,13 @@
-package elements.Fruits;
+package elements.fruits;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
 import elements.Elem;
 import elements.Player;
-import essentials.Cell;
+import cells.Cell;
 import status_effect.*;
-import javax.swing.ImageIcon;
+
 import java.util.HashSet;
 import java.util.Set;
 

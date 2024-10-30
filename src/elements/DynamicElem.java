@@ -1,6 +1,6 @@
 package elements;
 
-import essentials.Cell;
+import cells.Cell;
 
 public class DynamicElem extends Elem
 {

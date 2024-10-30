@@ -1,8 +1,8 @@
 package elements;
-import elements.Fruits.Fruit;
-import elements.Fruits.PassionFruit;
-import elements.Trees.Tree;
-import essentials.Cell;
+import elements.fruits.Fruit;
+import elements.fruits.PassionFruit;
+import cells.trees.Tree;
+import cells.Cell;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,20 +1,16 @@
 package UI.Panels;
 
 import UI.Frames.MainFrame;
-import builders.MapBuilder;
-import builders.MatchBuilder;
 import essentials.Map;
 import essentials.Match;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.HashMap;
 
 public class CreateMatchPanel extends JPanel implements Serializable {
 
-    private MatchBuilder matchBuilder;
     private Match match;
     private HashMap<String,InputField> inputFields;
     private JPanel topPanel;
@@ -22,12 +18,23 @@ public class CreateMatchPanel extends JPanel implements Serializable {
     private JPanel rightPanel;
     private JPanel centerPanel;
 
-    public CreateMatchPanel(MapBuilder mapBuilder, Map map) {
+    private ImageIcon player1Male;
+    private ImageIcon player1Female;
+    private ImageIcon player2Male;
+    private ImageIcon player2Female;
+
+
+
+    public CreateMatchPanel(Map map) {
         setLayout(new BorderLayout());
         setBackground(Color.darkGray);
 
         inputFields = new HashMap<>();
-        matchBuilder = new MatchBuilder(mapBuilder, map);
+
+        player1Female = new ImageIcon("images/Female01.png");
+        player1Male = new ImageIcon("images/Male01.png");
+        player2Female = new ImageIcon("images/Female02.png");
+        player2Male = new ImageIcon("images/Male02.png");
 
         topPanel = createTopPanel();
         add(topPanel, BorderLayout.NORTH);
@@ -44,8 +51,8 @@ public class CreateMatchPanel extends JPanel implements Serializable {
 
     }
 
-    private JPanel createSidePanel(String title, String key, int paramter) {
-        JPanel panel = createPlayerConfigPanel(title, key, paramter);
+    private JPanel createSidePanel(String title, String key, int parameter) {
+        JPanel panel = createPlayerConfigPanel(title, key, parameter);
         panel.setBackground(Color.lightGray);
         panel.setPreferredSize(new Dimension(300, getHeight()));
         return panel;
@@ -59,11 +66,11 @@ public class CreateMatchPanel extends JPanel implements Serializable {
         button.addActionListener(e -> {
             MainFrame mainFrame = MainFrame.getInstance();
 
-            matchBuilder.setPlayersName(
-                    inputFields.get("Player1").getInput(),
-                    inputFields.get("Player2").getInput()
-            );
-            mainFrame.setCurrentPanel(matchBuilder.build().getResult());
+            Map map = match.getMap();
+            map.getPlayerOne().setName(inputFields.get("Player1").getInput());
+            map.getPlayerTwo().setName(inputFields.get("Player2").getInput());
+
+            mainFrame.setCurrentPanel(new Match(map));
         });
 
         panel.add(button);
@@ -84,30 +91,28 @@ public class CreateMatchPanel extends JPanel implements Serializable {
         buttonPanel.setLayout(new GridLayout(0,2));
         JButton button1 = new JButton("Female");
         button1.addActionListener(e -> {
-            ImageIcon imageIcon;
             if(parameter == 1){
-                imageIcon = new ImageIcon("images/Female01.png");
+                setImage(characterPanel, player1Female);
+                match.getPlayerOne().setImage(player1Female);
             }
             else{
-                imageIcon = new ImageIcon("images/Female02.png");
+                setImage(characterPanel, player2Female);
+                match.getPlayerOne().setImage(player2Female);
             }
-            setImage(characterPanel, imageIcon);
-            matchBuilder.setPlayerImage(imageIcon,parameter);
+
         });
         buttonPanel.add(button1);
 
         JButton button2 = new JButton("Male");
         button2.addActionListener(e -> {
-            ImageIcon imageIcon;
             if(parameter == 1){
-                imageIcon = new ImageIcon("images/Male01.png");
+                setImage(characterPanel, player2Female);
+                match.getPlayerOne().setImage(player2Female);
             }
             else{
-                imageIcon = new ImageIcon("images/Male02.png");
+                setImage(characterPanel, player2Female);
+                match.getPlayerOne().setImage(player2Female);
             }
-
-            setImage(characterPanel, imageIcon);
-            matchBuilder.setPlayerImage(imageIcon,parameter);
         });
         buttonPanel.add(button2);
 

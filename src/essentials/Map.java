@@ -1,9 +1,11 @@
 package essentials;
 
-import builders.MapBuilder;
+import cells.Cell;
+import cells.Grass;
+import cells.Rock;
 import elements.*;
-import elements.Fruits.*;
-import elements.Trees.*;
+import elements.fruits.*;
+import cells.trees.*;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -14,7 +16,6 @@ import java.awt.event.MouseMotionAdapter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 public class Map extends JPanel implements Serializable {

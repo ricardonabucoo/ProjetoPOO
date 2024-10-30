@@ -1,6 +1,6 @@
-package elements.Trees;
+package cells.trees;
 
-import elements.Fruits.BlackBerry;
+import elements.fruits.BlackBerry;
 
 import javax.swing.*;
 
