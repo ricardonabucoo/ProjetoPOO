@@ -23,13 +23,13 @@ public class Map extends JPanel implements Serializable {
 
 
 	public Map(int size) {
+		setLayout(new GridBagLayout());
 		passionFruitFactory = null;
-		mapInfoPanel = new JPanel();
+		mapInfoPanel = createMapInfoPanel();
 		player1 = null;
 		player2 = null;
 		grid = null;
 		gridSize = size;
-		setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		gbc.weightx = 1;
 		gbc.weighty = 1;
@@ -51,11 +51,10 @@ public class Map extends JPanel implements Serializable {
 		}
 	}
 
-	private void cellInfoPanel(int i, int j) {
-
-
-		mapInfoPanel.setLayout(new BoxLayout(mapInfoPanel, BoxLayout.Y_AXIS));
-		mapInfoPanel.setBorder(
+	public JPanel createMapInfoPanel(){
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setBorder(
 				BorderFactory.createTitledBorder(
 						BorderFactory.createLineBorder(Color.BLACK),
 						"Informações da célula",
@@ -63,8 +62,15 @@ public class Map extends JPanel implements Serializable {
 						TitledBorder.TOP
 				)
 		);
-		mapInfoPanel.setBackground(Color.lightGray);
-		mapInfoPanel.setPreferredSize(new Dimension(300,500));
+		panel.setBackground(Color.lightGray);
+		panel.setPreferredSize(new Dimension(300,500));
+		return panel;
+	}
+
+	private void cellInfoPanel(int i, int j) {
+
+
+
 		mapInfoPanel.removeAll();
 		Cell cell = grid[i][j];
 		Dimension buttonSize = new Dimension(200, 40);

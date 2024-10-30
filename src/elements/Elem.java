@@ -11,10 +11,14 @@ public abstract class Elem extends JButton implements Serializable
 	protected ImageIcon imageIcon;
 		
 	public Elem(Cell ownPlace) {
-
 		this.ownPlace = ownPlace;
+		setContentAreaFilled(false);
+		setBorderPainted(false);
+		setFocusPainted(false);
+		setOpaque(false);
+		setEnabled(false);
 		addActionListener(e -> {
-			System.out.println(ownPlace.getRow() + " " + ownPlace.getCol());
+			System.out.println(getClass());
 		});
 	}
 	public void update() {}
