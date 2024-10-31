@@ -12,6 +12,11 @@ public class Guava extends Fruit {
         imageIcon = new ImageIcon("images/guava.png");
         setIcon(imageIcon);
     }
+    public Guava() {
+        fruitType = FruitType.GUAVA;
+        imageIcon = new ImageIcon("images/guava.png");
+        setIcon(imageIcon);
+    }
 
     @Override
     public Fruit clone() {

@@ -4,7 +4,10 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
+
+import static testes.HoverRedTintButtonExample.applyRedTint;
 
 public abstract class Cell extends JButton implements Serializable{
 
@@ -97,5 +100,46 @@ public abstract class Cell extends JButton implements Serializable{
 	}
 
 	public ImageIcon getImageIcon() { return imageIcon; }
+
+	public void setCellAbleToMove() {
+        BufferedImage bufferedImage = null;
+        if (imageIcon != null) {
+            bufferedImage = new BufferedImage(
+                    imageIcon.getIconWidth(),
+                    imageIcon.getIconHeight(),
+                    BufferedImage.TYPE_INT_ARGB
+            );
+        }
+
+        // Desenha a imagem do ImageIcon no BufferedImage
+        Graphics g = bufferedImage.getGraphics();
+        g.drawImage(imageIcon.getImage(), 0, 0, null);
+        g.dispose();
+
+        // Aplica a tonalidade vermelha
+        BufferedImage redTintImage = applyRedTint(bufferedImage);
+        setIcon(new ImageIcon(redTintImage));
+    }
+
+	public void setCellUnableToMove(){
+		setIcon(imageIcon);
+	}
+
+	private BufferedImage applyRedTint(BufferedImage image) {
+		BufferedImage tintedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+		for (int x = 0; x < image.getWidth(); x++) {
+			for (int y = 0; y < image.getHeight(); y++) {
+				Color originalColor = new Color(image.getRGB(x, y), true);
+				int red = Math.min(255, (int) (originalColor.getRed() * 1.5));  // Aumenta a tonalidade vermelha
+				int green = (int) (originalColor.getGreen() * 0.5);  // Reduz o verde
+				int blue = (int) (originalColor.getBlue() * 0.5);    // Reduz o azul
+				int alpha = originalColor.getAlpha();
+				Color tintedColor = new Color(red, green, blue, alpha);
+				tintedImage.setRGB(x, y, tintedColor.getRGB());
+			}
+		}
+		return tintedImage;
+	}
 }
 

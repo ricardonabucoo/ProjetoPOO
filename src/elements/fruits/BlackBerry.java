@@ -13,6 +13,12 @@ public class BlackBerry extends Fruit{
         setIcon(imageIcon);
     }
 
+    public BlackBerry() {
+        fruitType = FruitType.BLACKBERRY;
+        imageIcon = new ImageIcon("images/blackberry.png");
+        setIcon(imageIcon);
+    }
+
     @Override
     public Fruit clone() {
         return new BlackBerry(cell);

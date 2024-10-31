@@ -6,6 +6,7 @@ import elements.fruits.FruitType;
 import cells.Cell;
 import status_effect.EffectList;
 import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class Player extends Elem{
@@ -174,6 +175,26 @@ public class Player extends Elem{
 		setPreferredSize(new Dimension(100, 100));
 		revalidate();
 		repaint();
+	}
+
+	public void showCellsToMove() {
+		Cell cell_d = cell.getCellDown();
+		if(cell_d != null) {
+			cell_d.setCellAbleToMove();
+		}
+		Cell cell_u = cell.getCellUp();
+		if(cell_d != null) {
+			cell_d.setCellUnableToMove();
+		}
+		Cell cell_l = cell.getCellLeft();
+		if(cell_d != null) {
+			cell_d.setCellUnableToMove();
+		}
+		Cell cell_r = cell.getCellRight();
+		if(cell_d != null) {
+			cell_d.setCellUnableToMove();
+		}
+
 	}
 }
 

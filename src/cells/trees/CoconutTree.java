@@ -8,7 +8,7 @@ public class CoconutTree extends Tree {
 
     public CoconutTree(int row, int col) {
         super(row, col);
-        producedFruit = new Coconut(this);
+        producedFruit = new Coconut();
         stage1 = new ImageIcon("images/treeCoconut1-export.png");
         stage2 = new ImageIcon("images/treeCoconut2-export.png");
         stage3 = new ImageIcon("images/treeCoconut3-export.png");

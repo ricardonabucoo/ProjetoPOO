@@ -64,6 +64,7 @@ public class Match extends JPanel implements Serializable {
             currentPlayer = player1;
             currentPlayerInfo = player1Info;
         }
+        currentPlayer.showCellsToMove();
     }
 
     public Player getPlayerOne() {

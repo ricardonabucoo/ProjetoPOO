@@ -15,6 +15,13 @@ public class Coconut extends Fruit{
         setIcon(imageIcon);
     }
 
+    public Coconut () {
+        fruitType = FruitType.COCONUT;
+        fruitEffect.addEffect(new MovimentEffect());
+        imageIcon = new ImageIcon("images/coconut.png");
+        setIcon(imageIcon);
+    }
+
     @Override
     public Fruit clone() {
         return new Coconut(cell);

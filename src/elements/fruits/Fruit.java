@@ -22,6 +22,11 @@ public abstract class Fruit extends Elem {
 		if(isWormy())
 			fruitEffect.addEffect(new WormyEffect());
 	}
+	public Fruit () {
+		fruitEffect = new EffectList();
+		if(isWormy())
+			fruitEffect.addEffect(new WormyEffect());
+	}
 
 	public static void setWormyChance(int wormyChance) { Fruit.wormyChance = wormyChance; }
 

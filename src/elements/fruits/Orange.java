@@ -14,6 +14,12 @@ public class Orange extends Fruit {
         imageIcon = new ImageIcon("images/orange.png");
         setIcon(imageIcon);
     }
+    public Orange(){
+        fruitType = FruitType.ORANGE;
+        fruitEffect.addEffect(new AntidoteEffect());
+        imageIcon = new ImageIcon("images/orange.png");
+        setIcon(imageIcon);
+    }
 
     @Override
     public Fruit clone() {

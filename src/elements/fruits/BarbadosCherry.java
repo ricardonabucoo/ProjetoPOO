@@ -12,6 +12,11 @@ public class BarbadosCherry extends Fruit{
         imageIcon = new ImageIcon("images/barbadosCherry.png");
         setIcon(imageIcon);
     }
+    public BarbadosCherry() {
+        fruitType = FruitType.BARBADOSCHERRY;
+        imageIcon = new ImageIcon("images/barbadosCherry.png");
+        setIcon(imageIcon);
+    }
 
     @Override
     public Fruit clone() {

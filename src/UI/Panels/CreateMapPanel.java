@@ -3,6 +3,7 @@ package UI.Panels;
 import UI.Frames.MainFrame;
 import elements.fruits.FruitType;
 import essentials.Map;
+import essentials.MapReader;
 
 
 import javax.swing.*;
@@ -14,8 +15,9 @@ import java.util.HashMap;
 public class CreateMapPanel extends JPanel implements Serializable{
     private HashMap<String,InputField> inputFields;
     private Map map;
-    private JPanel leftPanel;
-    private JPanel rightPanel;
+    private MapReader mapReader;
+    private final JPanel leftPanel;
+    private final JPanel rightPanel;
     int size;
     int rocksAmount;
     HashMap<FruitType, Integer> treeMap;
@@ -24,7 +26,7 @@ public class CreateMapPanel extends JPanel implements Serializable{
     int bagCapacity;
     int fruitAmount;
     int treesAmount;
-    int wormychance;
+    int wormyChance;
 
 
     public CreateMapPanel() {
@@ -44,10 +46,39 @@ public class CreateMapPanel extends JPanel implements Serializable{
         add(splitPane, BorderLayout.CENTER);
     }
 
+    public CreateMapPanel(MapReader mapReader) {
+        this.mapReader = mapReader;
+        setLayout(new BorderLayout());
+        setBackground(Color.decode("#008b8b"));
+
+        leftPanel = createSetConfigsLoadedPanel();
+        rightPanel = createMapViewerPanel();
+
+        JSplitPane splitPane = new JSplitPane(
+                JSplitPane.HORIZONTAL_SPLIT,
+                leftPanel,
+                rightPanel
+        );
+        splitPane.setResizeWeight(0.3);
+        splitPane.setDividerLocation(300);
+        add(splitPane, BorderLayout.CENTER);
+    }
+
+    private JPanel createMapViewerPanel(Map map){
+        JPanel mapViewer = new JPanel(new GridBagLayout());
+        mapViewer.setBackground(Color.darkGray);
+        this.map = map;
+        return getjPanel(map, mapViewer);
+    }
+
     private JPanel createMapViewerPanel(){
         JPanel mapViewer = new JPanel(new GridBagLayout());
         mapViewer.setBackground(Color.darkGray);
         map = createDefaultMap();
+        return getjPanel(map, mapViewer);
+    }
+
+    private JPanel getjPanel(Map map, JPanel mapViewer) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -57,6 +88,7 @@ public class CreateMapPanel extends JPanel implements Serializable{
         mapViewer.add(map, gbc);
         return mapViewer;
     }
+
 
     private Map createDefaultMap(){
         HashMap<FruitType,Integer> treeMap = new HashMap<FruitType,Integer>();
@@ -93,6 +125,33 @@ public class CreateMapPanel extends JPanel implements Serializable{
         return configPanel;
     }
 
+    private JPanel createSetConfigsLoadedPanel(){
+        inputFields = new HashMap<>();
+
+        JPanel configPanel = new JPanel();
+        configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.Y_AXIS));
+        configPanel.setBackground(Color.decode("#f0f0f0"));
+        configPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createLineBorder(Color.BLACK),
+                        "Configurações Avançadas",
+                        TitledBorder.CENTER,
+                        TitledBorder.TOP
+                )
+        );
+
+        //dados gerais
+        configPanel.add(createGeneralDataLoadedPanel());
+        //arvores frutiferas
+        configPanel.add(createTreesTypeLoadedPanel());
+        //frutas iniciais
+        configPanel.add(createInitalFruitsLoadedPanel());
+        //botoes de submit e suffle
+        configPanel.add(createButtonsLoadedPanel());
+
+        return configPanel;
+    }
+
     private JPanel createGeneralDataPanel(){
         JPanel generalDataPanel = new JPanel();
         generalDataPanel.setLayout(new GridLayout(0,1));
@@ -103,6 +162,20 @@ public class CreateMapPanel extends JPanel implements Serializable{
         addNewInputFieldToHashMap(generalDataPanel,"PassionFruit_amount","Maracujás:");
         addNewInputFieldToHashMap(generalDataPanel,"BagCapacity","<html>Capacidade <br>da mochila</html>:");
         addNewInputFieldToHashMap(generalDataPanel,"WormyChance","<html>Chance de <br>fruta bichada:</html>:");
+
+        return generalDataPanel;
+    }
+
+    private JPanel createGeneralDataLoadedPanel(){
+        JPanel generalDataPanel = new JPanel();
+        generalDataPanel.setLayout(new GridLayout(0,1));
+        generalDataPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Dados Gerais", TitledBorder.CENTER, TitledBorder.TOP));
+
+        addNewInputFieldToHashMap(generalDataPanel,"Size","Tamanho:",mapReader.getSize()+"");
+        addNewInputFieldToHashMap(generalDataPanel,"Rocks_amount","Pedras:", mapReader.getRocksAmount()+"");
+        addNewInputFieldToHashMap(generalDataPanel,"PassionFruit_amount","Maracujás:", mapReader.getMaxPassionFruitAmount()+"");
+        addNewInputFieldToHashMap(generalDataPanel,"BagCapacity","<html>Capacidade <br>da mochila</html>:",mapReader.getBagCapacity()+"");
+        addNewInputFieldToHashMap(generalDataPanel,"WormyChance","<html>Chance de <br>fruta bichada:</html>:",mapReader.getWormyFruitChance()+"");
 
         return generalDataPanel;
     }
@@ -122,6 +195,21 @@ public class CreateMapPanel extends JPanel implements Serializable{
         return treesTypePanel;
     }
 
+    private JPanel createTreesTypeLoadedPanel(){
+        JPanel treesTypePanel = new JPanel();
+        treesTypePanel.setLayout(new GridLayout(0,1));
+        treesTypePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Árvore", TitledBorder.CENTER, TitledBorder.TOP));
+
+        addNewInputFieldToHashMap(treesTypePanel,"Guava_tree","Goiaba:",mapReader.getNumberOfTrees().get(FruitType.GUAVA)+"");
+        addNewInputFieldToHashMap(treesTypePanel,"BarbadosCherry_tree","Acerola:",mapReader.getNumberOfTrees().get(FruitType.BARBADOSCHERRY)+"");
+        addNewInputFieldToHashMap(treesTypePanel,"BlackBerry_tree","Amora:",mapReader.getNumberOfTrees().get(FruitType.BLACKBERRY)+"");
+        addNewInputFieldToHashMap(treesTypePanel,"Orange_tree","Laranja:",mapReader.getNumberOfTrees().get(FruitType.ORANGE)+"");
+        addNewInputFieldToHashMap(treesTypePanel,"Avocado_tree","Abacate:",mapReader.getNumberOfTrees().get(FruitType.AVOCADO)+"");
+        addNewInputFieldToHashMap(treesTypePanel,"Coconut_tree","Côco:",mapReader.getNumberOfTrees().get(FruitType.COCONUT)+"");
+
+        return treesTypePanel;
+    }
+
     private JPanel createInitalFruitsPanel(){
         JPanel initalFruitsPanel = new JPanel();
         initalFruitsPanel.setLayout(new GridLayout(0,1));
@@ -134,6 +222,22 @@ public class CreateMapPanel extends JPanel implements Serializable{
         addNewInputFieldToHashMap(initalFruitsPanel,"Coconut_fruit","Côcos:");
         addNewInputFieldToHashMap(initalFruitsPanel,"Avocado_fruit","Abacate:");
         addNewInputFieldToHashMap(initalFruitsPanel,"PassionFruit_fruit","Maracujás:");
+
+        return initalFruitsPanel;
+    }
+
+    private JPanel createInitalFruitsLoadedPanel(){
+        JPanel initalFruitsPanel = new JPanel();
+        initalFruitsPanel.setLayout(new GridLayout(0,1));
+        initalFruitsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Frutas Iniciais", TitledBorder.CENTER, TitledBorder.TOP));
+
+        addNewInputFieldToHashMap(initalFruitsPanel,"Guava_fruit","Goiabas:",mapReader.getInitialFruitsNumber().get(FruitType.GUAVA)+"");
+        addNewInputFieldToHashMap(initalFruitsPanel,"BarbadosCherry_fruit","Acerolas:",mapReader.getInitialFruitsNumber().get(FruitType.BARBADOSCHERRY)+"");
+        addNewInputFieldToHashMap(initalFruitsPanel,"BlackBerry_fruit","Amoras:",mapReader.getInitialFruitsNumber().get(FruitType.BLACKBERRY)+"");
+        addNewInputFieldToHashMap(initalFruitsPanel,"Orange_fruit","Laranjas:",mapReader.getInitialFruitsNumber().get(FruitType.ORANGE)+"");
+        addNewInputFieldToHashMap(initalFruitsPanel,"Coconut_fruit","Côcos:",mapReader.getInitialFruitsNumber().get(FruitType.COCONUT)+"");
+        addNewInputFieldToHashMap(initalFruitsPanel,"Avocado_fruit","Abacate:",mapReader.getInitialFruitsNumber().get(FruitType.AVOCADO)+"");
+        addNewInputFieldToHashMap(initalFruitsPanel,"PassionFruit_fruit","Maracujás:",mapReader.getInitialFruitsNumber().get(FruitType.PASSIONFRUIT)+"");
 
         return initalFruitsPanel;
     }
@@ -155,7 +259,7 @@ public class CreateMapPanel extends JPanel implements Serializable{
         submitButton.addActionListener(e -> {
 
             rightPanel.remove(map);
-            map = new Map(size, rocksAmount, treeMap, fruitMap, passionFruitAmount, bagCapacity, wormychance);
+            map = new Map(size, rocksAmount, treeMap, fruitMap, passionFruitAmount, bagCapacity, wormyChance);
             GridBagConstraints gbcMap = new GridBagConstraints();
             gbcMap.gridx = 0;
             gbcMap.gridy = 1;
@@ -178,7 +282,7 @@ public class CreateMapPanel extends JPanel implements Serializable{
             bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
             treesAmount = treeMap.values().stream().mapToInt(Integer::intValue).sum();
             fruitAmount = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
-            wormychance = inputFields.get("WormyChance").getInputAsInt();
+            wormyChance = inputFields.get("WormyChance").getInputAsInt();
             if(size>=3 && passionFruitAmount > 0 && bagCapacity > 0 && bagCapacity >= (passionFruitAmount/2+1) && treesAmount > 0 && size*size >= fruitAmount+treesAmount+rocksAmount+rocksAmount+2)
             {
                 submitButton.setEnabled(true);
@@ -209,8 +313,33 @@ public class CreateMapPanel extends JPanel implements Serializable{
         return buttonsPanel;
     }
 
+    private JPanel createButtonsLoadedPanel(){
+        JPanel buttonsPanel = createButtonsPanel();
+
+        size = inputFields.get("Size").getInputAsInt();
+        rocksAmount = inputFields.get("Rocks_amount").getInputAsInt();
+        treeMap = createTreesTypesHashMap();
+        fruitMap = createInitialFruitHashMap();
+        passionFruitAmount = inputFields.get("PassionFruit_amount").getInputAsInt();
+        bagCapacity = inputFields.get("BagCapacity").getInputAsInt();
+        treesAmount = treeMap.values().stream().mapToInt(Integer::intValue).sum();
+        fruitAmount = fruitMap.values().stream().mapToInt(Integer::intValue).sum();
+        wormyChance = inputFields.get("WormyChance").getInputAsInt();
+        if(size>=3 && passionFruitAmount > 0 && bagCapacity > 0 && bagCapacity >= (passionFruitAmount/2+1) && treesAmount > 0 && size*size >= fruitAmount+treesAmount+rocksAmount+rocksAmount+2)
+        {
+            buttonsPanel.getComponent(0).setEnabled(true);
+        }
+        return buttonsPanel;
+    }
+
     private void addNewInputFieldToHashMap(JPanel panel, String key, String text){
         InputField inputField = new InputField(new JLabel(text));
+        panel.add(inputField);
+        inputFields.put(key,inputField);
+    }
+
+    private void addNewInputFieldToHashMap(JPanel panel, String key, String text, String initialValue){
+        InputField inputField = new InputField(new JLabel(text),initialValue);
         panel.add(inputField);
         inputFields.put(key,inputField);
     }

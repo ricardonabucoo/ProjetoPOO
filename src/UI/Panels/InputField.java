@@ -20,6 +20,13 @@ public class InputField extends JPanel implements Serializable {
         add(field);
     }
 
+    public InputField(JLabel label, String text) {
+        field = new JTextField(text);
+        setLayout(new FlowLayout());
+        add(label);
+        add(field);
+    }
+
     public InputField(JLabel label, int size) {
         field = new JTextField("nome",size);
         setLayout(new FlowLayout());

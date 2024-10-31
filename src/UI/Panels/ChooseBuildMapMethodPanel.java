@@ -35,15 +35,8 @@ public class ChooseBuildMapMethodPanel extends JPanel implements Serializable {
                 MapReader mapReader = new MapReader(fileChooser.getSelectedFile());
                 MainFrame mainFrame = MainFrame.getInstance();
                 mainFrame.setCurrentPanel(
-                        new CreateMatchPanel
-                                (new Map(
-                                        mapReader.getSize(),
-                                        mapReader.getRocksAmount(),
-                                        mapReader.getNumberOfTrees(),
-                                        mapReader.getInitialFruitsNumber(),
-                                        mapReader.getMaxPassionFruitAmount(),
-                                        mapReader.getBagCapacity(),
-                                        mapReader.getWormyFruitChance()
+                        new CreateMapPanel(
+                                (mapReader
                                 )));
             }
         }));

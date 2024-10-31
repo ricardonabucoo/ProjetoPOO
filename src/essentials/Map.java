@@ -37,7 +37,7 @@ public class Map extends JPanel implements Serializable {
 
 	public JPanel createMapInfoPanel(){
 		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setLayout(new GridLayout(3, 1));
 		panel.setBorder(
 				BorderFactory.createTitledBorder(
 						BorderFactory.createLineBorder(Color.BLACK),
@@ -57,30 +57,32 @@ public class Map extends JPanel implements Serializable {
 		Cell cell = grid[i][j];
 		Dimension buttonSize = new Dimension(200, 40);
 		// Cria e adiciona os botões de informações
-		mapInfoPanel.add( new JButton("Célula"));
-		mapInfoPanel.add( new JButton("Linha: " + cell.getRow()));
-		mapInfoPanel.add( new JButton("Coluna: " + cell.getCol()));
 
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout( 1, 3));
+		panel.add( new JButton("Célula[" + cell.getRow() + "][" + cell.getCol() + "]"));
+		mapInfoPanel.add(panel);
 		mapInfoPanel.add(new JButton(cell.getImageIcon()));
+
+
 
 		Elem elem = cell.getElem();
 		if (elem != null) {
-			mapInfoPanel.add(new JButton(elem.getImageIcon()));
+			JButton elemButton = new JButton(elem.getImageIcon());
+			mapInfoPanel.add(elemButton);
 		}
 
 		mapInfoPanel.revalidate();
 		mapInfoPanel.repaint();
 	}
 
-	private JPanel createButtonPanel(String text, Dimension buttonSize) {
-		JButton button = new JButton(text);
-		button.setPreferredSize(buttonSize);
 
+
+	private JPanel createButtonPanel(Cell cell) {
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		panel.add(button);
-		panel.setPreferredSize(buttonSize); // Define o tamanho do painel também
+		panel.setLayout(new GridLayout(2, 1));
 
+		JLabel label = new JLabel();
 		return panel;
 	}
 
@@ -214,21 +216,21 @@ public class Map extends JPanel implements Serializable {
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			Avocado fruit = new Avocado(grass);
-			grass.setElem(fruit);
+			//grass.setElem(fruit);
 		}
 
 		fruitAmount = fruitMap.getOrDefault(FruitType.GUAVA, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			Guava fruit = new Guava(grass);
-			grass.setElem(fruit);
+			//grass.setElem(fruit);
 		}
 
 		fruitAmount = fruitMap.getOrDefault(FruitType.ORANGE, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			Orange fruit = new Orange(grass);
-			grass.setElem(fruit);
+			//grass.setElem(fruit);
 		}
 
 
@@ -236,28 +238,28 @@ public class Map extends JPanel implements Serializable {
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			BarbadosCherry fruit = new BarbadosCherry(grass);
-			grass.setElem(fruit);
+			//grass.setElem(fruit);
 		}
 
 		fruitAmount = fruitMap.getOrDefault(FruitType.COCONUT, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			Coconut fruit = new Coconut(grass);
-			grass.setElem(fruit);
+			//grass.setElem(fruit);
 		}
 
 		fruitAmount = fruitMap.getOrDefault(FruitType.BLACKBERRY, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			BlackBerry fruit = new BlackBerry(grass);
-			grass.setElem(fruit);
+			//grass.setElem(fruit);
 		}
 
 		fruitAmount = fruitMap.getOrDefault(FruitType.PASSIONFRUIT, 0);
 		for(int i = 0; i < fruitAmount; i++){
 			Grass grass = getRandomEmptyCell();
 			PassionFruit fruit = new PassionFruit(grass);
-			grass.setElem(fruit);
+			//grass.setElem(fruit);
 		}
 
 

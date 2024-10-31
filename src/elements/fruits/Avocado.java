@@ -14,6 +14,12 @@ public class Avocado extends Fruit{
         imageIcon = new ImageIcon("images/Avocado.png");
         setIcon(imageIcon);
     }
+    public Avocado() {
+        fruitType = FruitType.AVOCADO;
+        fruitEffect.addEffect(new PowerEffect());
+        imageIcon = new ImageIcon("images/Avocado.png");
+        setIcon(imageIcon);
+    }
 
     @Override
     public Fruit clone() {
