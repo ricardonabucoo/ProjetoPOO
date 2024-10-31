@@ -16,7 +16,7 @@ public abstract class Elem extends JButton implements Serializable
 		setBorderPainted(false);
 		setFocusPainted(false);
 		setOpaque(false);
-		setEnabled(false);
+		setEnabled(true);
 		addActionListener(e -> {
 			System.out.println(getClass());
 		});

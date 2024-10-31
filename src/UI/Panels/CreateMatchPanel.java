@@ -29,6 +29,8 @@ public class CreateMatchPanel extends JPanel implements Serializable {
         setLayout(new BorderLayout());
         setBackground(Color.darkGray);
 
+        match = new Match(map);
+
         inputFields = new HashMap<>();
 
         player1Female = new ImageIcon("images/Female01.png");
@@ -44,7 +46,6 @@ public class CreateMatchPanel extends JPanel implements Serializable {
 
         rightPanel = createSidePanel("Player 2", "Player2", 2);
         add(rightPanel, BorderLayout.EAST);
-
 
         centerPanel = map;
         add(centerPanel, BorderLayout.CENTER);
@@ -99,7 +100,7 @@ public class CreateMatchPanel extends JPanel implements Serializable {
             }
             else{
                 setImage(characterPanel, player2Female);
-                match.getPlayerOne().setImage(player2Female);
+                match.getPlayerTwo().setImage(player2Female);
             }
 
         });
@@ -108,12 +109,12 @@ public class CreateMatchPanel extends JPanel implements Serializable {
         JButton button2 = new JButton("Male");
         button2.addActionListener(e -> {
             if(parameter == 1){
-                setImage(characterPanel, player2Female);
-                match.getPlayerOne().setImage(player2Female);
+                setImage(characterPanel, player1Male);
+                match.getPlayerOne().setImage(player1Male);
             }
             else{
-                setImage(characterPanel, player2Female);
-                match.getPlayerOne().setImage(player2Female);
+                setImage(characterPanel, player2Male);
+                match.getPlayerTwo().setImage(player2Male);
             }
         });
         buttonPanel.add(button2);

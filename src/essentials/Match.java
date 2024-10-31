@@ -3,7 +3,6 @@ package essentials;
 
 import UI.Frames.MainFrame;
 import UI.Panels.PlayerInfoPanel;
-import elements.PassionFruitFactory;
 import elements.Player;
 
 import java.io.*;

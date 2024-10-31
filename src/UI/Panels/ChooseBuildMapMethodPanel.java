@@ -31,7 +31,21 @@ public class ChooseBuildMapMethodPanel extends JPanel implements Serializable {
         loadButton.addActionListener((e -> {
             JFileChooser fileChooser = new JFileChooser();
             int returnValue = fileChooser.showOpenDialog(null);
-
+            if (returnValue == JFileChooser.APPROVE_OPTION){
+                MapReader mapReader = new MapReader(fileChooser.getSelectedFile());
+                MainFrame mainFrame = MainFrame.getInstance();
+                mainFrame.setCurrentPanel(
+                        new CreateMatchPanel
+                                (new Map(
+                                        mapReader.getSize(),
+                                        mapReader.getRocksAmount(),
+                                        mapReader.getNumberOfTrees(),
+                                        mapReader.getInitialFruitsNumber(),
+                                        mapReader.getMaxPassionFruitAmount(),
+                                        mapReader.getBagCapacity(),
+                                        mapReader.getWormyFruitChance()
+                                )));
+            }
         }));
 
         add(loadButton);

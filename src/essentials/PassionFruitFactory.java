@@ -1,4 +1,4 @@
-package elements;
+package essentials;
 import elements.fruits.Fruit;
 import elements.fruits.PassionFruit;
 import cells.trees.Tree;

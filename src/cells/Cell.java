@@ -2,6 +2,8 @@ package cells;
 import elements.*;
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.Serializable;
 
 public abstract class Cell extends JButton implements Serializable{
@@ -19,8 +21,23 @@ public abstract class Cell extends JButton implements Serializable{
 
 		this.row = row;
 		this.col = col;
-		//setPreferredSize(new Dimension(100, 100));
-        this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+		setPreferredSize(new Dimension(100, 100));
+        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+
+		setHorizontalAlignment(SwingConstants.CENTER);
+		setVerticalAlignment(SwingConstants.CENTER);
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				if(imageIcon != null) {
+					Image resizedImage = imageIcon.getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+					setIcon(new ImageIcon(resizedImage));
+				}
+			}
+		});
+		//addActionListener(e -> {
+		//	System.out.println(getClass());
+		//});
 
 	}
 
