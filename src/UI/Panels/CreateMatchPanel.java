@@ -2,7 +2,6 @@ package UI.Panels;
 
 import UI.Frames.MainFrame;
 import essentials.Map;
-import essentials.Match;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,7 +1,7 @@
 package UI.Buttons;
 
 import UI.Frames.MainFrame;
-import essentials.Match;
+import UI.Panels.Match;
 
 import javax.swing.*;
 import java.awt.*;

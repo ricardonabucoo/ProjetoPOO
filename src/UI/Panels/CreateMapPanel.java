@@ -3,7 +3,6 @@ package UI.Panels;
 import UI.Frames.MainFrame;
 import elements.fruits.FruitType;
 import essentials.Map;
-import essentials.Match;
 
 
 import javax.swing.*;

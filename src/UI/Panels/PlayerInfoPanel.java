@@ -2,7 +2,6 @@ package UI.Panels;
 
 import elements.fruits.FruitType;
 import elements.Player;
-import essentials.Match;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

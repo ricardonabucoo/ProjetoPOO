@@ -1,9 +1,10 @@
-package essentials;
+package UI.Panels;
 
 
 import UI.Frames.MainFrame;
-import UI.Panels.PlayerInfoPanel;
 import elements.Player;
+import essentials.Map;
+import essentials.PassionFruitFactory;
 
 import java.io.*;
 import java.io.IOException;
