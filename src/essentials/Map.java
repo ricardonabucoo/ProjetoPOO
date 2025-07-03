@@ -1,94 +1,73 @@
 package essentials;
 
-import UI.Panels.MapInfoPanel;
+import cells.Cell;
+import cells.Grass;
+import cells.Rock;
 import elements.*;
-import temporario.CellInfoDisplay;
+import elements.fruits.*;
+import cells.trees.*;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.Point;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class Map extends JPanel implements Serializable {
 
-	public static Cell[][] grid;
+	public Cell[][] grid;
 	private Player player1;
 	private Player player2;
-	private int gridSize;
+	private final int gridSize;
 	private PassionFruitFactory passionFruitFactory;
 	private GridBagConstraints gbc;
-	private MapInfoPanel mapInfoPanel;
+	private JPanel mapInfoPanel;
+
+	private ArrayList<Point> avaliablePoints = new ArrayList<>();
+	private ArrayList<Cell> emptyCells = new ArrayList<>();
+	private ArrayList<Tree> treeCellList = new ArrayList<>();
+	private ArrayList<Grass> grassCellList = new ArrayList<>();
+	private ArrayList<Cell> avaliableCellsForPlayer = new ArrayList<>();
 
 
-	public Map(int size) {
-		passionFruitFactory = null;
-		mapInfoPanel = new MapInfoPanel(this);
-		player1 = null;
-		player2 = null;
-		grid = null;
-		gridSize = size;
-		setLayout(new GridBagLayout());
-		gbc = new GridBagConstraints();
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		gbc.fill = GridBagConstraints.BOTH;
-		fillDefaultCells();
-
+	public JPanel createMapInfoPanel(){
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setBorder(
+				BorderFactory.createTitledBorder(
+						BorderFactory.createLineBorder(Color.BLACK),
+						"Informações da célula",
+						TitledBorder.CENTER,
+						TitledBorder.TOP
+				)
+		);
+		panel.setBackground(Color.lightGray);
+		panel.setPreferredSize(new Dimension(300,500));
+		return panel;
 	}
-
-
-	public Cell[][] getGrid() {
-		return grid;
-	}
-
-	private void fillDefaultCells() {
-		grid = new Cell[gridSize][gridSize];
-		for (int i = 0; i < gridSize; i++) {
-			for (int j = 0; j < gridSize; j++) {
-				addCell(new Cell(i, j), i, j);
-			}
-		}
-	}
-
-
-
 
 	private void cellInfoPanel(int i, int j) {
 
 		mapInfoPanel.removeAll();
-
 		Cell cell = grid[i][j];
-
-		Dimension buttonSize = new Dimension(200, 40); // Largura 200px, altura 40px
-
+		Dimension buttonSize = new Dimension(200, 40);
 		// Cria e adiciona os botões de informações
-		mapInfoPanel.add(createButtonPanel("Célula", buttonSize));
-		mapInfoPanel.add(createButtonPanel("Linha: " + cell.getRow(), buttonSize));
-		mapInfoPanel.add(createButtonPanel("Coluna: " + cell.getCol(), buttonSize));
+		mapInfoPanel.add( new JButton("Célula"));
+		mapInfoPanel.add( new JButton("Linha: " + cell.getRow()));
+		mapInfoPanel.add( new JButton("Coluna: " + cell.getCol()));
 
-		// Exibe o elemento estático como um painel de imagem
-		JPanel staticElemPanel = new JPanel();
-		staticElemPanel.setPreferredSize(new Dimension(200, 200));
+		mapInfoPanel.add(new JButton(cell.getImageIcon()));
 
-		// Obtém o caminho da imagem com base no elemento estático
-		String imagePath = getStaticElementImagePath(cell.getStaticElem());
-		ImageIcon staticElemIcon = new ImageIcon(imagePath);
-
-		JButton button = new JButton();
-		button.setIcon(staticElemIcon);
-
-		staticElemPanel.add(button);
-		mapInfoPanel.add(staticElemPanel);
-
-
-		// Verifica se há um elemento dinâmico e cria um botão para ele
-		DynamicElem dynamicElem = cell.getDynamicElem();
-		if (dynamicElem != null) {
-			mapInfoPanel.add(createButtonPanel("Elemento Dinâmico: " + dynamicElem, buttonSize));
+		Elem elem = cell.getElem();
+		if (elem != null) {
+			mapInfoPanel.add(new JButton(elem.getImageIcon()));
 		}
 
-		// Atualiza o painel para exibir os novos componentes
 		mapInfoPanel.revalidate();
 		mapInfoPanel.repaint();
 	}
@@ -105,43 +84,8 @@ public class Map extends JPanel implements Serializable {
 		return panel;
 	}
 
-	private String getStaticElementImagePath (Object staticElem) {
-		if (staticElem instanceof Tree) {
-			return ((Tree) staticElem).getCurrentImagePath();
-		} else if (staticElem instanceof Grass) {
-			return ((Grass) staticElem).getCurrentImagePath();
-		} else {
-			return ((Rock) staticElem).getCurrentImagePath();
-		}
-	}
-	public void addCell(Cell cell, int row,int col){
-		gbc.gridx = row;
-		gbc.gridy = col;
-		grid[row][col] = cell;
-		add(cell, gbc);
-		cell.addMouseMotionListener(new MouseMotionAdapter() {
-										@Override
-										public void mouseMoved(MouseEvent e) {
-											cellInfoPanel(row, col);
-										}
-									} );
-	}
-
-	public void setPassionFruitFactory(PassionFruitFactory passionFruitFactory) {
-		this.passionFruitFactory = passionFruitFactory;
-	}
-
 	public void setPlayer1(Player player1) {
 		this.player1 = player1;
-	}
-
-	public void setPlayerOneName(String name){
-		player1.setName(name);
-	}
-
-
-	public void setPlayer2(Player player2) {
-		this.player2 = player2;
 	}
 
 	public void setPlayerTwoName(String name){
@@ -155,7 +99,234 @@ public class Map extends JPanel implements Serializable {
 			}
 	}
 
-	public MapInfoPanel getMapInfoPanel() {
+	public JPanel getMapInfoPanel() {
 		return mapInfoPanel;
+	}
+
+	public Player getPlayerOne() {
+		return player1;
+	}
+
+	public Player getPlayerTwo() {
+		return player2;
+	}
+
+	public void setPlayer1Image(ImageIcon playerImage) {
+		player1.setImage(playerImage);
+	}
+	public void setPlayer2Image(ImageIcon playerImage) {
+		player2.setImage(playerImage);
+	}
+
+	public void setPlayerOneName(String name){
+		player1.setName(name);
+	}
+
+	public void setPlayer2(Player player2) {
+		this.player2 = player2;
+	}
+
+	public Map(
+			int size,
+			int rocksAmount,
+			HashMap<FruitType, Integer> treeMap,
+			HashMap<FruitType, Integer> fruitMap,
+			int passionFruitsAmount,
+			int bagCapacity,
+			int wormyChance)
+	{
+		setLayout(new GridBagLayout());
+		grid = new Cell[size][size];
+		gridSize = size;
+		avaliablePoints = cartesianProduct(size);
+
+		///// rochas
+
+		for(int i = 0; i < rocksAmount; i++) {
+			Point freePoint = getUnoccupedRandomPoint();
+			grid[freePoint.x][freePoint.y] = new Rock(freePoint.x,freePoint.y);
+		}
+
+		////// arvores
+
+		treeCellList = new ArrayList<>();
+		int treeAmount = treeMap.getOrDefault(FruitType.AVOCADO, 0);
+		for (int i = 0; i < treeAmount; i++) {
+			Point freePoint = getUnoccupedRandomPoint();
+			AvocadoTree tree = new AvocadoTree(freePoint.x, freePoint.y);
+			grid[freePoint.x][freePoint.y] = tree;
+			treeCellList.add(tree);
+		}
+		 treeAmount = treeMap.getOrDefault(FruitType.GUAVA, 0);
+		for(int i = 0; i < treeAmount; i++){
+			Point freePoint = getUnoccupedRandomPoint();
+			GuavaTree tree = new GuavaTree(freePoint.x,freePoint.y);
+			grid[freePoint.x][freePoint.y] = tree;
+			treeCellList.add(tree);
+		}
+
+		treeAmount = treeMap.getOrDefault(FruitType.ORANGE, 0);
+		for(int i = 0; i < treeAmount; i++){
+			Point freePoint = getUnoccupedRandomPoint();
+			OrangeTree tree = new OrangeTree(freePoint.x,freePoint.y);
+			grid[freePoint.x][freePoint.y] = tree;
+			treeCellList.add(tree);
+		}
+
+		treeAmount = treeMap.getOrDefault(FruitType.BARBADOSCHERRY, 0);
+		for(int i = 0; i < treeAmount; i++){
+			Point freePoint = getUnoccupedRandomPoint();
+			BarbadosCherryTree tree = new BarbadosCherryTree(freePoint.x,freePoint.y);
+			grid[freePoint.x][freePoint.y] = tree;
+			treeCellList.add(tree);
+		}
+
+		treeAmount = treeMap.getOrDefault(FruitType.COCONUT, 0);
+		for(int i = 0; i < treeAmount; i++){
+			Point freePoint = getUnoccupedRandomPoint();
+			CoconutTree tree = new CoconutTree(freePoint.x,freePoint.y);
+			grid[freePoint.x][freePoint.y] = tree;
+			treeCellList.add(tree);
+		}
+
+		treeAmount = treeMap.getOrDefault(FruitType.BLACKBERRY, 0);
+		for(int i = 0; i < treeAmount; i++){
+			Point freePoint = getUnoccupedRandomPoint();
+			BlackBerryTree tree = new BlackBerryTree(freePoint.x,freePoint.y);
+			grid[freePoint.x][freePoint.y] = tree;
+			treeCellList.add(tree);
+		}
+
+		///// gramas
+
+		int grassCount = avaliablePoints.size();
+		for(int i = 0; i < grassCount; i++) {
+			Point freePoint = getUnoccupedRandomPoint();
+			Grass grass = new Grass(freePoint.x,freePoint.y);
+			grid[freePoint.x][freePoint.y] = grass;
+			grassCellList.add(grass);
+		}
+
+		////// frutas
+
+		Fruit.setWormyChance(wormyChance);
+		int fruitAmount = fruitMap.getOrDefault(FruitType.AVOCADO, 0);
+		for(int i = 0; i < fruitAmount; i++){
+			Grass grass = getRandomEmptyCell();
+			Avocado fruit = new Avocado(grass);
+			grass.setElem(fruit);
+		}
+
+		fruitAmount = fruitMap.getOrDefault(FruitType.GUAVA, 0);
+		for(int i = 0; i < fruitAmount; i++){
+			Grass grass = getRandomEmptyCell();
+			Guava fruit = new Guava(grass);
+			grass.setElem(fruit);
+		}
+
+		fruitAmount = fruitMap.getOrDefault(FruitType.ORANGE, 0);
+		for(int i = 0; i < fruitAmount; i++){
+			Grass grass = getRandomEmptyCell();
+			Orange fruit = new Orange(grass);
+			grass.setElem(fruit);
+		}
+
+
+		fruitAmount = fruitMap.getOrDefault(FruitType.AVOCADO, 0);
+		for(int i = 0; i < fruitAmount; i++){
+			Grass grass = getRandomEmptyCell();
+			BarbadosCherry fruit = new BarbadosCherry(grass);
+			grass.setElem(fruit);
+		}
+
+		fruitAmount = fruitMap.getOrDefault(FruitType.COCONUT, 0);
+		for(int i = 0; i < fruitAmount; i++){
+			Grass grass = getRandomEmptyCell();
+			Coconut fruit = new Coconut(grass);
+			grass.setElem(fruit);
+		}
+
+		fruitAmount = fruitMap.getOrDefault(FruitType.BLACKBERRY, 0);
+		for(int i = 0; i < fruitAmount; i++){
+			Grass grass = getRandomEmptyCell();
+			BlackBerry fruit = new BlackBerry(grass);
+			grass.setElem(fruit);
+		}
+
+		fruitAmount = fruitMap.getOrDefault(FruitType.PASSIONFRUIT, 0);
+		for(int i = 0; i < fruitAmount; i++){
+			Grass grass = getRandomEmptyCell();
+			PassionFruit fruit = new PassionFruit(grass);
+			grass.setElem(fruit);
+		}
+
+
+		passionFruitFactory = PassionFruitFactory.getInstance(treeCellList, passionFruitsAmount, fruitAmount);
+
+		Bag.setCapacity(bagCapacity);
+
+		avaliableCellsForPlayer.addAll(grassCellList);
+		avaliableCellsForPlayer.addAll(treeCellList);
+
+		Random random = new Random();
+		Cell cell;
+		cell = avaliableCellsForPlayer.remove(random.nextInt(avaliableCellsForPlayer.size()));
+		player1 = new Player(cell);
+		cell.setElem(player1);
+		cell = avaliableCellsForPlayer.remove(random.nextInt(avaliableCellsForPlayer.size()));
+		player2 = new Player(cell);
+		cell.setElem(player2);
+
+
+		gbc = new GridBagConstraints();
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		for(int i = 0; i < size; i++)
+			for(int j = 0; j < size; j++)
+				addCell(grid[i][j],i,j);
+
+		mapInfoPanel = createMapInfoPanel();
+	}
+
+	private void addCell(Cell cell, int row,int col){
+		gbc.gridx = row;
+		gbc.gridy = col;
+		grid[row][col] = cell;
+		add(cell, gbc);
+		cell.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				cellInfoPanel(row, col);
+			}
+		} );
+	}
+
+	private ArrayList<Point> cartesianProduct(int size){
+		ArrayList<Point> list = new ArrayList<Point>();
+
+		for(int i = 0; i < size; i++) {
+			for(int j = 0; j < size; j++){
+				list.add(new Point(i,j));
+			}
+		}
+
+		return list;
+	}
+
+	private Grass getRandomEmptyCell() {
+		if (grassCellList.isEmpty()) {
+			throw new IllegalStateException("sem celulas vazias");
+		}
+		Random random = new Random();
+		return grassCellList.remove(random.nextInt(grassCellList.size()));
+	}
+
+	private Point getUnoccupedRandomPoint(){
+		if (avaliablePoints.isEmpty()) {
+			throw new IllegalStateException("sem celulas vazias");
+		}
+		Random random = new Random();
+		return avaliablePoints.remove(random.nextInt(avaliablePoints.size()));
 	}
 }

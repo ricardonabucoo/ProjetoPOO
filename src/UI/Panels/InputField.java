@@ -2,8 +2,9 @@ package UI.Panels;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class InputField extends JPanel {
+public class InputField extends JPanel implements Serializable {
     private JTextField field;
 
     public InputField() {

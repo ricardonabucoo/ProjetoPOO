@@ -4,8 +4,10 @@ import UI.Frames.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.io.Serializable;
 
-public class CloseMainFrameButton extends JButton {
+public class CloseMainFrameButton extends JButton implements Serializable{
 
     public CloseMainFrameButton() {
         super("Sair");

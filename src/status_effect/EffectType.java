@@ -9,21 +9,17 @@ public enum EffectType {
     WHORMYEFFECT(NullEffect.class),
     EFFECTLIST(EffectList.class);
 
-    private final Class<?> type;
+    private Class<?> type;
 
-    EffectType(Class<?> typeEffect) {
-        this.type=typeEffect;
+    EffectType(Class<?> effectType) {
+        this.type=effectType;
     }
 
     public Class<?> GetType() {
-
         return this.type;
-
     }
-
     public boolean isInstance(Object obj) {
         return type.isInstance(obj);
     }
-
 
 }

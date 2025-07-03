@@ -1,11 +1,12 @@
 package status_effect;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import elements.Player;
 
-public class EffectList implements StatusEffect {
+public class EffectList implements StatusEffect, Serializable {
 	
 	private List<StatusEffect> effectList;
 	
@@ -28,8 +29,8 @@ public class EffectList implements StatusEffect {
 	    effectList.removeIf(effect -> effect.getClass().equals(se.getClass()));
 	}
 
+
 	public boolean containsEffect(EffectType effectType) {
 		return effectList.stream().anyMatch(effectType::isInstance);
 	}
-
 }

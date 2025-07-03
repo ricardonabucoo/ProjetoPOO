@@ -2,7 +2,9 @@ package status_effect;
 
 import elements.Player;
 
-public class AntidoteEffect implements StatusEffect {
+import java.io.Serializable;
+
+public class AntidoteEffect implements StatusEffect, Serializable {
 	@Override
 	public void applyEffect(Player player) {
 		if (!player.getCanMoveNextRound()) {

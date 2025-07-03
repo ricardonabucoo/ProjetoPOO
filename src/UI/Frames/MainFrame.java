@@ -3,8 +3,9 @@ package UI.Frames;
 import UI.Panels.MainMenuPanel;
 
 import javax.swing.*;
+import java.io.Serializable;
 
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame implements Serializable {
 
 	private static JPanel previousPanel;
 	private static JPanel currentPanel;

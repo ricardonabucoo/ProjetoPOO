@@ -1,6 +1,6 @@
 package essentials;
 
-import elements.FruitType;
+import elements.fruits.FruitType;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,7 +17,7 @@ public class MapReader {
     private int initialPassionFruitAmount;
     private HashMap<FruitType, Integer> numberOfTrees;
     private HashMap<FruitType, Integer> initialFruitsNumber;
-    private int wormyFruitAmount;
+    private int wormyFruitChance;
     private int bagCapacity;
     private Map map;
 
@@ -27,7 +27,7 @@ public class MapReader {
         readFile(file);
     }
 
-    private void readFile(File file) {
+    public void readFile(File file) {
         // Mapeamento de termos em português para enums e variáveis em inglês, acho que a professora
     	//vai passar arquivos em português, aí criei o hashmap com a tradução
         HashMap<String, String> translationMap = new HashMap<>();
@@ -57,7 +57,7 @@ public class MapReader {
                         rocksAmount = Integer.parseInt(parts[1]);
                         break;
                     case "bichadas":
-                        wormyFruitAmount = Integer.parseInt(parts[1]);
+                        wormyFruitChance = Integer.parseInt(parts[1]);
                         break;
                     case "mochila":
                         bagCapacity = Integer.parseInt(parts[1]);
@@ -100,8 +100,8 @@ public class MapReader {
         return initialPassionFruitAmount;
     }
 
-    public int getWormyFruitAmount() {
-        return wormyFruitAmount;
+    public int getWormyFruitChance() {
+        return wormyFruitChance;
     }
 
     public int getBagCapacity() {

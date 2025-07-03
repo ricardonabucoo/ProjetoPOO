@@ -2,8 +2,9 @@ package UI.Panels;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class SetMapConfig extends JPanel {
+public class SetMapConfig extends JPanel implements Serializable {
 
     public SetMapConfig() {
 

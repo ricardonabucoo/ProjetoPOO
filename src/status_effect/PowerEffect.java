@@ -2,11 +2,12 @@ package status_effect;
 
 import elements.Player;
 
-public class PowerEffect implements StatusEffect {
+import java.io.Serializable;
+
+public class PowerEffect implements StatusEffect, Serializable {
 	 @Override
 	 public void applyEffect (Player player) {
-		int currentPower = player.getPower();
-		player.setPower(currentPower * 2);
+		player.setPower(player.getPower() * 2);
 	}
 
 }
