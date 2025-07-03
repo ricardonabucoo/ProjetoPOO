@@ -18,7 +18,7 @@ O projeto consistia na criação de um jogo chamado **"Cata-Frutas"**, cujo obje
 
 ## 🖼️ Screenshot
 
-![Tela de Criação de Mapa](imagens/SetConfigScreen.png)
+![Tela de Criação de Mapa](images/SetConfigScreen.png)
 
 ---
 
