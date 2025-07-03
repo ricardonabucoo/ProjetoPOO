@@ -17,7 +17,7 @@ O jogo foi desenvolvido aplicando os principais conceitos de POO, como:
 
 ---
 
-## 🖼️ Screenshot
+## 🖼️ Tela de Criação de Mapa
 
 ![Tela de Criação de Mapa](images/SetConfigScreen.png)
 
