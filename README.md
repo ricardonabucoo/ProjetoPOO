@@ -1,50 +1,32 @@
+# Cata-Frutas 🍓🎮
 
+Este repositório contém o projeto desenvolvido para a disciplina de **Programação Orientada a Objetos (POO)**.  
+O projeto consistia na criação de um jogo chamado **"Cata-Frutas"**, cujo objetivo é coletar mais frutas maracujá que o seu oponente. O jogo foi desenvolvido aplicando os principais conceitos de POO, como:
 
+- Encapsulamento
+- Herança
+- Polimorfismo
+- Abstração
 
+---
 
+## 🚧 Status do Projeto
 
+**Pausado** – O desenvolvimento do jogo está atualmente interrompido, podendo ser retomado futuramente.
 
+---
 
+## 🖼️ Screenshot
 
+![Tela de Criação de Mapa](imagens/SetConfigScreen.png)
 
+---
 
+## 🛠️ Tecnologias Utilizadas
 
-Estrututa de diretórios do projeto:
+- Java
+- Java Swing (para interface gráfica)
+- Paradigma de Programação Orientada a Objetos
 
-/ProjetoPOO
-│
-├── /source                # Diretório principal do código fonte
-│   ├── Main.java          # Arquivo principal do jogo (entry point)
-│   ├── Game.java          # Lógica principal do jogo
-│   ├── /entities          # Pacote para as entidades do jogo (jogador, frutas, etc.)
-│   │   ├── Elem.java
-│   │   ├── StaticElem.java
-│   │   ├── DynamicElem.java
-│   │   └── etc
-│   ├── /input             # Pacote para controle de input do usuário
-│   │   └── InputHandler.java (exemplo)
-│   ├── /ui                # Pacote para interface gráfica do usuário (HUD, menus, etc.)
-│   │   └── Menu.java (exemplo)
-│   ├── /sound             # Pacote para sons e efeitos sonoros
-│   │   └── SoundManager.java (exemplo)
-│   └── /graphics          # Pacote para renderização gráfica
-│       └── GraphicsManager.java (exemplo)
-│
-├── /assets                # Recursos de mídia (imagens, sons, etc.)
-│   ├── /images            # Texturas e imagens do jogo
-│   └── /sounds            # Arquivos de som e trilha sonora
-│
-├── /lib                   # Bibliotecas externas
-│   └── lwjgl.jar          # Exemplo de biblioteca (LWJGL para gráficos)
-│
-├── /tests                 # Testes unitários e de integração
-│   └── GameTest.java
-│
-├── /docs                  # Documentação do projeto
-│   └── README.md
-│
-└── /build                 # Diretório para arquivos compilados
-    └── classes
-
-
+---
 
